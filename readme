@@ -1,0 +1,11 @@
+Liquid Wars for the Android OS (2.3 and above).
+Copyright (C) 2013 Henry Shepperd (hshepperd@gmail.com)
+
+Liquid Wars is a complete rewrite and redesign of the original
+game "Liquid War" (http://www.ufoot.org/liquidwar/), but has
+been designed for the Android operating system.
+
+On Linux machines (and probably most other Unix based machines) the
+build.sh, install.sh and run.sh shell scripts should build, install
+and run on a debug device, provided the Android SDK, NDK and adb are
+set up correctly.

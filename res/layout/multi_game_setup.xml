@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent">
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="fill_parent"
+android:layout_height="fill_parent"
+android:gravity="center_horizontal">
+
+    <View
+    android:layout_width="fill_parent"
+    android:layout_height="1px"
+    android:layout_margin="10sp"
+    android:background="#999"/>
+
+    <TextView
+    android:text=""
+    android:id="@+id/multi_game_textview"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:textSize="15sp"/>
+
+    <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+        <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.75"
+        android:stretchColumns="*">
+
+            <TableRow>
+
+                <TextView
+                android:text="Public Name:"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"/>
+
+                <TextView
+                android:text=""
+                android:id="@+id/public_name_textview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:paddingRight="20sp"
+                android:clickable="true"
+                android:onClick="changePublicName"/>
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                android:text="Team:"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"/>
+
+                <TextView
+                android:text=""
+                android:id="@+id/team_textview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:onClick="changeTeam"/>
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                android:text="Time Limit:"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"/>
+
+                <Spinner
+                android:id="@+id/timeout_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"/>
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                android:text="Map:"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"/>
+
+                <Spinner
+                android:id="@+id/map_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"/>
+
+            </TableRow>
+
+        </TableLayout>
+
+        <Button
+        android:id="@+id/start_button"
+        android:layout_width="0sp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.25"
+        android:text="Start"
+        android:onClick="start"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="150sp"
+    android:gravity="center">
+
+        <Button
+        android:id="@+id/previous_button"
+        android:layout_width="0sp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.15"
+        android:drawableLeft="@drawable/arrow_left"
+        android:onClick="previousMap"/>
+
+        <ImageView
+        android:id="@+id/map_imageview"
+        android:layout_width="0sp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.7"/>
+
+        <Button
+        android:id="@+id/next_button"
+        android:layout_width="0sp"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.15"
+        android:drawableRight="@drawable/arrow_right"
+        android:onClick="nextMap"/>
+
+    </LinearLayout>
+
+    <View
+    android:layout_width="fill_parent"
+    android:layout_height="1px"
+    android:layout_margin="10sp"
+    android:background="#999"/>
+
+</LinearLayout>
+</ScrollView>
