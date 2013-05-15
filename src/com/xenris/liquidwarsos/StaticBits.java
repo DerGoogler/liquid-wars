@@ -35,7 +35,7 @@ public class StaticBits {
     public static final int DOTS_PER_TEAMS = 400;
     public static final int AI_PLAYER = -1;
     public static final int NUMBER_OF_MAPS = 35;
-    public static final int PORT_NUMBER = 51054;
+    public static final int PORT_NUMBER = 51055;
     public static final int GAME_SPEED = 7000;
     public static final int RESEND_STEPS = 0x70;
     public static final int PLAYER_POSITION_DATA = 0x71;
