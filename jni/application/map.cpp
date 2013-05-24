@@ -25,6 +25,8 @@ Map::Map(int mapID) {
 
     int pngDataSize;
     unsigned char* pngData = (unsigned char*)acAssets->getFile((path + "-map.png").data(), &pngDataSize);
+    if(pngData == NULL)
+        pngData = (unsigned char*)acAssets->getFile("maps/blank-map.png", &pngDataSize);
 
     lodepng_decode32((unsigned char**)&imageMapData, &imageMapWidth, &imageMapHeight, pngData, pngDataSize);
 
