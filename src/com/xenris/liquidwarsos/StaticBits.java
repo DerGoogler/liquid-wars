@@ -30,7 +30,7 @@ public class StaticBits {
     public static String publicName = "Liquid Wars Game";
     public static int[] teams = new int[6];
     public static boolean gameWasDisconnected = false;
-    public static final int VERSION_CODE = 6;
+    public static final int VERSION_CODE = 8;
     public static final int NUMBER_OF_TEAMS = 6;
     public static final int DOTS_PER_TEAMS = 400;
     public static final int AI_PLAYER = -1;
