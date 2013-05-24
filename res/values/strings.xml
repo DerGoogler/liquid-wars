@@ -46,6 +46,17 @@
         <item>Medium Maze 2</item>
         <item>Medium Maze 3</item>
         <item>Team Colours</item>
+        <item>Stars</item>
+        <item>Skull</item>
+        <item>ABC</item>
+        <item>Eyes</item>
+        <item>Smudge</item>
+        <item>Crossword</item>
+        <item>Safari</item>
+        <item>Smilies</item>
+        <item>Stained Glass</item>
+        <item>Black Circles</item>
+        <item>Shapes</item>
     </string-array>
     <string-array name="timeout_array">
         <item>30 Seconds</item>

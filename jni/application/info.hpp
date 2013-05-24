@@ -24,7 +24,7 @@
 #define DOTS_PER_TEAM 400
 #define TIMESTEP 8000
 #define AI_UPDATE_SPEED 30
-#define NUMBER_OF_MAPS 34
+#define NUMBER_OF_MAPS 46
 
 class Info {
     public:
