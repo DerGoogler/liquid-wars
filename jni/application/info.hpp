@@ -21,7 +21,6 @@
 #define WIDTH 800
 #define HEIGHT 480
 #define NUMBER_OF_TEAMS 6
-#define DOTS_PER_TEAM 400
 #define TIMESTEP 8000
 #define AI_UPDATE_SPEED 30
 #define NUMBER_OF_MAPS 46

@@ -19,18 +19,27 @@
 
 State* state;
 
-State::State(int team, int mapId, int seed) {
+State::State(int team, int mapId, int seed, int dotsPerTeam) {
     me = team;
 
     currentlyDrawing = false;
 
     timeSidebar = 0;
 
+    this->dotsPerTeam = dotsPerTeam;
+
+    for(int i = 0; i < 6; i++)
+        players[i].score = dotsPerTeam;
+
+    dots.resize(NUMBER_OF_TEAMS*dotsPerTeam);
+    points.resize(NUMBER_OF_TEAMS*dotsPerTeam*3);
+    colours.resize(NUMBER_OF_TEAMS*dotsPerTeam*4);
+
     for(int w = 0; w < WIDTH; w++)
         for(int h = 0; h < HEIGHT; h++)
             field[w][h] = NULL;
 
-    for(int i = 0; i < NUMBER_OF_TEAMS*DOTS_PER_TEAM*4; i++)
+    for(int i = 0; i < NUMBER_OF_TEAMS*dotsPerTeam*4; i++)
         colours[i] = 1;
 
     moveRandom = new Random(seed);
@@ -45,7 +54,7 @@ State::State(int team, int mapId, int seed) {
 }
 
 State::~State() {
-    for(int i = 0; i < NUMBER_OF_TEAMS*DOTS_PER_TEAM; i++)
+    for(int i = 0; i < NUMBER_OF_TEAMS*dotsPerTeam; i++)
         delete(dots[i]);
     delete(map);
     delete(moveRandom);
@@ -59,11 +68,11 @@ void State::placeTeams() {
         int x = sx;
         int y = sy;
         int c = 0;
-        for(int i = 0; i < DOTS_PER_TEAM; i++) {
+        for(int i = 0; i < dotsPerTeam; i++) {
             while(map->isWall(x, y) || (field[x][y] != NULL))
                 Spiral::getNextXY(sx, sy, ++c, &x, &y);
             Dot* dot = new Dot(x, y, t);
-            dots[t*DOTS_PER_TEAM + i] = dot;
+            dots[t*dotsPerTeam + i] = dot;
             field[x][y] = dot;
         }
     }

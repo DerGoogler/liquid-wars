@@ -65,7 +65,7 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
         Util.loadPlayerInitialPositions(xs, ys);
 
         NativeInterface.init(getAssets());
-        NativeInterface.createGame(StaticBits.team, StaticBits.map, StaticBits.seed);
+        NativeInterface.createGame(StaticBits.team, StaticBits.map, StaticBits.seed, StaticBits.dotsPerTeam);
 
         new Thread(this).start();
     }
@@ -185,7 +185,7 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
         if(gameFinished)
             return;
         for(int i = 0; i < 6; i++) {
-            if(NativeInterface.teamScore(i) == StaticBits.NUMBER_OF_TEAMS*StaticBits.DOTS_PER_TEAMS) {
+            if(NativeInterface.teamScore(i) == StaticBits.NUMBER_OF_TEAMS*StaticBits.dotsPerTeam) {
                 final int p = i;
                 runOnUiThread(new Runnable() {
                     @Override

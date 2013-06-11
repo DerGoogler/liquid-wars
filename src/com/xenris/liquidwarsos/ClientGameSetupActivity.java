@@ -114,11 +114,15 @@ public class ClientGameSetupActivity extends Activity implements Client.ClientCa
         } else if(args[0] == StaticBits.START_GAME) {
             StaticBits.seed = args[1];
             StaticBits.map = args[2];
+            StaticBits.dotsPerTeam = args[3];
             StaticBits.client.setCallbacks(null);
             startClientGame();
         } else if(args[0] == StaticBits.SEND_VERSION_CODE) {
             if(args[1] != StaticBits.VERSION_CODE)
                 checkVersionCompatibility(args[1]);
+        } else if(args[0] == StaticBits.SET_TEAM_SIZE) {
+            StaticBits.dotsPerTeam = args[1];
+            setTextView(R.id.teamsize_textview, args[1] + "");
         }
     }
 

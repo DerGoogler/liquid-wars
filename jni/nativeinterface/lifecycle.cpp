@@ -27,8 +27,8 @@ void Java_com_xenris_liquidwarsos_NativeInterface_uninit(JNIEnv* env, jobject jo
     acLib = NULL;
 }
 
-void Java_com_xenris_liquidwarsos_NativeInterface_createGame(JNIEnv* env, jobject jobj, jint team, jint map, jint seed) {
-    createGame(team, map, seed);
+void Java_com_xenris_liquidwarsos_NativeInterface_createGame(JNIEnv* env, jobject jobj, jint team, jint map, jint seed, jint dotsPerTeam) {
+    createGame(team, map, seed, dotsPerTeam);
 }
 
 void Java_com_xenris_liquidwarsos_NativeInterface_destroyGame(JNIEnv* env, jobject jobj) {

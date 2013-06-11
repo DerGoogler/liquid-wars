@@ -30,7 +30,7 @@ public class NativeInterface {
     public static native void init(AssetManager assetManager);
     public static native void uninit();
     public static native void stepDots();
-    public static native void createGame(int team, int map, int seed);
+    public static native void createGame(int team, int map, int seed, int dotsPerTeam);
     public static native void destroyGame();
     public static native void setPlayerPosition(int team, short[] xs, short[] ys);
     public static native int getNearestDot(int p, short px, short py);

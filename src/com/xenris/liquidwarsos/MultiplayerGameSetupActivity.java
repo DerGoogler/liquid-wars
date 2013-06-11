@@ -45,6 +45,7 @@ public class MultiplayerGameSetupActivity extends Activity implements OnItemSele
     private Spinner teamSpinner;
     private Spinner mapSpinner;
     private Spinner timeoutSpinner;
+    private Spinner teamSizeSpinner;
     private EditText nameEditText;
     private Context context;
     private TextView nametv;
@@ -144,6 +145,13 @@ public class MultiplayerGameSetupActivity extends Activity implements OnItemSele
         timeoutSpinner.setAdapter(adapter);
         timeoutSpinner.setOnItemSelectedListener(this);
         timeoutSpinner.setSelection(2);
+
+        teamSizeSpinner = (Spinner)findViewById(R.id.teamsize_spinner);
+        adapter = ArrayAdapter.createFromResource(this, R.array.teamsize_array, simpleSpinnerItem);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        teamSizeSpinner.setAdapter(adapter);
+        teamSizeSpinner.setOnItemSelectedListener(this);
+        teamSizeSpinner.setSelection(2);
     }
 
     private void initButtons() {
@@ -156,7 +164,8 @@ public class MultiplayerGameSetupActivity extends Activity implements OnItemSele
     public void start(View view) {
         ServerFinder.stopSharing();
         StaticBits.server.stopAccepting();
-        StaticBits.server.sendToAll(StaticBits.START_GAME, StaticBits.seed, StaticBits.map);
+        int[] args = {StaticBits.START_GAME, StaticBits.seed, StaticBits.map, StaticBits.dotsPerTeam};
+        StaticBits.server.sendToAll(4, args);
         StaticBits.server.setCallbacks(null);
         StaticBits.team = Util.clientIdToPlayerNumber(myID);
 
@@ -215,6 +224,9 @@ public class MultiplayerGameSetupActivity extends Activity implements OnItemSele
             StaticBits.timeLimit = Util.intToTime(pos);
             int t = timeoutSpinner.getSelectedItemPosition();
             StaticBits.server.sendToAll(StaticBits.SET_TIME_LIMIT, pos);
+        } else if(spinnerId == R.id.teamsize_spinner) {
+            StaticBits.dotsPerTeam = Integer.parseInt(((TextView)view).getText() + "");
+            StaticBits.server.sendToAll(StaticBits.SET_TEAM_SIZE, StaticBits.dotsPerTeam);
         }
     }
 
@@ -267,6 +279,7 @@ public class MultiplayerGameSetupActivity extends Activity implements OnItemSele
         StaticBits.server.sendToOne(id, StaticBits.SET_TIME_LIMIT, t);
         int m = mapSpinner.getSelectedItemPosition();
         StaticBits.server.sendToOne(id, StaticBits.SET_MAP, m);
+        StaticBits.server.sendToAll(StaticBits.SET_TEAM_SIZE, StaticBits.dotsPerTeam);
     }
 
     @Override

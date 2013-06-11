@@ -27,7 +27,7 @@
 #include "ai.hpp"
 #include "move.hpp"
 
-void createGame(int team, int map, int seed);
+void createGame(int team, int map, int seed, int dotsPerTeam);
 void destroyGame();
 void stepDots();
 void setPlayerPosition(int team, short* x, short* y);

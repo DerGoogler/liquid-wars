@@ -19,6 +19,7 @@
 #define STATE_HPP
 
 #include <aclib.hpp>
+#include <vector>
 #include "map.hpp"
 #include "dot.hpp"
 #include "player.hpp"
@@ -35,13 +36,14 @@ class State {
         int displayHeight;
         Player players[NUMBER_OF_TEAMS];
         Map* map;
-        Dot* dots[NUMBER_OF_TEAMS*DOTS_PER_TEAM];
+        std::vector<Dot*> dots;
         Dot* field[WIDTH][HEIGHT];
-        float points[NUMBER_OF_TEAMS*DOTS_PER_TEAM*3];
-        float colours[NUMBER_OF_TEAMS*DOTS_PER_TEAM*4];
+        std::vector<float> points;
+        std::vector<float> colours;
         Random* moveRandom;
         Random* aiRandom;
-        State(int team, int mapId, int seed);
+        int dotsPerTeam;
+        State(int team, int mapId, int seed, int dotsPerTeam);
         ~State();
         void placeTeams();
 };

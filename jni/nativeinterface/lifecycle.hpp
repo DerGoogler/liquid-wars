@@ -24,7 +24,7 @@
 extern "C" {
 void Java_com_xenris_liquidwarsos_NativeInterface_init(JNIEnv* env, jobject jobj, jobject am);
 void Java_com_xenris_liquidwarsos_NativeInterface_uninit(JNIEnv* env, jobject jobj);
-void Java_com_xenris_liquidwarsos_NativeInterface_createGame(JNIEnv* env, jobject jobj, jint team, jint map, jint seed);
+void Java_com_xenris_liquidwarsos_NativeInterface_createGame(JNIEnv* env, jobject jobj, jint team, jint map, jint seed, jint dotsPerTeam);
 void Java_com_xenris_liquidwarsos_NativeInterface_destroyGame(JNIEnv* env, jobject jobj);
 void Java_com_xenris_liquidwarsos_NativeInterface_stepDots(JNIEnv* env, jobject jobj);
 void Java_com_xenris_liquidwarsos_NativeInterface_setPlayerPosition(JNIEnv* env, jobject jobj, jint team, jshortArray jxa, jshortArray jya);
@@ -33,7 +33,7 @@ int Java_com_xenris_liquidwarsos_NativeInterface_teamScore(JNIEnv* env, jobject 
 void Java_com_xenris_liquidwarsos_NativeInterface_setTimeSidebar(JNIEnv* env, jobject jobj, jfloat t);
 }
 
-void createGame(int team, int map, int seed);
+void createGame(int team, int map, int seed, int dotsPerTeam);
 void destroyGame();
 void stepDots();
 void setPlayerPosition(int team, short* x, short* y);

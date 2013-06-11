@@ -53,7 +53,7 @@ void onDrawFrame() {
 
     glTranslatef(1, 0, 0);
 
-    for(int i = 0; i < NUMBER_OF_TEAMS*DOTS_PER_TEAM; i++) {
+    for(int i = 0; i < NUMBER_OF_TEAMS*state->dotsPerTeam; i++) {
         state->points[i*3] = state->dots[i]->x;
         state->points[i*3+1] = state->dots[i]->y;
         state->colours[i*4] = state->dots[i]->getRed();
@@ -63,9 +63,9 @@ void onDrawFrame() {
 
     glEnableClientState(GL_VERTEX_ARRAY);
     glEnableClientState(GL_COLOR_ARRAY);
-    glColorPointer(4, GL_FLOAT, 0, state->colours);
-    glVertexPointer(3, GL_FLOAT, 0, state->points);
-    glDrawArrays(GL_POINTS, 0, NUMBER_OF_TEAMS*DOTS_PER_TEAM);
+    glColorPointer(4, GL_FLOAT, 0, &state->colours[0]);
+    glVertexPointer(3, GL_FLOAT, 0, &state->points[0]);
+    glDrawArrays(GL_POINTS, 0, NUMBER_OF_TEAMS*state->dotsPerTeam);
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 
@@ -76,7 +76,7 @@ void onDrawFrame() {
     for(int p = 0; p < 6; p++) {
         glLoadIdentity();
         glTranslatef((float)WIDTH - ((5-p) * 2) - 2, 0, 0);
-        float s = 1 - (float)state->players[p].score/2400.0;
+        float s = 1 - (float)state->players[p].score/(state->dotsPerTeam*NUMBER_OF_TEAMS);
         s = s*s*s;
         glScalef(2, (float)HEIGHT*(1-s), 1);
 

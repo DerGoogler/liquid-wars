@@ -17,8 +17,8 @@
 
 #include "main.hpp"
 
-void createGame(int team, int map, int seed) {
-    state = new State(team, map, seed);
+void createGame(int team, int map, int seed, int dotsPerTeam) {
+    state = new State(team, map, seed, dotsPerTeam);
 }
 
 void destroyGame() {

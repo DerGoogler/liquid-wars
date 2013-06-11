@@ -18,7 +18,7 @@
 #include "move.hpp"
 
 void Move::stepDots() {
-    for(int i = 0; i < NUMBER_OF_TEAMS*DOTS_PER_TEAM; i++) {
+    for(int i = 0; i < NUMBER_OF_TEAMS*state->dotsPerTeam; i++) {
         Dot* dot = state->dots[i];
         const Player* player = &state->players[dot->team];
         moveDotToward(dot, player);

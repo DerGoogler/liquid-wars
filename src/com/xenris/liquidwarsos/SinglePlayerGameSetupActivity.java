@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -37,6 +38,7 @@ public class SinglePlayerGameSetupActivity extends Activity implements OnItemSel
     private Spinner teamSpinner;
     private Spinner mapSpinner;
     private Spinner timeoutSpinner;
+    private Spinner teamSizeSpinner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,13 @@ public class SinglePlayerGameSetupActivity extends Activity implements OnItemSel
         timeoutSpinner.setAdapter(adapter);
         timeoutSpinner.setOnItemSelectedListener(this);
         timeoutSpinner.setSelection(2);
+
+        teamSizeSpinner = (Spinner)findViewById(R.id.teamsize_spinner);
+        adapter = ArrayAdapter.createFromResource(this, R.array.teamsize_array, simpleSpinnerItem);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        teamSizeSpinner.setAdapter(adapter);
+        teamSizeSpinner.setOnItemSelectedListener(this);
+        teamSizeSpinner.setSelection(2);
     }
 
     private void initButtons() {
@@ -149,6 +158,8 @@ public class SinglePlayerGameSetupActivity extends Activity implements OnItemSel
                 StaticBits.timeLimit = 60*10;
             else if(pos == 6)
                 StaticBits.timeLimit = 60*60*24*23;
+        } else if(spinnerId == R.id.teamsize_spinner) {
+            StaticBits.dotsPerTeam = Integer.parseInt(((TextView)view).getText() + "");
         }
     }
 

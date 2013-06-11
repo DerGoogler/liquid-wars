@@ -23,6 +23,7 @@ public class StaticBits {
     public static int team;
     public static int map;
     public static int seed;
+    public static int dotsPerTeam = 400;
     public static long startTimestamp;
     public static int timeLimit = 4*60;
     public static Client client;
@@ -32,7 +33,6 @@ public class StaticBits {
     public static boolean gameWasDisconnected = false;
     public static final int VERSION_CODE = 8;
     public static final int NUMBER_OF_TEAMS = 6;
-    public static final int DOTS_PER_TEAMS = 400;
     public static final int AI_PLAYER = -1;
     public static final int NUMBER_OF_MAPS = 46;
     public static final int PORT_NUMBER = 51055;
@@ -56,6 +56,7 @@ public class StaticBits {
     public static final int SET_MAP = 0x80;
     public static final int START_GAME = 0x81;
     public static final int SEND_VERSION_CODE = 0x82;
+    public static final int SET_TEAM_SIZE = 0x83;
 
     public static void init() {
         team = 0;

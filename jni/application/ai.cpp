@@ -21,7 +21,7 @@ int AI::getNearestDot(int p, short px, short py) {
     int nearestX = 0;
     int nearestY = 0;
     float dist = 10000;
-    for(int i = 0; i < NUMBER_OF_TEAMS*DOTS_PER_TEAM; i++) {
+    for(int i = 0; i < NUMBER_OF_TEAMS*state->dotsPerTeam; i++) {
         if(state->dots[i]->team == p)
             continue;
         const int tempx = state->dots[i]->x;

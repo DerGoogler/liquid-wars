@@ -74,7 +74,7 @@ public class GameServerActivity extends Activity implements Server.ServerCallbac
             clientLags[i] = 0;
 
         NativeInterface.init(getAssets());
-        NativeInterface.createGame(StaticBits.team, StaticBits.map, StaticBits.seed);
+        NativeInterface.createGame(StaticBits.team, StaticBits.map, StaticBits.seed, StaticBits.dotsPerTeam);
 
         StaticBits.server.setCallbacks(this);
 
@@ -201,7 +201,7 @@ public class GameServerActivity extends Activity implements Server.ServerCallbac
         if(gameFinished)
             return;
         for(int i = 0; i < 6; i++) {
-            if(NativeInterface.teamScore(i) == StaticBits.NUMBER_OF_TEAMS*StaticBits.DOTS_PER_TEAMS) {
+            if(NativeInterface.teamScore(i) == StaticBits.NUMBER_OF_TEAMS*StaticBits.dotsPerTeam) {
                 final int p = i;
                 runOnUiThread(new Runnable() {
                     @Override
