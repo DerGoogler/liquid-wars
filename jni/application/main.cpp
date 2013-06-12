@@ -26,9 +26,10 @@ void destroyGame() {
         return;
 
     while(state->currentlyDrawing)
-        usleep(20000);
-    delete(state);
+        usleep(200);
+    State* s = state;
     state = NULL;
+    delete(s);
 }
 
 void stepDots() {
