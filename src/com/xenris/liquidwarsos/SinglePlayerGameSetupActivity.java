@@ -159,7 +159,9 @@ public class SinglePlayerGameSetupActivity extends Activity implements OnItemSel
             else if(pos == 6)
                 StaticBits.timeLimit = 60*60*24*23;
         } else if(spinnerId == R.id.teamsize_spinner) {
-            StaticBits.dotsPerTeam = Integer.parseInt(((TextView)view).getText() + "");
+            if(view != null) {
+                StaticBits.dotsPerTeam = Integer.parseInt(((TextView)view).getText() + "");
+            }
         }
     }
 
