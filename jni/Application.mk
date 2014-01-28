@@ -3,5 +3,5 @@ APP_ABI := armeabi-v7a
 APP_ABI += armeabi
 #APP_ABI += x86
 #APP_ABI += mips
-NDK_TOOLCHAIN_VERSION = clang3.1
+NDK_TOOLCHAIN_VERSION = clang3.3
 APP_STL := gnustl_static
