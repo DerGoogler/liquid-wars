@@ -1,5 +1,6 @@
 //    This file is part of Liquid Wars.
 //
+//    Copyright (C) 2014 Austin Hartzheim (austin@austinhartzheim.me)
 //    Copyright (C) 2013 Henry Shepperd (hshepperd@gmail.com)
 //
 //    Liquid Wars is free software: you can redistribute it and/or modify
