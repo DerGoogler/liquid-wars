@@ -36,8 +36,8 @@ int AI::getNearestDot(int p, short px, short py) {
         }
     }
     if(dist != 10000) {
-        nearestX += (state->aiRandom->next() % 11) - 5;
-        nearestY += (state->aiRandom->next() % 11) - 5;
+        nearestX += (state->aiRandom->next() % 13) - 5;
+        nearestY += (state->aiRandom->next() % 13) - 5;
     } else {
         nearestX = px;
         nearestY = py;
