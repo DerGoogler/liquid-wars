@@ -42,8 +42,22 @@ public class MainMenuActivity extends Activity {
 
     public void multiplayerMenu(View view) {
         String ip = NetInfo.getIPAddress(this);
-        if((ip == null) || (ip.compareTo("0.0.0.0") == 0)) {
-            Toast.makeText(this, "Need Wi-Fi connection for multiplayer game.", Toast.LENGTH_SHORT).show();
+        if((ip == null) || ip.equals("0.0.0.0")) {
+            DialogInterface.OnClickListener clicker = new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(this, MultiplayerMenuActivity.class);
+                    startActivity(intent);
+                }
+            };
+            if(dialog != null)
+                dialog.dismiss();
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("You don't seem to be connected to any Wi-Fi. Continue anyway?");
+            builder.setPositiveButton("Yes", clicker);
+            builder.setNegativeButton("Cancel", null);
+            dialog = builder.show();
+            TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+            messageText.setGravity(Gravity.CENTER);
         } else {
             Intent intent = new Intent(this, MultiplayerMenuActivity.class);
             startActivity(intent);
