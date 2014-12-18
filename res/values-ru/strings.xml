@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- translated at 2014-12-19 from commit dea19d8d3aac50347f14d53be7223461e69dfe2a -->
+    <string name="app_name">Liquid Wars OS</string>
+    <string-array name="teams_array">
+        <item>Зелёный</item>
+        <item>Синий</item>
+        <item>Красный</item>
+        <item>Голубой</item>
+        <item>Жёлтый</item>
+        <item>Сиреневый</item>
+    </string-array>
+    <string-array name="maps_array">
+        <item>Произвольно</item>
+        <item>Сосна</item>
+        <item>Белые Овалы</item>
+        <item>Сосна 2</item>
+        <item>Сосна в Фоне</item>
+        <item>Пусто</item>
+        <item>Arch Linux</item>
+        <item>Красные Линии</item>
+        <item>Овал</item>
+        <item>Инвертированный Овал</item>
+        <item>Liquid Wars</item>
+        <item>Симметрия</item>
+        <item>Маленький Лабиринт</item>
+        <item>Зелёные Силуэты</item>
+        <item>Красные Треугольники</item>
+        <item>Суп из Liquid Wars</item>
+        <item>Зелёные Квадраты</item>
+        <item>Зелёный</item>
+        <item>Глаз</item>
+        <item>Точки</item>
+        <item>Большие Точки</item>
+        <item>Бриллиант</item>
+        <item>Фиолетовые Линии</item>
+        <item>Зигзаг</item>
+        <item>Разделители</item>
+        <item>Назад и Вперед</item>
+        <item>Обрывки Коробки</item>
+        <item>Волны</item>
+        <item>Гнёзда</item>
+        <item>Красный</item>
+        <item>Пробелы</item>
+        <item>Средний Лабиринт</item>
+        <item>Большой Лабиринт</item>
+        <item>Средний Лабиринт 2</item>
+        <item>Средний Лабиринт 3</item>
+        <item>Цвета Команд</item>
+        <item>Звёзды</item>
+        <item>Череп</item>
+        <item>ABC</item>
+        <item>Глаза</item>
+        <item>Мандельброт</item>
+        <item>Кроссворд</item>
+        <item>Safari</item>
+        <item>Смайлики</item>
+        <item>Разноцветное Стекло</item>
+        <item>Круги</item>
+        <item>Формы</item>
+    </string-array>
+    <string-array name="timeout_array">
+        <item>30 Секунд</item>
+        <item>1 Минута</item>
+        <item>2 Минут</item>
+        <item>3 Минут</item>
+        <item>5 Минут</item>
+        <item>10 Минут</item>
+        <item>23 Дней</item>
+    </string-array>
+    <string-array name="teamsize_array">
+        <item>100</item>
+        <item>200</item>
+        <item>400</item>
+        <item>800</item>
+        <item>1000</item>
+        <item>1500</item>
+    </string-array>
+</resources>
