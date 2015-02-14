@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Liquid Wars OS</string>
+    <string-array name="teams_array">
+        <item>Grün</item>
+        <item>Blau</item>
+        <item>Rot</item>
+        <item>Türkis</item>
+        <item>Gelb</item>
+        <item>Magenta</item>
+    </string-array>
+    <string-array name="maps_array">
+        <item>Zufällig</item>
+        <item>Kiefer</item>
+        <item>Weiße Ovale</item>
+        <item>Kiefer 2</item>
+        <item>Hintergrund Kiefer</item>
+        <item>Leer</item>
+        <item>Arch Linux</item>
+        <item>Rote Linien</item>
+        <item>Oval</item>
+        <item>Invertiertes Oval</item>
+        <item>Liquid Wars</item>
+        <item>Symmetrie</item>
+        <item>Kleines Labyrinth</item>
+        <item>Grüne Silhouetten</item>
+        <item>Rote Dreiecke</item>
+        <item>Liquid Wars Soup</item>
+        <item>Grüne Vierecke</item>
+        <item>Grün</item>
+        <item>Auge</item>
+        <item>Punkte</item>
+        <item>Große Punkte</item>
+        <item>Diamanten</item>
+        <item>Lila Kurven</item>
+        <item>Gekrakel</item>
+        <item>Trenner</item>
+        <item>Vor und Zurück</item>
+        <item>Boxen</item>
+        <item>2 Wellen</item>
+        <item>Nester</item>
+        <item>Rot</item>
+        <item>Lücken</item>
+        <item>Mittleres Labyrinth</item>
+        <item>Großes Labyrinth</item>
+        <item>Mittleres Labyrinth 2</item>
+        <item>Mittleres Labyrinth 3</item>
+        <item>Teamfarben</item>
+        <item>Sterne</item>
+        <item>Totenschädel</item>
+        <item>ABC</item>
+        <item>Augen</item>
+        <item>Mandelbrot</item>
+        <item>Kreuzworträtsel</item>
+        <item>Safari</item>
+        <item>Smilies</item>
+        <item>Glas</item>
+        <item>Kreise</item>
+        <item>Formen</item>
+    </string-array>
+    <string-array name="timeout_array">
+        <item>30 Sekunden</item>
+        <item>1 Minute</item>
+        <item>2 Minuten</item>
+        <item>3 Minuten</item>
+        <item>5 Minuten</item>
+        <item>10 Minuten</item>
+        <item>23 Tage</item>
+    </string-array>
+    <string-array name="teamsize_array">
+        <item>100</item>
+        <item>200</item>
+        <item>400</item>
+        <item>800</item>
+        <item>1000</item>
+        <item>1500</item>
+    </string-array>
+</resources>
