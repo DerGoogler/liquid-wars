@@ -7,7 +7,7 @@ android:layout_height="fill_parent"
 android:gravity="center">
 
     <Button
-    android:text="Single Player Game"
+    android:text="@string/single_player_game"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textSize="25sp"
@@ -16,7 +16,7 @@ android:gravity="center">
     android:onClick="singlePlayerMenu"/>
 
     <Button
-    android:text="Multiplayer Game"
+    android:text="@string/multiplayer_game"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textSize="25sp"
@@ -25,7 +25,7 @@ android:gravity="center">
     android:onClick="multiplayerMenu"/>
 
     <Button
-    android:text="How To Play"
+    android:text="@string/how_to_play"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textSize="25sp"

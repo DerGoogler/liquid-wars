@@ -30,7 +30,7 @@ android:gravity="center_horizontal">
             <TableRow>
 
                 <TextView
-                android:text="Team:"
+                android:text="@string/team"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"/>
@@ -46,7 +46,7 @@ android:gravity="center_horizontal">
             <TableRow>
 
                 <TextView
-                android:text="Time Limit:"
+                android:text="@string/time_limit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"/>
@@ -62,7 +62,7 @@ android:gravity="center_horizontal">
             <TableRow>
 
                 <TextView
-                android:text="Team Size:"
+                android:text="@string/team_size"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"/>
@@ -78,7 +78,7 @@ android:gravity="center_horizontal">
             <TableRow>
 
                 <TextView
-                android:text="Map:"
+                android:text="@string/map"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"/>
@@ -98,7 +98,7 @@ android:gravity="center_horizontal">
         android:layout_width="0sp"
         android:layout_height="fill_parent"
         android:layout_weight="0.25"
-        android:text="Start"
+        android:text="@string/start"
         android:onClick="start"/>
 
     </LinearLayout>

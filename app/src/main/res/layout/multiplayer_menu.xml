@@ -7,7 +7,7 @@ android:layout_height="fill_parent"
 android:gravity="center">
 
     <Button
-    android:text="Connect To Game"
+    android:text="@string/connect_to_game"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textSize="25sp"
@@ -16,7 +16,7 @@ android:gravity="center">
     android:onClick="connectToGame"/>
 
     <Button
-    android:text="Start New Game"
+    android:text="@string/start_new_game"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textSize="25sp"
