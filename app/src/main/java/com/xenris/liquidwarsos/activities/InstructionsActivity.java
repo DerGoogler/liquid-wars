@@ -15,15 +15,17 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Liquid Wars.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.xenris.liquidwarsos;
+package com.xenris.liquidwarsos.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.view.View;
 import android.view.Window;
 
-public class InstructionsActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.xenris.liquidwarsos.R;
+
+public class InstructionsActivity extends AppCompatActivity {
     private static final String instructions1 = "Aim:\n Convert the enemy's army to your own colour to win.";
     private static final String instructions2 = "How to play:\n Wherever you touch the screen your army will run to.\n Use up to five fingers to guide your army.\n Enemy liquid will be converted to your own when they collide.\n Try to surround the enemy for the best effect.";
 

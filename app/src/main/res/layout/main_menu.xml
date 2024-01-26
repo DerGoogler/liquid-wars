@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-android:gravity="center">
-
-    <Button
-    android:text="@string/single_player_game"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:textSize="25sp"
-    android:clickable="true"
-    android:padding="10sp"
-    android:onClick="singlePlayerMenu"/>
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:padding="8sp"
+    android:background="@color/blue_200"
+    android:orientation="vertical">
 
-    <Button
-    android:text="@string/multiplayer_game"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:textSize="25sp"
-    android:clickable="true"
-    android:padding="10sp"
-    android:onClick="multiplayerMenu"/>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="@color/blue_700"
+        android:backgroundTint="@color/blue_300"
+        android:onClick="singlePlayerMenu"
+        android:padding="10sp"
+        android:text="@string/single_player_game"
+        android:textSize="25sp" />
 
-    <Button
-    android:text="@string/how_to_play"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:textSize="25sp"
-    android:clickable="true"
-    android:padding="10sp"
-    android:onClick="instructions"/>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="@color/blue_700"
+        android:backgroundTint="@color/blue_300"
+        android:onClick="multiplayerMenu"
+        android:padding="10sp"
+        android:text="@string/multiplayer_game"
+        android:textSize="25sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textColor="@color/blue_700"
+        android:backgroundTint="@color/blue_300"
+        android:onClick="instructions"
+        android:padding="10sp"
+        android:text="@string/how_to_play"
+        android:textSize="25sp" />
 
 </LinearLayout>

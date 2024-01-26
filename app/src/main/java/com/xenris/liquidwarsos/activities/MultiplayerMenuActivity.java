@@ -15,12 +15,10 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Liquid Wars.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.xenris.liquidwarsos;
+package com.xenris.liquidwarsos.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -34,9 +32,17 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.DialogInterface.OnCancelListener;
 import android.text.InputType;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.xenris.liquidwarsos.server.NetInfo;
+import com.xenris.liquidwarsos.R;
+import com.xenris.liquidwarsos.server.ServerFinder;
+import com.xenris.liquidwarsos.StaticBits;
+
 import java.util.ArrayList;
 
-public class MultiplayerMenuActivity extends Activity {
+public class MultiplayerMenuActivity extends AppCompatActivity {
     private Context context;
     private ArrayAdapter serverList;
     private static EditText ipEditText;

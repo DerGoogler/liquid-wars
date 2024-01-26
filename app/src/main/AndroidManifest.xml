@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-sdk />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <uses-feature android:name="android.hardware.screen.landscape" />
     <uses-feature android:name="android.hardware.touchscreen" />
 
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
     <application
+        android:appCategory="game"
         android:icon="@drawable/ic_launcher"
+        android:isGame="true"
         android:label="@string/app_name">
 
         <activity
-            android:name="MainMenuActivity"
+            android:name=".activities.MainMenuActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
             android:screenOrientation="landscape"
-            android:exported="true">
+            android:theme="@style/Theme.LiqurdWars">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,44 +33,52 @@
         </activity>
 
         <activity
-            android:name="InstructionsActivity"
+            android:name=".activities.InstructionsActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.LiqurdWars" />
 
         <activity
-            android:name="MultiplayerMenuActivity"
+            android:name=".activities.MultiplayerMenuActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.LiqurdWars" />
 
         <activity
-            android:name="SinglePlayerGameSetupActivity"
+            android:name=".activities.SinglePlayerGameSetupActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.LiqurdWars" />
 
         <activity
-            android:name="MultiplayerGameSetupActivity"
+            android:name=".activities.MultiplayerGameSetupActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.LiqurdWars" />
 
         <activity
-            android:name="ClientGameSetupActivity"
+            android:name=".activities.ClientGameSetupActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.LiqurdWars" />
 
         <activity
-            android:name="GameActivity"
+            android:name=".activities.GameActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.LiqurdWars" />
 
         <activity
-            android:name="GameServerActivity"
+            android:name=".activities.GameServerActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.LiqurdWars" />
 
         <activity
-            android:name="GameClientActivity"
+            android:name=".activities.GameClientActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.LiqurdWars" />
 
     </application>
 

@@ -15,16 +15,16 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Liquid Wars.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.xenris.liquidwarsos;
+package com.xenris.liquidwarsos.server;
 
 import android.content.Context;
+
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 import java.io.IOException;
 import java.lang.Thread;
-import java.util.ArrayList;
 
 public class ServerFinder {
     private static DatagramSocket datagramSocket = null;

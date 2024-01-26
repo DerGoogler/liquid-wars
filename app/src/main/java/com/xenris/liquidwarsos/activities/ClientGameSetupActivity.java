@@ -15,33 +15,29 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Liquid Wars.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.xenris.liquidwarsos;
+package com.xenris.liquidwarsos.activities;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.EditText;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Toast;
 import android.graphics.drawable.Drawable;
 import android.content.Context;
 import android.content.Intent;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
-import android.content.DialogInterface.OnCancelListener;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.xenris.liquidwarsos.Client;
+import com.xenris.liquidwarsos.R;
+import com.xenris.liquidwarsos.StaticBits;
+import com.xenris.liquidwarsos.Util;
+
 import java.io.InputStream;
 import java.io.IOException;
 
-public class ClientGameSetupActivity extends Activity implements Client.ClientCallbacks {
+public class ClientGameSetupActivity extends AppCompatActivity implements Client.ClientCallbacks {
     private EditText nameEditText;
     private Context context;
     private String serverIP;

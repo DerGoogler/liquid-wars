@@ -1,27 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:orientation="vertical"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-android:gravity="center">
-
-    <Button
-    android:text="@string/connect_to_game"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:textSize="25sp"
-    android:clickable="true"
-    android:padding="10sp"
-    android:onClick="connectToGame"/>
+    android:layout_height="fill_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/blue_200"
+    android:padding="8sp">
 
-    <Button
-    android:text="@string/start_new_game"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:textSize="25sp"
-    android:clickable="true"
-    android:padding="10sp"
-    android:onClick="startNewGame"/>
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="connectToGame"
+        android:textColor="@color/blue_700"
+        android:backgroundTint="@color/blue_300"
+        android:padding="10sp"
+        android:text="@string/connect_to_game"
+        android:textSize="25sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="startNewGame"
+        android:textColor="@color/blue_700"
+        android:backgroundTint="@color/blue_300"
+        android:padding="10sp"
+        android:text="@string/start_new_game"
+        android:textSize="25sp" />
 
 </LinearLayout>

@@ -1,140 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent">
-<LinearLayout
-    android:orientation="vertical"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:gravity="center_horizontal">
-
-    <View
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="1px"
-    android:layout_margin="10sp"
-    android:background="#999"/>
-
-    <TextView
-    android:text=""
-    android:id="@+id/client_game_textview"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:textSize="15sp"/>
-
-    <TableLayout
-        android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:stretchColumns="*">
-
-        <TableRow>
-
-            <TextView
-            android:text="@string/team"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"/>
-
-            <TextView
-            android:text=""
-            android:id="@+id/team_textview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"/>
-
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-            android:text="@string/time_limit"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"/>
-
-            <TextView
-            android:text=""
-            android:id="@+id/timeout_textview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"/>
-
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-            android:text="@string/team_size"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"/>
-
-            <TextView
-            android:text=""
-            android:id="@+id/teamsize_textview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"/>
-
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-            android:text="@string/map"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"/>
-
-            <TextView
-            android:text=""
-            android:id="@+id/map_textview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textSize="25sp"/>
-
-        </TableRow>
-
-    </TableLayout>
+    android:layout_height="fill_parent">
 
     <LinearLayout
-        android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="150sp"
-    android:gravity="center">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-        <Button
-        android:id="@+id/previous_button"
-        android:layout_width="0sp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.15"
-        android:drawableStart="@drawable/arrow_left"
-        android:onClick="previousMap"
-        android:visibility="invisible"/>
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_margin="10sp"
+            android:background="#999" />
 
-        <ImageView
-        android:id="@+id/map_imageview"
-        android:layout_width="0sp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.7"/>
+        <TextView
+            android:id="@+id/client_game_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="15sp" />
 
-        <Button
-        android:id="@+id/next_button"
-        android:layout_width="0sp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.15"
-        android:drawableEnd="@drawable/arrow_right"
-        android:onClick="nextMap"
-        android:visibility="invisible"/>
+        <TableLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:stretchColumns="*">
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/team"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/team_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="25sp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_limit"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/timeout_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="25sp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/team_size"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/teamsize_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="25sp" />
+
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/map"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/map_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="25sp" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="150sp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/previous_button"
+                android:layout_width="0sp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.15"
+                android:drawableStart="@drawable/arrow_left"
+                android:onClick="previousMap"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/map_imageview"
+                android:layout_width="0sp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.7" />
+
+            <Button
+                android:id="@+id/next_button"
+                android:layout_width="0sp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.15"
+                android:drawableEnd="@drawable/arrow_right"
+                android:onClick="nextMap"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:layout_margin="10sp"
+            android:background="#999" />
 
     </LinearLayout>
-
-    <View
-    android:layout_width="fill_parent"
-    android:layout_height="1px"
-    android:layout_margin="10sp"
-    android:background="#999"/>
-
-</LinearLayout>
 </ScrollView>

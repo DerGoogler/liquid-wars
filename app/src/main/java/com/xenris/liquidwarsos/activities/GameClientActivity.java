@@ -15,13 +15,10 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Liquid Wars.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.xenris.liquidwarsos;
+package com.xenris.liquidwarsos.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.MotionEvent;
@@ -30,13 +27,22 @@ import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.xenris.liquidwarsos.Client;
+import com.xenris.liquidwarsos.MyGLSurfaceView;
+import com.xenris.liquidwarsos.MyRenderer;
+import com.xenris.liquidwarsos.NativeInterface;
+import com.xenris.liquidwarsos.R;
+import com.xenris.liquidwarsos.StaticBits;
+import com.xenris.liquidwarsos.Util;
+
 import java.lang.Thread;
 import java.util.ArrayList;
 
-public class GameClientActivity extends Activity implements Client.ClientCallbacks, Runnable, MyGLSurfaceView.SurfaceCallbacks {
+public class GameClientActivity extends AppCompatActivity implements Client.ClientCallbacks, Runnable, MyGLSurfaceView.SurfaceCallbacks {
     private MyGLSurfaceView myGLSurfaceView = null;
     private boolean running;
     private int gameStep = -1;
@@ -196,7 +202,7 @@ public class GameClientActivity extends Activity implements Client.ClientCallbac
         final int count = event.getPointerCount();
         for(int i = 0; i < 5; i++) {
             if(i < count) {
-                xs[i] = (short)((event.getX(i) / (float)MyRenderer.displayWidth) * (float)MyRenderer.WIDTH);
+                xs[i] = (short)((event.getX(i) / (float) MyRenderer.displayWidth) * (float)MyRenderer.WIDTH);
                 ys[i] = (short)((MyRenderer.HEIGHT-1) - ((event.getY(i) / (float)MyRenderer.displayHeight) * (float)MyRenderer.HEIGHT));
             } else {
                 xs[i] = -1;

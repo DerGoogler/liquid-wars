@@ -15,9 +15,8 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Liquid Wars.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.xenris.liquidwarsos;
+package com.xenris.liquidwarsos.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -31,10 +30,18 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.graphics.drawable.Drawable;
 import android.content.Intent;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatImageButton;
+
+import com.xenris.liquidwarsos.R;
+import com.xenris.liquidwarsos.StaticBits;
+import com.xenris.liquidwarsos.activities.GameActivity;
+
 import java.io.InputStream;
 import java.io.IOException;
 
-public class SinglePlayerGameSetupActivity extends Activity implements OnItemSelectedListener, OnLongClickListener {
+public class SinglePlayerGameSetupActivity extends AppCompatActivity implements OnItemSelectedListener, OnLongClickListener {
     private Spinner teamSpinner;
     private Spinner mapSpinner;
     private Spinner timeoutSpinner;
@@ -89,9 +96,9 @@ public class SinglePlayerGameSetupActivity extends Activity implements OnItemSel
     }
 
     private void initButtons() {
-        Button previousButton = (Button)findViewById(R.id.previous_button);
+        AppCompatImageButton previousButton = (AppCompatImageButton)findViewById(R.id.previous_button);
         previousButton.setOnLongClickListener(this);
-        Button nextButton = (Button)findViewById(R.id.next_button);
+        AppCompatImageButton nextButton = (AppCompatImageButton)findViewById(R.id.next_button);
         nextButton.setOnLongClickListener(this);
     }
 

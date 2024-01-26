@@ -17,6 +17,10 @@
 
 package com.xenris.liquidwarsos;
 
+import com.xenris.liquidwarsos.activities.ClientGameSetupActivity;
+import com.xenris.liquidwarsos.activities.MultiplayerGameSetupActivity;
+import com.xenris.liquidwarsos.server.Server;
+
 public class StaticBits {
     public static ClientGameSetupActivity clientGameSetupActivity;
     public static MultiplayerGameSetupActivity multiplayerGameSetupActivity;

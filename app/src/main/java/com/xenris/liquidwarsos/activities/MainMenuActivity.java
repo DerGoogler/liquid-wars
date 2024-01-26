@@ -15,17 +15,20 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Liquid Wars.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.xenris.liquidwarsos;
+package com.xenris.liquidwarsos.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 import android.view.Window;
 import android.content.Intent;
 
-public class MainMenuActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.xenris.liquidwarsos.server.NetInfo;
+import com.xenris.liquidwarsos.R;
+
+public class MainMenuActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

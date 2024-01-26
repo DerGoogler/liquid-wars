@@ -1,143 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent">
-<LinearLayout
-    android:orientation="vertical"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:gravity="center_horizontal">
-
-    <View
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="1px"
-    android:layout_margin="10sp"
-    android:background="#999"/>
+    android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/blue_200"
+    android:padding="10sp">
 
     <LinearLayout
-        android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-        <TableLayout
-            android:orientation="vertical"
-        android:layout_width="0sp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.75"
-        android:stretchColumns="*">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
-            <TableRow>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:paddingBottom="8sp">
 
-                <TextView
-                android:text="@string/team"
-                android:layout_width="fill_parent"
+            <TableLayout
+                android:layout_width="0sp"
                 android:layout_height="wrap_content"
-                android:textSize="25sp"/>
+                android:layout_weight="0.75"
+                android:orientation="vertical"
+                android:stretchColumns="*">
 
-                <Spinner
-                android:id="@+id/team_spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dialog"/>
+                <TableRow>
 
-            </TableRow>
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/team"
+                        android:textColor="@color/blue_800" />
 
-            <TableRow>
+                    <Spinner
+                        android:id="@+id/team_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dialog" />
 
-                <TextView
-                android:text="@string/time_limit"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"/>
+                </TableRow>
 
-                <Spinner
-                android:id="@+id/timeout_spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dialog"/>
+                <TableRow>
 
-            </TableRow>
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/time_limit"
+                        android:textColor="@color/blue_800" />
 
-            <TableRow>
+                    <Spinner
+                        android:id="@+id/timeout_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dialog" />
 
-                <TextView
-                android:text="@string/team_size"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"/>
+                </TableRow>
 
-                <Spinner
-                android:id="@+id/teamsize_spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dialog"/>
+                <TableRow>
 
-            </TableRow>
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/team_size"
+                        android:textColor="@color/blue_800" />
 
-            <TableRow>
+                    <Spinner
+                        android:id="@+id/teamsize_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dialog" />
 
-                <TextView
-                android:text="@string/map"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"/>
+                </TableRow>
 
-                <Spinner
-                android:id="@+id/map_spinner"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:spinnerMode="dialog"/>
+                <TableRow>
 
-            </TableRow>
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/map"
+                        android:textColor="@color/blue_800" />
 
-        </TableLayout>
+                    <Spinner
+                        android:id="@+id/map_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dialog" />
 
-        <Button
-        android:id="@+id/start_button"
-        android:layout_width="0sp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.25"
-        android:text="@string/start"
-        android:onClick="start"/>
+                </TableRow>
+
+            </TableLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/start_button"
+                android:layout_width="0sp"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.25"
+                android:onClick="start"
+                android:textColor="@color/blue_700"
+                android:backgroundTint="@color/blue_300"
+                android:text="@string/start" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="150sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/previous_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.2"
+                android:background="@color/blue_300"
+                android:onClick="previousMap"
+                android:scaleType="centerInside"
+                android:src="@drawable/arrow_left"
+                tools:ignore="NestedWeights"
+                app:tint="@color/blue_400" />
+
+
+            <ImageView
+                android:id="@+id/map_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.2"
+                android:background="@color/blue_300"
+                android:scaleType="centerInside"
+                android:onClick="nextMap"
+                android:src="@drawable/arrow_right"
+                app:tint="@color/blue_400" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-    android:layout_width="fill_parent"
-    android:layout_height="150sp"
-    android:gravity="center">
-
-        <Button
-        android:id="@+id/previous_button"
-        android:layout_width="0sp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.15"
-        android:drawableStart="@drawable/arrow_left"
-        android:onClick="previousMap"/>
-
-        <ImageView
-        android:id="@+id/map_imageview"
-        android:layout_width="0sp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.7"/>
-
-        <Button
-        android:id="@+id/next_button"
-        android:layout_width="0sp"
-        android:layout_height="fill_parent"
-        android:layout_weight="0.15"
-        android:drawableEnd="@drawable/arrow_right"
-        android:onClick="nextMap"/>
-
-    </LinearLayout>
-
-    <View
-    android:layout_width="fill_parent"
-    android:layout_height="1px"
-    android:layout_margin="10sp"
-    android:background="#999"/>
-
 </LinearLayout>
-</ScrollView>

@@ -76,11 +76,13 @@ android {
 }
 
 repositories {
-    maven { url 'https://jitpack.io' }
+    maven { url "https://jitpack.io" }
     mavenCentral()
 }
 
 dependencies {
     implementation "androidx.browser:browser:1.7.0"
     implementation "androidx.appcompat:appcompat:1.6.1"
+    implementation "androidx.core:core:1.12.0"
+    implementation "com.google.android.material:material:1.11.0"
 }

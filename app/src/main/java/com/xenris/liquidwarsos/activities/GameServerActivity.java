@@ -15,35 +15,46 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Liquid Wars.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.xenris.liquidwarsos;
+package com.xenris.liquidwarsos.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.view.View;
+import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.MotionEvent;
 import android.view.KeyEvent;
 import android.view.Gravity;
+import android.widget.TextView;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.content.DialogInterface;
-import java.lang.Thread;
-import java.util.ArrayList;
 
-public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.SurfaceCallbacks {
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.xenris.liquidwarsos.MyGLSurfaceView;
+import com.xenris.liquidwarsos.MyRenderer;
+import com.xenris.liquidwarsos.NativeInterface;
+import com.xenris.liquidwarsos.PlayerHistory;
+import com.xenris.liquidwarsos.R;
+import com.xenris.liquidwarsos.server.Server;
+import com.xenris.liquidwarsos.StaticBits;
+import com.xenris.liquidwarsos.Util;
+
+import java.lang.Thread;
+
+public class GameServerActivity extends AppCompatActivity implements Server.ServerCallbacks, Runnable, MyGLSurfaceView.SurfaceCallbacks {
     private MyGLSurfaceView myGLSurfaceView = null;
     private boolean running;
-    private boolean paused;
+    private int gameStep = 0;
+    private int[] clientLags = new int[6];
+    private PlayerHistory playerHistory = new PlayerHistory();
+    private int playerWithMissedStepsId = -1;
+    private int playerWithMissedStepsStep = 0;
     private short[][] xs = new short[6][5];
     private short[][] ys = new short[6][5];
+    private boolean[] ready = new boolean[6];
     private Context context;
     private boolean gameFinished;
     private boolean lostGame;
-    private int gameStep;
     private boolean frozen;
     private AlertDialog dialog;
 
@@ -64,8 +75,15 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
 
         Util.loadPlayerInitialPositions(xs, ys);
 
+        createReadyList();
+
+        for(int i = 0; i < clientLags.length; i++)
+            clientLags[i] = 0;
+
         NativeInterface.init(getAssets());
         NativeInterface.createGame(StaticBits.team, StaticBits.map, StaticBits.seed, StaticBits.dotsPerTeam);
+
+        StaticBits.server.setCallbacks(this);
 
         new Thread(this).start();
     }
@@ -73,7 +91,6 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
     @Override
     public void onPause() {
         super.onPause();
-        paused = true;
         if(myGLSurfaceView != null)
             myGLSurfaceView.onPause();
     }
@@ -81,7 +98,6 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
     @Override
     public void onResume() {
         super.onResume();
-        paused = false;
         if(myGLSurfaceView != null)
             myGLSurfaceView.onResume();
     }
@@ -91,6 +107,7 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
         if(!isFinishing())
             finish();
         super.onDestroy();
+        StaticBits.server.setCallbacks(StaticBits.multiplayerGameSetupActivity);
         running = false;
         if(dialog != null)
             dialog.dismiss();
@@ -101,27 +118,32 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
         running = true;
         gameFinished = false;
         lostGame = false;
-        gameStep = 0;
         frozen = false;
-        int aiStartDelay = 6;
+        waitForEveryoneToBeReady();
         StaticBits.startTimestamp = System.currentTimeMillis();
+        int aiStartDelay = 6;
         while(running) {
-            if(!paused && !frozen) {
+            playerHistory.savePlayerPositions(xs, ys);
+            if(!frozen) {
+                sendStepData();
                 stepGame();
                 final int timeDiff = (int)(System.currentTimeMillis() - StaticBits.startTimestamp)/1000;
-                if(!gameFinished)
+                if(!gameFinished) {
+                    StaticBits.server.sendToAll(StaticBits.TIME_DIFF, timeDiff);
                     NativeInterface.setTimeSidebar((float)timeDiff/(float)StaticBits.timeLimit);
+                }
                 checkTimeout(timeDiff);
                 checkForWinner();
                 checkIfLost();
                 if(aiStartDelay-- < 0)
                     updateAI();
-            } else {
-                try { Thread.sleep(100); } catch (InterruptedException ie) { }
+                resendAnyLostSteps();
             }
+            waitForSlowClients();
         }
         NativeInterface.destroyGame();
         NativeInterface.uninit();
+        finish();
     }
 
     private void checkTimeout(int timeDiff) {
@@ -152,6 +174,7 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
                     dialog.setCanceledOnTouchOutside(false);
                     Util.makeDialogCancelableIn(dialog, 1500);
                     Util.makeDialogDismissIn(dialog, 5000);
+                    StaticBits.server.sendToAll(StaticBits.OUT_OF_TIME, winningTeam);
                 }
             });
         }
@@ -214,13 +237,81 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
 
     private void updateAI() {
         for(int p = 0; p < 6; p++) {
-            if(p != StaticBits.team) {
+            if(StaticBits.teams[p] == StaticBits.AI_PLAYER) {
                 int nearestXY = NativeInterface.getNearestDot(p, xs[p][0], ys[p][0]);
                 short nearestX = (short)(nearestXY >>> 16);
                 short nearestY = (short)(nearestXY & 0x0000FFFF);
                 xs[p][0] = nearestX;
                 ys[p][0] = nearestY;
             }
+        }
+    }
+
+    private void waitForEveryoneToBeReady() {
+        if((StaticBits.server == null) || (ready == null))
+            return;
+
+        int countdown = 10;
+        while(true) {
+            if(ready[0] && ready[1] && ready[2] && ready[3] && ready[4] && ready[5])
+                break;
+            if(countdown-- < 0) {
+                StaticBits.server.sendToAll(StaticBits.CLIENT_READY_QUERY, 0);
+                countdown = 10;
+            }
+            try { Thread.sleep(10); } catch (InterruptedException ie) { }
+        }
+    }
+
+    private void createReadyList() {
+        for(int i = 0; i < 6; i++) {
+            if((StaticBits.teams[i] == StaticBits.AI_PLAYER) || (StaticBits.teams[i] == 0))
+                ready[i] = true;
+            else
+                ready[i] = false;
+        }
+
+    }
+
+    private void sendStepData() {
+        int[] data = new int[3 + 6 * 5 * 2];
+        data[0] = StaticBits.STEP_GAME;
+        data[1] = StaticBits.REGULATED_STEP;
+        data[2] = gameStep;
+        playerHistory.serialiseCurrentPlayerState(data, 3);
+        StaticBits.server.sendToAll(data.length, data);
+    }
+
+    private void resendAnyLostSteps() {
+        int[] data = new int[3 + 6 * 5 * 2];
+        if(playerWithMissedStepsId == -1)
+            return;
+        data[0] = StaticBits.STEP_GAME;
+        data[1] = StaticBits.FAST_STEP;
+        for(int i = playerWithMissedStepsStep; i <= gameStep; i++) {
+            data[2] = i;
+            playerHistory.serialiseHistoricalPlayerState(gameStep - i, data, 3);
+            StaticBits.server.sendToOne(playerWithMissedStepsId, data.length, data);
+        }
+        playerWithMissedStepsId = -1;
+    }
+
+    private void waitForSlowClients() {
+        if(playerWithMissedStepsId != -1)
+            return;
+        int biggestIndex = 0;
+        int biggestValue = 0;
+        for(int i = 0; i < 6; i++) {
+            if(clientLags[i] > biggestValue) {
+                biggestIndex = i;
+                biggestValue = clientLags[i];
+            }
+        }
+        biggestValue = biggestValue*biggestValue*biggestValue;
+        for(int i = 0; i < biggestValue; i++) {
+            try { Thread.sleep(1); } catch (InterruptedException ie) { }
+            if(clientLags[biggestIndex] < 4)
+                break;
         }
     }
 
@@ -235,43 +326,48 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
     }
 
     private void setPlayerPositions() {
-        for(int i = 0; i < 6; i++)
-            NativeInterface.setPlayerPosition(i, xs[i], ys[i]);
+        for(int i = 0; i < 6; i++) {
+            short[] tempxs = playerHistory.playerX[playerHistory.historyIndex][i];
+            short[] tempys = playerHistory.playerY[playerHistory.historyIndex][i];
+            NativeInterface.setPlayerPosition(i, tempxs, tempys);
+        }
     }
 
     @Override
     public void onTouch(MotionEvent event) {
         final int count = event.getPointerCount();
+        final int p = clientIdToPlayerNumber(0);
         for(int i = 0; i < 5; i++) {
             if(i < count) {
-                xs[StaticBits.team][i] = (short)((event.getX(i) / (float)MyRenderer.displayWidth) * (float)MyRenderer.WIDTH);
-                ys[StaticBits.team][i] = (short)((MyRenderer.HEIGHT-1) - ((event.getY(i) / (float)MyRenderer.displayHeight) * (float)MyRenderer.HEIGHT));
+                xs[p][i] = (short)((event.getX(i) / (float) MyRenderer.displayWidth) * (float)MyRenderer.WIDTH);
+                ys[p][i] = (short)((MyRenderer.HEIGHT-1) - ((event.getY(i) / (float)MyRenderer.displayHeight) * (float)MyRenderer.HEIGHT));
             } else {
-                xs[StaticBits.team][i] = -1;
-                ys[StaticBits.team][i] = -1;
+                xs[p][i] = -1;
+                ys[p][i] = -1;
             }
         }
 
         if(event.getAction() == MotionEvent.ACTION_POINTER_UP) {
             final int upIndex = event.getActionIndex();
-            final int upId = event.getPointerId(upIndex);
-            xs[StaticBits.team][upId] = -1;
-            ys[StaticBits.team][upId] = -1;
+            xs[p][upIndex] = -1;
+            ys[p][upIndex] = -1;
         }
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if((keyCode == KeyEvent.KEYCODE_BACK) && !gameFinished && !lostGame) {
+        if((keyCode == KeyEvent.KEYCODE_BACK) && !gameFinished) {
             DialogInterface.OnClickListener clicker = new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
+                    StaticBits.server.sendToAll(StaticBits.KILL_GAME, 0);
                     finish();
+                    running = false;
                 }
             };
             if(dialog != null)
                 dialog.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            builder.setMessage("Back to menu?");
+            builder.setMessage("Game is still in play! Back to menu?");
             builder.setPositiveButton("Yes", clicker);
             builder.setNegativeButton("No", null);
             dialog = builder.show();
@@ -280,12 +376,58 @@ public class GameActivity extends Activity implements Runnable, MyGLSurfaceView.
             return true;
         }
         else {
+            StaticBits.server.sendToAll(StaticBits.BACK_TO_MENU, 0);
             return super.onKeyDown(keyCode, event);
         }
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        paused = !hasFocus;
+    public void onClientMessageReceived(int id, int argc, int[] args) {
+        if(args[0] == StaticBits.RESEND_STEPS) {
+            if(playerWithMissedStepsId == -1)
+                noteMissedSteps(id, args[1]);
+        } else if(args[0] == StaticBits.PLAYER_POSITION_DATA) {
+            final int p = clientIdToPlayerNumber(id);
+            for(int i = 0; i < 5; i++) {
+                xs[p][i] = (short)args[i+1];
+                ys[p][i] = (short)args[i+5+1];
+            }
+        } else if(args[0] == StaticBits.CLIENT_CURRENT_GAMESTEP) {
+            final int p = clientIdToPlayerNumber(id);
+            final int clientGameStep = args[1];
+            clientLags[p] = gameStep - clientGameStep;
+        } else if(args[0] == StaticBits.CLIENT_READY) {
+            final int p = clientIdToPlayerNumber(id);
+            ready[p] = true;
+        } else if(args[0] == StaticBits.CLIENT_EXIT) {
+            final int p = clientIdToPlayerNumber(id);
+            if((p >= 0) && (p < 6))
+                clientLags[p] = 0;
+        }
+    }
+
+    @Override
+    public void onClientConnected(int id) {
+    }
+
+    @Override
+    public void onClientDisconnected(int id) {
+        final int p = clientIdToPlayerNumber(id);
+        if((p >= 0) && (p < 6))
+            clientLags[p] = 0;
+        StaticBits.multiplayerGameSetupActivity.onClientDisconnected(id);
+        ready[p] = true;
+    }
+
+    private void noteMissedSteps(int id, int step) {
+        playerWithMissedStepsStep = step;
+        playerWithMissedStepsId = id;
+    }
+
+    private int clientIdToPlayerNumber(int id) {
+        for(int i = 0; i < 6; i++)
+            if(StaticBits.teams[i] == id)
+                return i;
+        return -1;
     }
 }

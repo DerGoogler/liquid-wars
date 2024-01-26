@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+
+    <!-- Base application theme. -->
+    <style name="Theme.LiqurdWars" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">@color/blue_100</item>
+        <item name="android:statusBarColor">@color/blue_200</item>
+
+        <item name="android:colorPrimary">@color/blue_300</item>
+        <item name="android:colorPrimaryDark">@color/blue_400</item>
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+
+    </style>
+
+</resources>
