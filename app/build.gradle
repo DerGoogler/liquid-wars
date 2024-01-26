@@ -10,8 +10,8 @@ android {
         applicationId "com.xenris.liquidwarsos"
         minSdk 26
         targetSdk 34
-        versionName "1.42"
-        versionCode 11
+        versionName "1.43"
+        versionCode 12
         externalNativeBuild {
             ndkBuild {
                 targets "application", "nativeinterface", "ode", "application", "aclib"
