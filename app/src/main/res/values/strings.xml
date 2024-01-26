@@ -74,7 +74,6 @@
         <item>1000</item>
         <item>1500</item>
     </string-array>
-
     <string name="team">Team:</string>
     <string name="time_limit">Time Limit:</string>
     <string name="team_size">Team Size:</string>
