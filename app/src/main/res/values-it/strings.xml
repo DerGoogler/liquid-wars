@@ -66,14 +66,6 @@
         <item>10 Minuti</item>
         <item>23 Giorni</item>
     </string-array>
-    <string-array name="teamsize_array">
-        <item>100</item>
-        <item>200</item>
-        <item>400</item>
-        <item>800</item>
-        <item>1000</item>
-        <item>1500</item>
-    </string-array>
     <string name="team">Team:</string>
     <string name="time_limit">Time Limit:</string>
     <string name="team_size">Team Size:</string>

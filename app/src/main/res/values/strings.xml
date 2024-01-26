@@ -66,13 +66,16 @@
         <item>10 Minutes</item>
         <item>23 Days</item>
     </string-array>
-    <string-array name="teamsize_array">
+    <string-array translatable="false" name="teamsize_array">
         <item>100</item>
         <item>200</item>
         <item>400</item>
         <item>800</item>
         <item>1000</item>
         <item>1500</item>
+        <item>2000</item>
+        <item>3000</item>
+        <item>4500</item>
     </string-array>
     <string name="team">Team:</string>
     <string name="time_limit">Time Limit:</string>
