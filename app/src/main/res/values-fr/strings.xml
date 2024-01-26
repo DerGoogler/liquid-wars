@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="teams_array">
+        <item>Vert</item>
+        <item>Bleu</item>
+        <item>Rouge</item>
+        <item>Cyan</item>
+        <item>Jaune</item>
+        <item>Magenta</item>
+    </string-array>
+    <string-array name="maps_array">
+        <item>Aléatoire</item>
+        <item>Pine</item>
+        <item>Ovales blancs</item>
+        <item>Pine 2</item>
+        <item>Backing Pine</item>
+        <item>Vide</item>
+        <item>Arch Linux</item>
+        <item>Ligne rouge de bits</item>
+        <item>Ovale</item>
+        <item>Ovale inversé</item>
+        <item>Liquid Wars</item>
+        <item>Symétrie</item>
+        <item>Petit labyrinthe</item>
+        <item>Silhouettes vertes</item>
+        <item>Triangles rouges</item>
+        <item>Soupe Liquid Wars</item>
+        <item>Rectangles verts</item>
+        <item>Vert</item>
+        <item>Oeil</item>
+        <item>Dots</item>
+        <item>Big Dots</item>
+        <item>Diamants</item>
+        <item>Courbes violettes</item>
+        <item>Sharp Squiggle</item>
+        <item>Diviseurs</item>
+        <item>Aller et retour</item>
+        <item>Jagged Boxes</item>
+        <item>Ondulé</item>
+        <item>Nids</item>
+        <item>Rouge</item>
+        <item>Trou</item>
+        <item>Labyrinthe moyen</item>
+        <item>Grand labyrinthe</item>
+        <item>Labyrinthe moyen 2</item>
+        <item>Labyrinthe moyen 3</item>
+        <item>Couleurs des équipes</item>
+        <item>Étoiles</item>
+        <item>Crâne</item>
+        <item>ABC</item>
+        <item>Yeux</item>
+        <item>Mandelbrot</item>
+        <item>Mots croisés</item>
+        <item>Safari</item>
+        <item>Sourires</item>
+        <item>Vitrail</item>
+        <item>Cercles</item>
+        <item>Formes</item>
+    </string-array>
+    <string-array name="timeout_array">
+        <item>30 secondes</item>
+        <item>1 minute</item>
+        <item>2 minutes</item>
+        <item>3 minutes</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>23 jours</item>
+    </string-array>
+    <string-array name="teamsize_array">
+        <item>100</item>
+        <item>200</item>
+        <item>400</item>
+        <item>800</item>
+        <item>1000</item>
+        <item>1500</item>
+    </string-array>
+</resources>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="teams_array">
+        <item>Verde</item>
+        <item>Blu</item>
+        <item>Rosso</item>
+        <item>Ciano</item>
+        <item>Giallo</item>
+        <item>Magenta</item>
+    </string-array>
+    <string-array name="maps_array">
+        <item>A muzzo!</item>
+        <item>Legno di pino</item>
+        <item>Ovali bianchi</item>
+        <item>Legno squadretta</item>
+        <item>Legno intarsiato</item>
+        <item>Vuoto</item>
+        <item>Arch Linux</item>
+        <item>Strisce rosse</item>
+        <item>Ovale</item>
+        <item>Ovale invertito</item>
+        <item>Liquid Wars</item>
+        <item>Simmetrico</item>
+        <item>Piccolo labirinto</item>
+        <item>Sagome verdi</item>
+        <item>Triangoli rossi</item>
+        <item>Zuppa di Liquid Wars</item>
+        <item>Rettangoli verdi</item>
+        <item>Verde daltonico</item>
+        <item>Occhio</item>
+        <item>Pallini</item>
+        <item>Palloni</item>
+        <item>Diamanti</item>
+        <item>Linee porpora</item>
+        <item>Scarabocchio</item>
+        <item>Divide-et-impera</item>
+        <item>Avanti e indietro</item>
+        <item>Scatole sparse</item>
+        <item>Ondeggiato</item>
+        <item>Colonia</item>
+        <item>Rosso daltonico</item>
+        <item>Breccia</item>
+        <item>Labirinto medio</item>
+        <item>Labirinto terribile</item>
+        <item>Labirinto medio 2</item>
+        <item>Labirinto medio 3</item>
+        <item>Colori dei team</item>
+        <item>Stelle</item>
+        <item>Teschio ghignante</item>
+        <item>ABC</item>
+        <item>Occhietti</item>
+        <item>Mandelbrot</item>
+        <item>Parole crociate</item>
+        <item>Safari</item>
+        <item>Smilies</item>
+        <item>Murano</item>
+        <item>Cerchi</item>
+        <item>Figure</item>
+    </string-array>
+    <string-array name="timeout_array">
+        <item>30 Secondi</item>
+        <item>1 Minuto</item>
+        <item>2 Minuti</item>
+        <item>3 Minuti</item>
+        <item>5 Minuti</item>
+        <item>10 Minuti</item>
+        <item>23 Giorni</item>
+    </string-array>
+    <string-array name="teamsize_array">
+        <item>100</item>
+        <item>200</item>
+        <item>400</item>
+        <item>800</item>
+        <item>1000</item>
+        <item>1500</item>
+    </string-array>
+</resources>
