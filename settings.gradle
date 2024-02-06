@@ -1,0 +1,2 @@
+rootProject.name = "Liquid Wars OS"
+include ':app'
