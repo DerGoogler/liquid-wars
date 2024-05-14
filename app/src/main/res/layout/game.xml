@@ -5,7 +5,7 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <com.xenris.liquidwarsos.MyGLSurfaceView
+    <com.dergoogler.liquidwars.MyGLSurfaceView
         android:id="@+id/mySurfaceView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />

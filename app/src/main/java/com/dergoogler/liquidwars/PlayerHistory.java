@@ -1,4 +1,4 @@
-package com.xenris.liquidwarsos;
+package com.dergoogler.liquidwars;
 
 public class PlayerHistory {
     public final int MAX_HISTORY = 50;

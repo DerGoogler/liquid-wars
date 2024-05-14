@@ -1,4 +1,4 @@
-package com.xenris.liquidwarsos;
+package com.dergoogler.liquidwars;
 
 import android.opengl.GLSurfaceView;
 import javax.microedition.khronos.opengles.GL10;

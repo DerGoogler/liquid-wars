@@ -1,6 +1,6 @@
 
 
-package com.xenris.liquidwarsos.activities;
+package com.dergoogler.liquidwars.activities;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -8,7 +8,7 @@ import android.view.Window;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.xenris.liquidwarsos.R;
+import com.dergoogler.liquidwars.R;
 
 public class InstructionsActivity extends AppCompatActivity {
     private static final String instructions1 = "Aim:\n Convert the enemy's army to your own colour to win.";

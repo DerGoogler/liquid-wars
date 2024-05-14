@@ -1,6 +1,6 @@
 
 
-package com.xenris.liquidwarsos.activities;
+package com.dergoogler.liquidwars.activities;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -10,8 +10,8 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.xenris.liquidwarsos.server.NetInfo;
-import com.xenris.liquidwarsos.R;
+import com.dergoogler.liquidwars.server.NetInfo;
+import com.dergoogler.liquidwars.R;
 
 public class MainMenuActivity extends AppCompatActivity {
     @Override

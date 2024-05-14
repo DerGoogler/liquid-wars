@@ -1,6 +1,6 @@
 
 
-package com.xenris.liquidwarsos.activities;
+package com.dergoogler.liquidwars.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -15,14 +15,14 @@ import android.content.DialogInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.xenris.liquidwarsos.MyGLSurfaceView;
-import com.xenris.liquidwarsos.MyRenderer;
-import com.xenris.liquidwarsos.NativeInterface;
-import com.xenris.liquidwarsos.PlayerHistory;
-import com.xenris.liquidwarsos.R;
-import com.xenris.liquidwarsos.server.Server;
-import com.xenris.liquidwarsos.StaticBits;
-import com.xenris.liquidwarsos.Util;
+import com.dergoogler.liquidwars.MyGLSurfaceView;
+import com.dergoogler.liquidwars.MyRenderer;
+import com.dergoogler.liquidwars.NativeInterface;
+import com.dergoogler.liquidwars.PlayerHistory;
+import com.dergoogler.liquidwars.R;
+import com.dergoogler.liquidwars.server.Server;
+import com.dergoogler.liquidwars.StaticBits;
+import com.dergoogler.liquidwars.Util;
 
 import java.lang.Thread;
 

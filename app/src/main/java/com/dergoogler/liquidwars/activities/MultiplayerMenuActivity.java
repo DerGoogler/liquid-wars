@@ -1,6 +1,6 @@
 
 
-package com.xenris.liquidwarsos.activities;
+package com.dergoogler.liquidwars.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -20,10 +20,10 @@ import android.text.InputType;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.xenris.liquidwarsos.server.NetInfo;
-import com.xenris.liquidwarsos.R;
-import com.xenris.liquidwarsos.server.ServerFinder;
-import com.xenris.liquidwarsos.StaticBits;
+import com.dergoogler.liquidwars.server.NetInfo;
+import com.dergoogler.liquidwars.R;
+import com.dergoogler.liquidwars.server.ServerFinder;
+import com.dergoogler.liquidwars.StaticBits;
 
 import java.util.ArrayList;
 

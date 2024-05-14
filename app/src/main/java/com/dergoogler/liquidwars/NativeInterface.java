@@ -1,4 +1,4 @@
-package com.xenris.liquidwarsos;
+package com.dergoogler.liquidwars;
 
 import android.content.res.AssetManager;
 

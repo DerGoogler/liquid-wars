@@ -1,6 +1,6 @@
 
 
-package com.xenris.liquidwarsos.activities;
+package com.dergoogler.liquidwars.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -18,12 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
-import com.xenris.liquidwarsos.MyGLSurfaceView;
-import com.xenris.liquidwarsos.MyRenderer;
-import com.xenris.liquidwarsos.NativeInterface;
-import com.xenris.liquidwarsos.R;
-import com.xenris.liquidwarsos.StaticBits;
-import com.xenris.liquidwarsos.Util;
+import com.dergoogler.liquidwars.MyGLSurfaceView;
+import com.dergoogler.liquidwars.MyRenderer;
+import com.dergoogler.liquidwars.NativeInterface;
+import com.dergoogler.liquidwars.R;
+import com.dergoogler.liquidwars.StaticBits;
+import com.dergoogler.liquidwars.Util;
 
 import java.lang.Thread;
 import java.util.ArrayList;

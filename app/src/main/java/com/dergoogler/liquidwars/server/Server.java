@@ -1,6 +1,6 @@
 
 
-package com.xenris.liquidwarsos.server;
+package com.dergoogler.liquidwars.server;
 
 import java.lang.Thread;
 import java.lang.Runnable;

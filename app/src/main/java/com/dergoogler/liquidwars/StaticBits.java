@@ -1,8 +1,8 @@
-package com.xenris.liquidwarsos;
+package com.dergoogler.liquidwars;
 
-import com.xenris.liquidwarsos.activities.ClientGameSetupActivity;
-import com.xenris.liquidwarsos.activities.MultiplayerGameSetupActivity;
-import com.xenris.liquidwarsos.server.Server;
+import com.dergoogler.liquidwars.activities.ClientGameSetupActivity;
+import com.dergoogler.liquidwars.activities.MultiplayerGameSetupActivity;
+import com.dergoogler.liquidwars.server.Server;
 
 public class StaticBits {
     public static ClientGameSetupActivity clientGameSetupActivity;

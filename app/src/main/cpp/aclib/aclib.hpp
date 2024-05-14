@@ -7,7 +7,7 @@
 #include "log.hpp"
 #include "lodepng.hpp"
 
-#define ACTIVITY_NAME "com/xenris/liquidwarsos/GameActivity"
+#define ACTIVITY_NAME "com/dergoogler/liquidwars/GameActivity"
 
 class ACLib {
     private:

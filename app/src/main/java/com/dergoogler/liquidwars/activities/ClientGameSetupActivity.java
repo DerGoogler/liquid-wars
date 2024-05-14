@@ -1,6 +1,6 @@
 
 
-package com.xenris.liquidwarsos.activities;
+package com.dergoogler.liquidwars.activities;
 
 import android.os.Bundle;
 import android.view.Window;
@@ -14,10 +14,10 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.xenris.liquidwarsos.Client;
-import com.xenris.liquidwarsos.R;
-import com.xenris.liquidwarsos.StaticBits;
-import com.xenris.liquidwarsos.Util;
+import com.dergoogler.liquidwars.Client;
+import com.dergoogler.liquidwars.R;
+import com.dergoogler.liquidwars.StaticBits;
+import com.dergoogler.liquidwars.Util;
 
 import java.io.InputStream;
 import java.io.IOException;

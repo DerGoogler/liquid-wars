@@ -1,6 +1,6 @@
 
 
-package com.xenris.liquidwarsos.activities;
+package com.dergoogler.liquidwars.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -25,12 +25,12 @@ import android.content.DialogInterface.OnClickListener;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 
-import com.xenris.liquidwarsos.server.NetInfo;
-import com.xenris.liquidwarsos.R;
-import com.xenris.liquidwarsos.server.Server;
-import com.xenris.liquidwarsos.server.ServerFinder;
-import com.xenris.liquidwarsos.StaticBits;
-import com.xenris.liquidwarsos.Util;
+import com.dergoogler.liquidwars.server.NetInfo;
+import com.dergoogler.liquidwars.R;
+import com.dergoogler.liquidwars.server.Server;
+import com.dergoogler.liquidwars.server.ServerFinder;
+import com.dergoogler.liquidwars.StaticBits;
+import com.dergoogler.liquidwars.Util;
 
 import java.io.InputStream;
 import java.io.IOException;

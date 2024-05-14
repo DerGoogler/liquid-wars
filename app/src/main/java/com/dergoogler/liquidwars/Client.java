@@ -1,4 +1,4 @@
-package com.xenris.liquidwarsos;
+package com.dergoogler.liquidwars;
 
 import java.lang.Thread;
 import java.net.Socket;

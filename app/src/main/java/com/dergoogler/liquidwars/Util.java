@@ -1,4 +1,4 @@
-package com.xenris.liquidwarsos;
+package com.dergoogler.liquidwars;
 
 import android.os.Handler;
 import android.app.Dialog;
