@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/blue_200">
+    android:background="@color/blue_200"
+    android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:background="@color/blue_200"
         android:padding="8sp">
 
         <TextView
@@ -48,8 +48,8 @@
                         android:clickable="true"
                         android:onClick="changePublicName"
                         android:paddingEnd="20sp"
-                        android:textColor="@color/blue_800"
-                        android:text="" />
+                        android:text=""
+                        android:textColor="@color/blue_800" />
 
                 </TableRow>
 
@@ -66,8 +66,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:onClick="changeTeam"
-                        android:textColor="@color/blue_800"
-                        android:text=""/>
+                        android:text=""
+                        android:textColor="@color/blue_800" />
 
                 </TableRow>
 
@@ -93,7 +93,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/team_size"
-                        android:textColor="@color/blue_800"/>
+                        android:textColor="@color/blue_800" />
 
                     <Spinner
                         android:id="@+id/teamsize_spinner"
@@ -126,10 +126,10 @@
                 android:layout_width="0sp"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.25"
-                android:onClick="start"
-                android:textColor="@color/blue_700"
                 android:backgroundTint="@color/blue_300"
-                android:text="@string/start" />
+                android:onClick="start"
+                android:text="@string/start"
+                android:textColor="@color/blue_700" />
 
         </LinearLayout>
 
@@ -149,7 +149,6 @@
                 android:onClick="previousMap"
                 android:scaleType="centerInside"
                 android:src="@drawable/arrow_left"
-                tools:ignore="NestedWeights"
                 app:tint="@color/blue_400" />
 
 
@@ -165,8 +164,8 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="0.2"
                 android:background="@color/blue_300"
-                android:scaleType="centerInside"
                 android:onClick="nextMap"
+                android:scaleType="centerInside"
                 android:src="@drawable/arrow_right"
                 app:tint="@color/blue_400" />
 

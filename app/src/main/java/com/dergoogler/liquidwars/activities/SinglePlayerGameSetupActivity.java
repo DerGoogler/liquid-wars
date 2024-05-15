@@ -18,6 +18,7 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.core.view.WindowCompat;
 
 import com.dergoogler.liquidwars.R;
 import com.dergoogler.liquidwars.StaticBits;
@@ -35,6 +36,7 @@ public class SinglePlayerGameSetupActivity extends AppCompatActivity implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.single_game_setup);
         StaticBits.init();

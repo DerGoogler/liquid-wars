@@ -9,6 +9,7 @@ import android.view.Window;
 import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
 
 import com.dergoogler.liquidwars.server.NetInfo;
 import com.dergoogler.liquidwars.R;
@@ -17,9 +18,8 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.main_menu);
     }
 
@@ -30,7 +30,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void multiplayerMenu(View view) {
         String ip = NetInfo.getIPAddress(this);
-        if((ip == null) || (ip.compareTo("0.0.0.0") == 0)) {
+        if(ip.compareTo("0.0.0.0") == 0) {
             Toast.makeText(this, "Need Wi-Fi connection for multiplayer game.", Toast.LENGTH_SHORT).show();
         } else {
             Intent intent = new Intent(this, MultiplayerMenuActivity.class);

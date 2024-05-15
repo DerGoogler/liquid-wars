@@ -2,31 +2,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:gravity="center"
-    android:orientation="vertical"
     android:background="@color/blue_200"
-    android:padding="8sp">
+    android:fitsSystemWindows="true">
 
-    <com.google.android.material.button.MaterialButton
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:onClick="connectToGame"
-        android:textColor="@color/blue_700"
-        android:backgroundTint="@color/blue_300"
-        android:padding="10sp"
-        android:text="@string/connect_to_game"
-        android:textSize="25sp" />
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="8sp">
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:onClick="startNewGame"
-        android:textColor="@color/blue_700"
-        android:backgroundTint="@color/blue_300"
-        android:padding="10sp"
-        android:text="@string/start_new_game"
-        android:textSize="25sp" />
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue_300"
+            android:clickable="true"
+            android:onClick="connectToGame"
+            android:padding="10sp"
+            android:text="@string/connect_to_game"
+            android:textColor="@color/blue_700"
+            android:textSize="25sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blue_300"
+            android:clickable="true"
+            android:onClick="startNewGame"
+            android:padding="10sp"
+            android:text="@string/start_new_game"
+            android:textColor="@color/blue_700"
+            android:textSize="25sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

@@ -49,6 +49,7 @@ public class GameActivity extends AppCompatActivity implements Runnable, MyGLSur
         // Hide the system bars.
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         context = this;
 

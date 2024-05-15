@@ -19,6 +19,7 @@ import android.content.DialogInterface.OnCancelListener;
 import android.text.InputType;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
 
 import com.dergoogler.liquidwars.server.NetInfo;
 import com.dergoogler.liquidwars.R;
@@ -37,6 +38,7 @@ public class MultiplayerMenuActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         context = this;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.multiplayer_menu);

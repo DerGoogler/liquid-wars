@@ -24,6 +24,7 @@ import android.content.DialogInterface.OnClickListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.core.view.WindowCompat;
 
 import com.dergoogler.liquidwars.server.NetInfo;
 import com.dergoogler.liquidwars.R;
@@ -49,6 +50,7 @@ public class MultiplayerGameSetupActivity extends AppCompatActivity implements O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         context = this;
         StaticBits.multiplayerGameSetupActivity = this;
         StaticBits.clientGameSetupActivity = null;
