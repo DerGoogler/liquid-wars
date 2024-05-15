@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 
-def app_name = "Liquid Wars OS"
+def app_name = "Liquid Wars"
 def cur_time = System.currentTimeMillis()
 
 android {

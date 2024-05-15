@@ -16,7 +16,7 @@
 
     <application
         android:appCategory="game"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:isGame="true"
         android:label="@string/app_name">
 
