@@ -23,6 +23,7 @@ import androidx.core.view.WindowCompat;
 import com.dergoogler.liquidwars.R;
 import com.dergoogler.liquidwars.StaticBits;
 import com.dergoogler.liquidwars.activities.GameActivity;
+import com.google.android.material.button.MaterialButton;
 
 import java.io.InputStream;
 import java.io.IOException;
@@ -83,9 +84,9 @@ public class SinglePlayerGameSetupActivity extends AppCompatActivity implements 
     }
 
     private void initButtons() {
-        AppCompatImageButton previousButton = (AppCompatImageButton)findViewById(R.id.previous_button);
+        MaterialButton previousButton = (MaterialButton)findViewById(R.id.previous_button);
         previousButton.setOnLongClickListener(this);
-        AppCompatImageButton nextButton = (AppCompatImageButton)findViewById(R.id.next_button);
+        MaterialButton nextButton = (MaterialButton)findViewById(R.id.next_button);
         nextButton.setOnLongClickListener(this);
     }
 

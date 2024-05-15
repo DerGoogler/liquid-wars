@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/blue_200"
     android:fitsSystemWindows="true">
 
     <LinearLayout
@@ -13,25 +12,23 @@
         android:padding="8sp">
 
         <com.google.android.material.button.MaterialButton
+            style="@style/Theme.Button.Primary"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/blue_300"
             android:clickable="true"
             android:onClick="connectToGame"
             android:padding="10sp"
             android:text="@string/connect_to_game"
-            android:textColor="@color/blue_700"
             android:textSize="25sp" />
 
         <com.google.android.material.button.MaterialButton
+            style="@style/Theme.Button.Primary"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/blue_300"
             android:clickable="true"
             android:onClick="startNewGame"
             android:padding="10sp"
             android:text="@string/start_new_game"
-            android:textColor="@color/blue_700"
             android:textSize="25sp" />
 
     </LinearLayout>

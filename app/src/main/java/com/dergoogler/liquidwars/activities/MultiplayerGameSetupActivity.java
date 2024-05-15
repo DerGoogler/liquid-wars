@@ -32,6 +32,7 @@ import com.dergoogler.liquidwars.server.Server;
 import com.dergoogler.liquidwars.server.ServerFinder;
 import com.dergoogler.liquidwars.StaticBits;
 import com.dergoogler.liquidwars.Util;
+import com.google.android.material.button.MaterialButton;
 
 import java.io.InputStream;
 import java.io.IOException;
@@ -151,9 +152,9 @@ public class MultiplayerGameSetupActivity extends AppCompatActivity implements O
     }
 
     private void initButtons() {
-        AppCompatImageButton previousButton = (AppCompatImageButton)findViewById(R.id.previous_button);
+        MaterialButton previousButton = (MaterialButton)findViewById(R.id.previous_button);
         previousButton.setOnLongClickListener(this);
-        AppCompatImageButton nextButton = (AppCompatImageButton)findViewById(R.id.next_button);
+        MaterialButton nextButton = (MaterialButton)findViewById(R.id.next_button);
         nextButton.setOnLongClickListener(this);
     }
 

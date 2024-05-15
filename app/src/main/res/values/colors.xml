@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue_100">#c9d5f7</color>
-    <color name="blue_200">#9db4f1</color>
-    <color name="blue_300">#7293ec</color>
-    <color name="blue_400">#4772e6</color>
-    <color name="blue_500">#1e51de</color>
-    <color name="blue_600">#1842b3</color>
-    <color name="blue_700">#123288</color>
-    <color name="blue_800">#0c225d</color>
-    <color name="blue_900">#061232</color>
-    <color name="blue_1000">#000207</color>
+    <color name="lw_primary_button_background">#ffffff</color>
+    <color name="lw_primary_button_text">#000000</color>
+    <color name="lw_primary_outline">#26F3F5F7</color>
+    <color name="lw_primary_background">#101010</color>
+    <color name="lw_primary_text">#f3f5f7</color>
 </resources>

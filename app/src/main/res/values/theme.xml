@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.LiqurdWars" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="android:windowBackground">@color/blue_100</item>
-        <item name="android:colorPrimary">@color/blue_300</item>
-        <item name="android:colorPrimaryDark">@color/blue_400</item>
+        <item name="android:windowBackground">@color/lw_primary_background</item>
+        <item name="android:colorPrimary">@color/lw_primary_background</item>
+        <item name="android:colorPrimaryDark">@color/lw_primary_background</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:textColor">@color/lw_primary_text</item>
+
     </style>
+
+    <style name="Theme.Button.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">8sp</item>
+        <item name="colorButtonNormal">@color/lw_primary_button_background</item>
+        <item name="backgroundTint">@color/lw_primary_button_background</item>
+        <item name="android:textColor">@color/lw_primary_button_text</item>
+    </style>
+
+    <style name="Theme.Button.Outlined" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="cornerRadius">8sp</item>
+        <item name="strokeColor">@color/lw_primary_outline</item>
+        <item name="android:textColor">@color/lw_primary_text</item>
+    </style>
+
 </resources>

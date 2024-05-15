@@ -2,151 +2,138 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/blue_200"
     android:fitsSystemWindows="true">
 
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="10sp">
+
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            tools:ignore="UselessParent">
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:paddingBottom="8sp">
 
-            <LinearLayout
-                android:layout_width="fill_parent"
+            <TableLayout
+                android:layout_width="0sp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.75"
+                android:orientation="vertical"
+                android:stretchColumns="*">
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/team" />
+
+                    <Spinner
+                        android:id="@+id/team_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dialog" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/time_limit" />
+
+                    <Spinner
+                        android:id="@+id/timeout_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dialog" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/team_size" />
+
+                    <Spinner
+                        android:id="@+id/teamsize_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dialog" />
+
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/map" />
+
+                    <Spinner
+                        android:id="@+id/map_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:spinnerMode="dialog" />
+
+                </TableRow>
+
+            </TableLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/start_button"
+                style="@style/Theme.Button.Primary"
+                android:layout_width="0sp"
                 android:layout_height="fill_parent"
-                android:orientation="horizontal"
-                android:paddingBottom="8sp">
+                android:layout_weight="0.25"
+                android:onClick="start"
+                android:text="@string/start" />
 
-                <TableLayout
-                    android:layout_width="0sp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.75"
-                    android:orientation="vertical"
-                    android:stretchColumns="*">
+        </LinearLayout>
 
-                    <TableRow>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="150sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/team"
-                            android:textColor="@color/blue_800" />
-
-                        <Spinner
-                            android:id="@+id/team_spinner"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:spinnerMode="dialog" />
-
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/time_limit"
-                            android:textColor="@color/blue_800" />
-
-                        <Spinner
-                            android:id="@+id/timeout_spinner"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:spinnerMode="dialog" />
-
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/team_size"
-                            android:textColor="@color/blue_800" />
-
-                        <Spinner
-                            android:id="@+id/teamsize_spinner"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:spinnerMode="dialog" />
-
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/map"
-                            android:textColor="@color/blue_800" />
-
-                        <Spinner
-                            android:id="@+id/map_spinner"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:spinnerMode="dialog" />
-
-                    </TableRow>
-
-                </TableLayout>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/start_button"
-                    android:layout_width="0sp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="0.25"
-                    android:backgroundTint="@color/blue_300"
-                    android:onClick="start"
-                    android:text="@string/start"
-                    android:textColor="@color/blue_700" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="150sp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/previous_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="0.2"
-                    android:background="@color/blue_300"
-                    android:onClick="previousMap"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/arrow_left"
-                    app:tint="@color/blue_400"
-                    tools:ignore="NestedWeights" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/previous_button"
+                style="@style/Theme.Button.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.2"
+                android:onClick="previousMap"
+                android:scaleType="centerInside"
+                android:text="Prev"
+                android:textSize="30sp"
+                tools:ignore="NestedWeights" />
 
 
-                <ImageView
-                    android:id="@+id/map_imageview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1" />
+            <ImageView
+                android:id="@+id/map_imageview"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="1" />
 
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/next_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="0.2"
-                    android:background="@color/blue_300"
-                    android:onClick="nextMap"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/arrow_right"
-                    app:tint="@color/blue_400" />
-
-            </LinearLayout>
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/next_button"
+                style="@style/Theme.Button.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.2"
+                android:onClick="nextMap"
+                android:scaleType="centerInside"
+                android:text="Next"
+                android:textSize="30sp" />
 
         </LinearLayout>
 
