@@ -5,9 +5,9 @@ def cur_time = System.currentTimeMillis()
 
 android {
     compileSdk 34
-    namespace "com.xenris.liquidwarsos"
+    namespace "com.dergoogler.liquidwars"
     defaultConfig {
-        applicationId "com.xenris.liquidwarsos"
+        applicationId "com.dergoogler.liquidwars"
         minSdk 26
         targetSdk 34
         versionName "1.43"

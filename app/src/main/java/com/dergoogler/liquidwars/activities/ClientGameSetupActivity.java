@@ -1,19 +1,6 @@
-//    This file is part of Liquid Wars.
-//
-//    Liquid Wars is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//
-//    Liquid Wars is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//
-//    You should have received a copy of the GNU General Public License
-//    along with Liquid Wars.  If not, see <http://www.gnu.org/licenses/>.
 
-package com.xenris.liquidwarsos.activities;
+
+package com.dergoogler.liquidwars.activities;
 
 import android.os.Bundle;
 import android.view.Window;
@@ -27,10 +14,10 @@ import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.xenris.liquidwarsos.Client;
-import com.xenris.liquidwarsos.R;
-import com.xenris.liquidwarsos.StaticBits;
-import com.xenris.liquidwarsos.Util;
+import com.dergoogler.liquidwars.Client;
+import com.dergoogler.liquidwars.R;
+import com.dergoogler.liquidwars.StaticBits;
+import com.dergoogler.liquidwars.Util;
 
 import java.io.InputStream;
 import java.io.IOException;
