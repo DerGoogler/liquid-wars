@@ -10,8 +10,8 @@ android {
         applicationId "com.dergoogler.liquidwars"
         minSdk 26
         targetSdk 34
-        versionName "1.43"
-        versionCode 12
+        versionName "1.0.0"
+        versionCode 100
         externalNativeBuild {
             ndkBuild {
                 targets "application", "nativeinterface", "ode", "application", "aclib"
@@ -81,8 +81,7 @@ repositories {
 }
 
 dependencies {
-    implementation "androidx.browser:browser:1.7.0"
     implementation "androidx.appcompat:appcompat:1.6.1"
-    implementation "androidx.core:core:1.12.0"
-    implementation "com.google.android.material:material:1.11.0"
+    implementation "androidx.core:core:1.13.1"
+    implementation "com.google.android.material:material:1.12.0"
 }
