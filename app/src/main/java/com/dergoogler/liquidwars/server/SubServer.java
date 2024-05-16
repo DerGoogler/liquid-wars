@@ -12,7 +12,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 public class SubServer extends Thread {
-    private SubServerCallbacks subServerCallbacks;
+    private final SubServerCallbacks subServerCallbacks;
     private Socket socket;
     public int id;
     private boolean sendLocked = true;
@@ -72,7 +72,7 @@ public class SubServer extends Thread {
     }
 
     public interface SubServerCallbacks {
-        public void onSubServerMessageReceived(int id, int argc, int[] args);
-        public void onSubServerDisconnect(int id);
+        void onSubServerMessageReceived(int id, int argc, int[] args);
+        void onSubServerDisconnect(int id);
     }
 }

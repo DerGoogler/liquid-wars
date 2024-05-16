@@ -2,6 +2,7 @@
 
 package com.dergoogler.liquidwars.server;
 
+import android.annotation.SuppressLint;
 import android.net.wifi.WifiManager;
 import android.content.Context;
 
@@ -30,6 +31,7 @@ public class NetInfo {
         return wm.getConnectionInfo().getSSID();
     }
 
+    @SuppressLint("DefaultLocale")
     private static String format(int i) {
         return String.format("%d.%d.%d.%d",
             (i & 0xFF),

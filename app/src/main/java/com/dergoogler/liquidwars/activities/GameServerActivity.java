@@ -31,13 +31,13 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     private MyGLSurfaceView myGLSurfaceView = null;
     private boolean running;
     private int gameStep = 0;
-    private int[] clientLags = new int[6];
-    private PlayerHistory playerHistory = new PlayerHistory();
+    private final int[] clientLags = new int[6];
+    private final PlayerHistory playerHistory = new PlayerHistory();
     private int playerWithMissedStepsId = -1;
     private int playerWithMissedStepsStep = 0;
-    private short[][] xs = new short[6][5];
-    private short[][] ys = new short[6][5];
-    private boolean[] ready = new boolean[6];
+    private final short[][] xs = new short[6][5];
+    private final short[][] ys = new short[6][5];
+    private final boolean[] ready = new boolean[6];
     private Context context;
     private boolean gameFinished;
     private boolean lostGame;
@@ -237,7 +237,7 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
                 StaticBits.server.sendToAll(StaticBits.CLIENT_READY_QUERY, 0);
                 countdown = 10;
             }
-            try { Thread.sleep(10); } catch (InterruptedException ie) { }
+            try { Thread.sleep(10); } catch (InterruptedException ignored) { }
         }
     }
 

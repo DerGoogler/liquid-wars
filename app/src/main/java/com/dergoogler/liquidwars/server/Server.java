@@ -15,7 +15,7 @@ public class Server implements SubServer.SubServerCallbacks, Runnable {
     public ServerCallbacks serverCallbacks;
     private int port;
     private ServerSocket serverSocket;
-    private ArrayList<SubServer> subServers;
+    private final ArrayList<SubServer> subServers;
     private Context context;
     private boolean accepting = false;
     private static int MAX_CLIENTS = 5;
@@ -28,7 +28,7 @@ public class Server implements SubServer.SubServerCallbacks, Runnable {
         this.context = context;
         this.serverCallbacks = (ServerCallbacks)context;
         this.port = port;
-        subServers = new ArrayList<SubServer>();
+        subServers = new ArrayList<>();
     }
 
     public void startAccepting() {
@@ -55,7 +55,7 @@ public class Server implements SubServer.SubServerCallbacks, Runnable {
                     socket.close();
                 }
             }
-        } catch(UnknownHostException u) { } catch(IOException e) { }
+        } catch(IOException ignored) { }
         serverSocket = null;
         accepting = false;
     }
@@ -131,8 +131,8 @@ public class Server implements SubServer.SubServerCallbacks, Runnable {
     }
 
     public interface ServerCallbacks {
-        public void onClientMessageReceived(int id, int argc, int[] args);
-        public void onClientConnected(int id);
-        public void onClientDisconnected(int id);
+        void onClientMessageReceived(int id, int argc, int[] args);
+        void onClientConnected(int id);
+        void onClientDisconnected(int id);
     }
 }

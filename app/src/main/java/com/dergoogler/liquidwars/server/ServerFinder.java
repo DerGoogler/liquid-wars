@@ -38,7 +38,7 @@ public class ServerFinder {
                             datagramSocket.send(sendPacket);
                         }
                     }
-                } catch (SocketException s) { } catch (IOException i) { }
+                } catch (IOException ignored) { }
             }
         }.start();
     }
@@ -81,8 +81,7 @@ public class ServerFinder {
                             }
                         }
                     }
-                } catch (SocketException s) {
-                } catch (IOException i) {
+                } catch (IOException ignored) {
                 }
                 stopSearching();
             }
@@ -107,6 +106,6 @@ public class ServerFinder {
     }
 
     public interface ServerFinderCallbacks {
-        public void onServerFound(ServerInfo serverInfo);
+        void onServerFound(ServerInfo serverInfo);
     }
 }

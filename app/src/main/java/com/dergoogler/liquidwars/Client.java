@@ -13,8 +13,8 @@ import java.nio.IntBuffer;
 
 public class Client extends Thread {
     private ClientCallbacks clientCallbacks;
-    private String ip;
-    private int port;
+    private final String ip;
+    private final int port;
     private Socket socket;
     private int id = -1;
     private boolean sendLocked = false;
@@ -49,11 +49,6 @@ public class Client extends Thread {
                 if(clientCallbacks != null)
                     clientCallbacks.onServerMessageReceived(count/4, intBuffer);
             }
-        } catch(UnknownHostException u) {
-            if((clientCallbacks != null) && (!destroyCalled))
-                clientCallbacks.onServerConnectionFailed(ip);
-            destroy();
-            return;
         } catch(IOException e) {
             if((clientCallbacks != null) && (!destroyCalled))
                 clientCallbacks.onServerConnectionFailed(ip);
