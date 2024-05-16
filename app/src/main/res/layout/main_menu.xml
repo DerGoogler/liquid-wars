@@ -11,7 +11,7 @@
         android:fitsSystemWindows="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="8sp">
+        android:padding="10sp">
 
         <com.google.android.material.button.MaterialButton
             style="@style/Theme.Button.Primary"
