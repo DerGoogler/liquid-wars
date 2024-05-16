@@ -4,6 +4,7 @@ package com.dergoogler.liquidwars.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.MotionEvent;
@@ -202,6 +203,11 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
         }
         sendPlayerData();
 //        android.util.Log.i("mylog", xs[1] + " " + ys[1]);
+    }
+
+    @Override
+    public void onHover(View v, MotionEvent event) {
+        onTouch(event);
     }
 
     @Override

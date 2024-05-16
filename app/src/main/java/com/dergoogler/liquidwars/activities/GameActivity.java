@@ -4,6 +4,7 @@ package com.dergoogler.liquidwars.activities;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 import android.view.Window;
 import android.view.WindowManager;
@@ -67,6 +68,8 @@ public class GameActivity extends AppCompatActivity implements Runnable, MyGLSur
         NativeInterface.init(getAssets());
         NativeInterface.createGame(StaticBits.team, StaticBits.map, StaticBits.seed, StaticBits.dotsPerTeam);
 
+        myGLSurfaceView.requestPointerCapture();
+
         new Thread(this).start();
     }
 
@@ -74,20 +77,25 @@ public class GameActivity extends AppCompatActivity implements Runnable, MyGLSur
     public void onPause() {
         super.onPause();
         paused = true;
-        if (myGLSurfaceView != null)
+        if (myGLSurfaceView != null) {
+            myGLSurfaceView.releasePointerCapture();
             myGLSurfaceView.onPause();
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         paused = false;
-        if (myGLSurfaceView != null)
+        if (myGLSurfaceView != null) {
+            myGLSurfaceView.requestPointerCapture();
             myGLSurfaceView.onResume();
+        }
     }
 
     @Override
     public void onDestroy() {
+        myGLSurfaceView.releasePointerCapture();
         if (!isFinishing())
             finish();
         super.onDestroy();
@@ -258,6 +266,11 @@ public class GameActivity extends AppCompatActivity implements Runnable, MyGLSur
             xs[StaticBits.team][upId] = -1;
             ys[StaticBits.team][upId] = -1;
         }
+    }
+
+    @Override
+    public void onHover(View v, MotionEvent event) {
+        onTouch(event);
     }
 
     @Override

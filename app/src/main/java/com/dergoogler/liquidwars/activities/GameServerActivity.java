@@ -5,6 +5,7 @@ package com.dergoogler.liquidwars.activities;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.KeyEvent;
@@ -313,6 +314,27 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
 
     @Override
     public void onTouch(MotionEvent event) {
+        final int count = event.getPointerCount();
+        final int p = clientIdToPlayerNumber(0);
+        for(int i = 0; i < 5; i++) {
+            if(i < count) {
+                xs[p][i] = (short)((event.getX(i) / (float) MyRenderer.displayWidth) * (float)MyRenderer.WIDTH);
+                ys[p][i] = (short)((MyRenderer.HEIGHT-1) - ((event.getY(i) / (float)MyRenderer.displayHeight) * (float)MyRenderer.HEIGHT));
+            } else {
+                xs[p][i] = -1;
+                ys[p][i] = -1;
+            }
+        }
+
+        if(event.getAction() == MotionEvent.ACTION_POINTER_UP) {
+            final int upIndex = event.getActionIndex();
+            xs[p][upIndex] = -1;
+            ys[p][upIndex] = -1;
+        }
+    }
+
+    @Override
+    public void onHover(View v, MotionEvent event) {
         final int count = event.getPointerCount();
         final int p = clientIdToPlayerNumber(0);
         for(int i = 0; i < 5; i++) {

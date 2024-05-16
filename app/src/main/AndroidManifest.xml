@@ -9,6 +9,9 @@
 
     <uses-feature android:name="android.hardware.screen.landscape" />
     <uses-feature android:name="android.hardware.touchscreen" />
+    <uses-feature
+        android:name="android.hardware.type.pc"
+        android:required="false" />
 
     <supports-screens
         android:anyDensity="true"
