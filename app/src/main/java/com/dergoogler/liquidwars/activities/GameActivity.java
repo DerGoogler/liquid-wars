@@ -43,12 +43,12 @@ public class GameActivity extends AppCompatActivity implements Runnable, MyGLSur
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         Window window = getWindow();
         WindowInsetsControllerCompat windowInsetsController =
                 WindowCompat.getInsetsController(window, window.getDecorView());
         // Hide the system bars.
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
-        super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         context = this;
@@ -59,7 +59,7 @@ public class GameActivity extends AppCompatActivity implements Runnable, MyGLSur
         getWindow().addFlags(fullscreen | keepOn);
 
         setContentView(R.layout.game);
-        myGLSurfaceView = (MyGLSurfaceView) findViewById(R.id.mySurfaceView);
+        myGLSurfaceView = findViewById(R.id.mySurfaceView);
         myGLSurfaceView.setSurfaceCallbacks(this);
 
         Util.loadPlayerInitialPositions(xs, ys);
@@ -129,33 +129,30 @@ public class GameActivity extends AppCompatActivity implements Runnable, MyGLSur
 
     private void checkTimeout(int timeDiff) {
         if ((timeDiff >= StaticBits.timeLimit) && !gameFinished) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    frozen = true;
-                    gameFinished = true;
-                    if (dialog != null)
-                        dialog.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    int winningTeam = 0;
-                    for (int i = 0; i < 6; i++) {
-                        int score = NativeInterface.teamScore(winningTeam);
-                        int temp = NativeInterface.teamScore(i);
-                        if (temp > score)
-                            winningTeam = i;
-                    }
-                    if (winningTeam == StaticBits.team)
-                        builder.setMessage("Out of time! You win!");
-                    else
-                        builder.setMessage("Out of time! " + Util.teamToNameString(winningTeam) + " wins!");
-                    dialog = builder.show();
-                    TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
-                    messageText.setTextColor(Util.teamToColour(winningTeam));
-                    messageText.setGravity(Gravity.CENTER);
-                    dialog.setCanceledOnTouchOutside(false);
-                    Util.makeDialogCancelableIn(dialog, 1500);
-                    Util.makeDialogDismissIn(dialog, 5000);
+            runOnUiThread(() -> {
+                frozen = true;
+                gameFinished = true;
+                if (dialog != null)
+                    dialog.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                int winningTeam = 0;
+                for (int i = 0; i < 6; i++) {
+                    int score = NativeInterface.teamScore(winningTeam);
+                    int temp = NativeInterface.teamScore(i);
+                    if (temp > score)
+                        winningTeam = i;
                 }
+                if (winningTeam == StaticBits.team)
+                    builder.setMessage("Out of time! You win!");
+                else
+                    builder.setMessage("Out of time! " + Util.teamToNameString(winningTeam) + " wins!");
+                dialog = builder.show();
+                TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
+                messageText.setTextColor(Util.teamToColour(winningTeam));
+                messageText.setGravity(Gravity.CENTER);
+                dialog.setCanceledOnTouchOutside(false);
+                Util.makeDialogCancelableIn(dialog, 1500);
+                Util.makeDialogDismissIn(dialog, 5000);
             });
         }
     }

@@ -28,4 +28,12 @@
         <item name="android:textColor">@color/lw_primary_text</item>
     </style>
 
+
+    <style name="Theme.Spinner.Outlined" parent="android:Widget.Spinner">
+        <item name="android:spinnerMode">dialog</item>
+        <item name="android:background">@drawable/border</item>
+        <item name="android:padding">4sp</item>
+        <item name="android:layout_margin">4sp</item>
+
+    </style>
 </resources>

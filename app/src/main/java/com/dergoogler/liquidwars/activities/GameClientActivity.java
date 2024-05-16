@@ -15,6 +15,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
 
 import com.dergoogler.liquidwars.Client;
 import com.dergoogler.liquidwars.MyGLSurfaceView;
@@ -31,8 +32,8 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
     private MyGLSurfaceView myGLSurfaceView = null;
     private boolean running;
     private int gameStep = -1;
-    private short[] xs = new short[5];
-    private short[] ys = new short[5];
+    private final short[] xs = new short[5];
+    private final short[] ys = new short[5];
     private int touchReduction = 5;
     private Context context;
     private boolean usingNativeStateLock = false;
@@ -43,6 +44,7 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         context = this;
 
@@ -52,7 +54,7 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
         getWindow().addFlags(fullscreen | keepOn);
 
         setContentView(R.layout.game);
-        myGLSurfaceView = (MyGLSurfaceView)findViewById(R.id.mySurfaceView);
+        myGLSurfaceView = findViewById(R.id.mySurfaceView);
         myGLSurfaceView.setSurfaceCallbacks(this);
 
         NativeInterface.init(getAssets());
@@ -115,22 +117,19 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
         if(lostGame)
             return;
         if(NativeInterface.teamScore(StaticBits.team) == 0) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    lostGame = true;
-                    if(dialog != null)
-                        dialog.dismiss();
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage("You Lose");
-                    dialog = builder.show();
-                    TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
-                    messageText.setGravity(Gravity.CENTER);
-                    messageText.setTextColor(Util.teamToColour(StaticBits.team));
-                    dialog.setCanceledOnTouchOutside(false);
-                    Util.makeDialogCancelableIn(dialog, 1500);
-                    Util.makeDialogDismissIn(dialog, 5000);
-                }
+            runOnUiThread(() -> {
+                lostGame = true;
+                if(dialog != null)
+                    dialog.dismiss();
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("You Lose");
+                dialog = builder.show();
+                TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+                messageText.setGravity(Gravity.CENTER);
+                messageText.setTextColor(Util.teamToColour(StaticBits.team));
+                dialog.setCanceledOnTouchOutside(false);
+                Util.makeDialogCancelableIn(dialog, 1500);
+                Util.makeDialogDismissIn(dialog, 5000);
             });
         }
     }
@@ -274,34 +273,26 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
     }
 
     private void ToastOnUiThread(final String s) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-            }
-        });
+        runOnUiThread(() -> Toast.makeText(context, s, Toast.LENGTH_SHORT).show());
     }
 
     private void outOfTimeMessage(final int winningTeam) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                gameFinished = true;
-                if(dialog != null)
-                    dialog.dismiss();
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                if(winningTeam == StaticBits.team)
-                    builder.setMessage("Out of time! You win!");
-                else
-                    builder.setMessage("Out of time! " + Util.teamToNameString(winningTeam) + " wins!");
-                dialog = builder.show();
-                TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
-                messageText.setTextColor(Util.teamToColour(winningTeam));
-                messageText.setGravity(Gravity.CENTER);
-                dialog.setCanceledOnTouchOutside(false);
-                Util.makeDialogCancelableIn(dialog, 1500);
-                Util.makeDialogDismissIn(dialog, 5000);
-            }
+        runOnUiThread(() -> {
+            gameFinished = true;
+            if(dialog != null)
+                dialog.dismiss();
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            if(winningTeam == StaticBits.team)
+                builder.setMessage("Out of time! You win!");
+            else
+                builder.setMessage("Out of time! " + Util.teamToNameString(winningTeam) + " wins!");
+            dialog = builder.show();
+            TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+            messageText.setTextColor(Util.teamToColour(winningTeam));
+            messageText.setGravity(Gravity.CENTER);
+            dialog.setCanceledOnTouchOutside(false);
+            Util.makeDialogCancelableIn(dialog, 1500);
+            Util.makeDialogDismissIn(dialog, 5000);
         });
     }
 

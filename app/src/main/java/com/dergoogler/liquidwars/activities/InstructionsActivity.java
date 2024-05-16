@@ -25,9 +25,9 @@ public class InstructionsActivity extends AppCompatActivity {
         setContentView(R.layout.instructions);
 
         TextView tv;
-        tv = (TextView)findViewById(R.id.instructions1);
+        tv = findViewById(R.id.instructions1);
         tv.setText(instructions1);
-        tv = (TextView)findViewById(R.id.instructions2);
+        tv = findViewById(R.id.instructions2);
         tv.setText(instructions2);
     }
 }

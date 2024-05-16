@@ -56,26 +56,26 @@ public class SinglePlayerGameSetupActivity extends AppCompatActivity implements 
         ArrayAdapter<CharSequence> adapter;
         final int simpleSpinnerItem = android.R.layout.simple_spinner_item;
 
-        teamSpinner = (Spinner)findViewById(R.id.team_spinner);
+        teamSpinner = findViewById(R.id.team_spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.teams_array, simpleSpinnerItem);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         teamSpinner.setAdapter(adapter);
         teamSpinner.setOnItemSelectedListener(this);
 
-        mapSpinner = (Spinner)findViewById(R.id.map_spinner);
+        mapSpinner = findViewById(R.id.map_spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.maps_array, simpleSpinnerItem);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mapSpinner.setAdapter(adapter);
         mapSpinner.setOnItemSelectedListener(this);
 
-        timeoutSpinner = (Spinner)findViewById(R.id.timeout_spinner);
+        timeoutSpinner = findViewById(R.id.timeout_spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.timeout_array, simpleSpinnerItem);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timeoutSpinner.setAdapter(adapter);
         timeoutSpinner.setOnItemSelectedListener(this);
         timeoutSpinner.setSelection(2);
 
-        teamSizeSpinner = (Spinner)findViewById(R.id.teamsize_spinner);
+        teamSizeSpinner = findViewById(R.id.teamsize_spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.teamsize_array, simpleSpinnerItem);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         teamSizeSpinner.setAdapter(adapter);
@@ -84,9 +84,9 @@ public class SinglePlayerGameSetupActivity extends AppCompatActivity implements 
     }
 
     private void initButtons() {
-        MaterialButton previousButton = (MaterialButton)findViewById(R.id.previous_button);
+        MaterialButton previousButton = findViewById(R.id.previous_button);
         previousButton.setOnLongClickListener(this);
-        MaterialButton nextButton = (MaterialButton)findViewById(R.id.next_button);
+        MaterialButton nextButton = findViewById(R.id.next_button);
         nextButton.setOnLongClickListener(this);
     }
 
@@ -176,7 +176,7 @@ public class SinglePlayerGameSetupActivity extends AppCompatActivity implements 
             } catch(IOException ex) { }
         }
         Drawable d = Drawable.createFromStream(is, null);
-        ImageView iv = (ImageView)findViewById(R.id.map_imageview);
+        ImageView iv = findViewById(R.id.map_imageview);
         iv.setImageDrawable(d);
     }
 }

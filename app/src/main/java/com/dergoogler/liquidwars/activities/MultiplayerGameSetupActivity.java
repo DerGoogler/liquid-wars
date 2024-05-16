@@ -64,9 +64,9 @@ public class MultiplayerGameSetupActivity extends AppCompatActivity implements O
         ServerFinder.share(context, StaticBits.PORT_NUMBER+1, StaticBits.publicName);
         StaticBits.server = new Server(this, StaticBits.PORT_NUMBER);
         updateMessageTextView();
-        nametv = (TextView)findViewById(R.id.public_name_textview);
+        nametv = findViewById(R.id.public_name_textview);
         nametv.setText(StaticBits.publicName);
-        TextView tv = (TextView)findViewById(R.id.team_textview);
+        TextView tv = findViewById(R.id.team_textview);
         tv.setText(Util.teamToNameString(0));
     }
 
@@ -98,24 +98,21 @@ public class MultiplayerGameSetupActivity extends AppCompatActivity implements O
     }
 
     public void changePublicName(View view) {
-        OnClickListener clicker = new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String name = nameEditText.getText().toString();
-                    if((name.length() > 0) && (StaticBits.publicName.compareTo(name) != 0)) {
-                        StaticBits.publicName = name;
-                        ServerFinder.stopSharing();
-                        ServerFinder.share(context, StaticBits.PORT_NUMBER+1, StaticBits.publicName);
-                        byte[] nameBytes = name.getBytes();
-                        int[] data = new int[1 + nameBytes.length];
-                        data[0] = StaticBits.UPDATE_SERVER_NAME;
-                        for(int i = 1; i < data.length; i++)
-                            data[i] = nameBytes[i-1];
-                        StaticBits.server.sendToAll(data.length, data);
-                        nametv.setText(StaticBits.publicName);
-                    }
-                }
-            };
+        OnClickListener clicker = (dialog, which) -> {
+            String name = nameEditText.getText().toString();
+            if((name.length() > 0) && (StaticBits.publicName.compareTo(name) != 0)) {
+                StaticBits.publicName = name;
+                ServerFinder.stopSharing();
+                ServerFinder.share(context, StaticBits.PORT_NUMBER+1, StaticBits.publicName);
+                byte[] nameBytes = name.getBytes();
+                int[] data = new int[1 + nameBytes.length];
+                data[0] = StaticBits.UPDATE_SERVER_NAME;
+                for(int i = 1; i < data.length; i++)
+                    data[i] = nameBytes[i-1];
+                StaticBits.server.sendToAll(data.length, data);
+                nametv.setText(StaticBits.publicName);
+            }
+        };
         nameEditText = new EditText(this);
         nameEditText.setText(nametv.getText());
         new AlertDialog.Builder(this)
@@ -130,20 +127,20 @@ public class MultiplayerGameSetupActivity extends AppCompatActivity implements O
         ArrayAdapter<CharSequence> adapter;
         final int simpleSpinnerItem = android.R.layout.simple_spinner_item;
 
-        mapSpinner = (Spinner)findViewById(R.id.map_spinner);
+        mapSpinner = findViewById(R.id.map_spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.maps_array, simpleSpinnerItem);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mapSpinner.setAdapter(adapter);
         mapSpinner.setOnItemSelectedListener(this);
 
-        timeoutSpinner = (Spinner)findViewById(R.id.timeout_spinner);
+        timeoutSpinner = findViewById(R.id.timeout_spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.timeout_array, simpleSpinnerItem);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         timeoutSpinner.setAdapter(adapter);
         timeoutSpinner.setOnItemSelectedListener(this);
         timeoutSpinner.setSelection(2);
 
-        teamSizeSpinner = (Spinner)findViewById(R.id.teamsize_spinner);
+        teamSizeSpinner = findViewById(R.id.teamsize_spinner);
         adapter = ArrayAdapter.createFromResource(this, R.array.teamsize_array, simpleSpinnerItem);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         teamSizeSpinner.setAdapter(adapter);
@@ -152,9 +149,9 @@ public class MultiplayerGameSetupActivity extends AppCompatActivity implements O
     }
 
     private void initButtons() {
-        MaterialButton previousButton = (MaterialButton)findViewById(R.id.previous_button);
+        MaterialButton previousButton = findViewById(R.id.previous_button);
         previousButton.setOnLongClickListener(this);
-        MaterialButton nextButton = (MaterialButton)findViewById(R.id.next_button);
+        MaterialButton nextButton = findViewById(R.id.next_button);
         nextButton.setOnLongClickListener(this);
     }
 
@@ -245,7 +242,7 @@ public class MultiplayerGameSetupActivity extends AppCompatActivity implements O
             } catch(IOException ex) { }
         }
         Drawable d = Drawable.createFromStream(is, null);
-        ImageView iv = (ImageView)findViewById(R.id.map_imageview);
+        ImageView iv = findViewById(R.id.map_imageview);
         iv.setImageDrawable(d);
     }
 
@@ -294,23 +291,15 @@ public class MultiplayerGameSetupActivity extends AppCompatActivity implements O
     }
 
     private void updateMessageTextView() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TextView tv = (TextView)findViewById(R.id.multi_game_textview);
-                String ip = NetInfo.getIPAddress(context);
-                String ssid = NetInfo.getSSID(context);
-                tv.setText("Sharing game on " + ssid + ". IP Address: " + ip + ". Number of players: " + (numberOfClients+1));
-            }
+        runOnUiThread(() -> {
+            TextView tv = findViewById(R.id.multi_game_textview);
+            String ip = NetInfo.getIPAddress(context);
+            String ssid = NetInfo.getSSID(context);
+            tv.setText("Sharing game on " + ssid + ". IP Address: " + ip + ". Number of players: " + (numberOfClients+1));
         });
     }
 
     private void toast(final String message, final int length) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(context, message, length).show();
-            }
-        });
+        runOnUiThread(() -> Toast.makeText(context, message, length).show());
     }
 }
