@@ -10,16 +10,18 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/instructions1"
+            android:paddingTop="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:text="@string/instructions_one"/>
 
         <TextView
-            android:id="@+id/instructions2"
+            android:paddingTop="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:text="@string/instructions_two"/>
 
     </LinearLayout>
 </ScrollView>

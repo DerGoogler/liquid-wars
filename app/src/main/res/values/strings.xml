@@ -88,4 +88,6 @@
     <string name="start">Start</string>
     <string name="connect_to_game">Connect To Game</string>
     <string name="start_new_game">Start New Game</string>
+    <string name="instructions_one">Goal:\nConvert the enemy\'s army to your own to win.</string>
+    <string name="instructions_two">How to play:\nWherever you touch the screen or moving your mouse pointer your army will run to. Use up to five fingers (mouse pointer can\'t do this) to guide your army. Enemy liquid will be converted to your own when they collide. Try to surround the enemy for the best effect.</string>
 </resources>

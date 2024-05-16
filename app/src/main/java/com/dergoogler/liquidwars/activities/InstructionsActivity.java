@@ -12,22 +12,11 @@ import androidx.core.view.WindowCompat;
 import com.dergoogler.liquidwars.R;
 
 public class InstructionsActivity extends AppCompatActivity {
-    private static final String instructions1 = "Aim:\n Convert the enemy's army to your own colour to win.";
-    private static final String instructions2 = "How to play:\n Wherever you touch the screen your army will run to.\n Use up to five fingers to guide your army.\n Enemy liquid will be converted to your own when they collide.\n Try to surround the enemy for the best effect.";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.instructions);
-
-        TextView tv;
-        tv = findViewById(R.id.instructions1);
-        tv.setText(instructions1);
-        tv = findViewById(R.id.instructions2);
-        tv.setText(instructions2);
     }
 }
