@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 
 def app_name = "Liquid Wars"
-def cur_time = System.currentTimeMillis()
 
 android {
     compileSdk 34
@@ -10,8 +9,8 @@ android {
         applicationId "com.dergoogler.liquidwars"
         minSdk 26
         targetSdk 34
-        versionName "1.1.0"
-        versionCode 110
+        versionName "1.1.1"
+        versionCode 111
         externalNativeBuild {
             ndkBuild {
                 targets "application", "nativeinterface", "ode", "application", "aclib"
