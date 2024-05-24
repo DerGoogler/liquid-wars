@@ -22,7 +22,7 @@ import com.dergoogler.liquidwars.Util;
 import java.io.InputStream;
 import java.io.IOException;
 
-public class ClientGameSetupActivity extends AppCompatActivity implements Client.ClientCallbacks {
+public class ClientGameSetupActivity extends LiquidCompatActivity implements Client.ClientCallbacks {
     private EditText nameEditText;
     private Context context;
     private String serverIP;
@@ -37,7 +37,6 @@ public class ClientGameSetupActivity extends AppCompatActivity implements Client
         StaticBits.multiplayerGameSetupActivity = null;
         StaticBits.clientGameSetupActivity = this;
         retries = 4;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.client_game_setup);
         StaticBits.init();
         refreshMapImage();

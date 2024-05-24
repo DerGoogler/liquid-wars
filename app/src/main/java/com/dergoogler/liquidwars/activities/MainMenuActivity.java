@@ -19,12 +19,10 @@ import androidx.core.view.WindowCompat;
 import com.dergoogler.liquidwars.server.NetInfo;
 import com.dergoogler.liquidwars.R;
 
-public class MainMenuActivity extends AppCompatActivity {
+public class MainMenuActivity extends LiquidCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.main_menu);
     }
 

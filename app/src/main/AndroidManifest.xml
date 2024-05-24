@@ -86,6 +86,10 @@
             android:screenOrientation="landscape"
             android:theme="@style/Theme.LiqurdWars" />
 
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-5042729416879007~6841214599"/>
+
     </application>
 
 </manifest> 

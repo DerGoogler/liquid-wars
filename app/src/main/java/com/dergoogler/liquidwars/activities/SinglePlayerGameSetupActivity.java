@@ -28,7 +28,7 @@ import com.google.android.material.button.MaterialButton;
 import java.io.InputStream;
 import java.io.IOException;
 
-public class SinglePlayerGameSetupActivity extends AppCompatActivity implements OnItemSelectedListener, OnLongClickListener {
+public class SinglePlayerGameSetupActivity extends LiquidCompatActivity implements OnItemSelectedListener, OnLongClickListener {
     private Spinner teamSpinner;
     private Spinner mapSpinner;
     private Spinner timeoutSpinner;
@@ -37,8 +37,6 @@ public class SinglePlayerGameSetupActivity extends AppCompatActivity implements 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.single_game_setup);
         StaticBits.init();
         refreshMapImage();

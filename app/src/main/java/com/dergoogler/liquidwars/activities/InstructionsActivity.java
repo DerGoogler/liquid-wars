@@ -11,12 +11,10 @@ import androidx.core.view.WindowCompat;
 
 import com.dergoogler.liquidwars.R;
 
-public class InstructionsActivity extends AppCompatActivity {
+public class InstructionsActivity extends LiquidCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.instructions);
     }
 }

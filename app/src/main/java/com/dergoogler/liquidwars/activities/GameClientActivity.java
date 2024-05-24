@@ -29,7 +29,7 @@ import com.dergoogler.liquidwars.Util;
 import java.lang.Thread;
 import java.util.ArrayList;
 
-public class GameClientActivity extends AppCompatActivity implements Client.ClientCallbacks, Runnable, MyGLSurfaceView.SurfaceCallbacks {
+public class GameClientActivity extends LiquidCompatActivity implements Client.ClientCallbacks, Runnable, MyGLSurfaceView.SurfaceCallbacks {
     private MyGLSurfaceView myGLSurfaceView = null;
     private boolean running;
     private int gameStep = -1;
@@ -45,14 +45,10 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-
+        this.hideSystemUI();
+        this.keepOn();
         context = this;
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        final int fullscreen = WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        final int keepOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-        getWindow().addFlags(fullscreen | keepOn);
 
         setContentView(R.layout.game);
         myGLSurfaceView = findViewById(R.id.mySurfaceView);
@@ -69,28 +65,28 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
     @Override
     public void onPause() {
         super.onPause();
-        if(myGLSurfaceView != null)
+        if (myGLSurfaceView != null)
             myGLSurfaceView.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(myGLSurfaceView != null)
+        if (myGLSurfaceView != null)
             myGLSurfaceView.onResume();
     }
 
     @Override
     public void onDestroy() {
-        if(!isFinishing())
+        if (!isFinishing())
             finish();
         super.onDestroy();
-        if(StaticBits.client != null)
+        if (StaticBits.client != null)
             StaticBits.client.setCallbacks(StaticBits.clientGameSetupActivity);
-        if(myGLSurfaceView != null)
+        if (myGLSurfaceView != null)
             myGLSurfaceView.onPause();
         running = false;
-        if(dialog != null)
+        if (dialog != null)
             dialog.dismiss();
     }
 
@@ -100,14 +96,20 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
         gameFinished = false;
         lostGame = false;
         StaticBits.client.send(StaticBits.CLIENT_READY, 0);
-        while(running) {
+        while (running) {
             StaticBits.client.send(StaticBits.CLIENT_CURRENT_GAMESTEP, gameStep);
             checkForWinner();
             checkIfLost();
-            try { Thread.sleep(50); } catch (InterruptedException ie) { }
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException ie) {
+            }
         }
-        while(usingNativeStateLock)
-            try { Thread.sleep(3); } catch (InterruptedException ie) { }
+        while (usingNativeStateLock)
+            try {
+                Thread.sleep(3);
+            } catch (InterruptedException ie) {
+            }
         NativeInterface.destroyGame();
         NativeInterface.uninit();
         StaticBits.client.send(StaticBits.CLIENT_EXIT, 0);
@@ -115,17 +117,17 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
     }
 
     private void checkIfLost() {
-        if(lostGame)
+        if (lostGame)
             return;
-        if(NativeInterface.teamScore(StaticBits.team) == 0) {
+        if (NativeInterface.teamScore(StaticBits.team) == 0) {
             runOnUiThread(() -> {
                 lostGame = true;
-                if(dialog != null)
+                if (dialog != null)
                     dialog.dismiss();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You Lose");
                 dialog = builder.show();
-                TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+                TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
                 messageText.setGravity(Gravity.CENTER);
                 messageText.setTextColor(Util.teamToColour(StaticBits.team));
                 dialog.setCanceledOnTouchOutside(false);
@@ -136,24 +138,24 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
     }
 
     private void checkForWinner() {
-        if(gameFinished)
+        if (gameFinished)
             return;
-        for(int i = 0; i < 6; i++) {
-            if(NativeInterface.teamScore(i) == StaticBits.NUMBER_OF_TEAMS*StaticBits.dotsPerTeam) {
+        for (int i = 0; i < 6; i++) {
+            if (NativeInterface.teamScore(i) == StaticBits.NUMBER_OF_TEAMS * StaticBits.dotsPerTeam) {
                 final int p = i;
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         gameFinished = true;
-                        if(dialog != null)
+                        if (dialog != null)
                             dialog.dismiss();
                         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                        if(p == StaticBits.team)
+                        if (p == StaticBits.team)
                             builder.setMessage("You Win!");
                         else
                             builder.setMessage(Util.teamToNameString(p) + " Wins");
                         dialog = builder.show();
-                        TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+                        TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
                         messageText.setGravity(Gravity.CENTER);
                         messageText.setTextColor(Util.teamToColour(p));
                         dialog.setCanceledOnTouchOutside(false);
@@ -168,9 +170,9 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
 
     private void sendPlayerData() {
         int[] data = new int[5 + 5 + 1];
-        for(int i = 0; i < 5; i++) {
-            data[i+1] = xs[i];
-            data[i+5+1] = ys[i];
+        for (int i = 0; i < 5; i++) {
+            data[i + 1] = xs[i];
+            data[i + 5 + 1] = ys[i];
         }
         data[0] = StaticBits.PLAYER_POSITION_DATA;
         StaticBits.client.send(data.length, data);
@@ -178,24 +180,24 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
 
     @Override
     public void onTouch(MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_MOVE)
-            if(touchReduction-- != 0)
+        if (event.getAction() == MotionEvent.ACTION_MOVE)
+            if (touchReduction-- != 0)
                 return;
             else
                 touchReduction = 5;
 
         final int count = event.getPointerCount();
-        for(int i = 0; i < 5; i++) {
-            if(i < count) {
-                xs[i] = (short)((event.getX(i) / (float) MyRenderer.displayWidth) * (float)MyRenderer.WIDTH);
-                ys[i] = (short)((MyRenderer.HEIGHT-1) - ((event.getY(i) / (float)MyRenderer.displayHeight) * (float)MyRenderer.HEIGHT));
+        for (int i = 0; i < 5; i++) {
+            if (i < count) {
+                xs[i] = (short) ((event.getX(i) / (float) MyRenderer.displayWidth) * (float) MyRenderer.WIDTH);
+                ys[i] = (short) ((MyRenderer.HEIGHT - 1) - ((event.getY(i) / (float) MyRenderer.displayHeight) * (float) MyRenderer.HEIGHT));
             } else {
                 xs[i] = -1;
                 ys[i] = -1;
             }
         }
 
-        if(event.getAction() == MotionEvent.ACTION_POINTER_UP) { //XXX this appears to be not working.
+        if (event.getAction() == MotionEvent.ACTION_POINTER_UP) { //XXX this appears to be not working.
             final int upIndex = event.getActionIndex();
             final int upId = event.getPointerId(upIndex);
             xs[upId] = -1;
@@ -212,51 +214,50 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if((keyCode == KeyEvent.KEYCODE_BACK) && !gameFinished) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && !gameFinished) {
             DialogInterface.OnClickListener clicker = new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int which) {
                     running = false;
                 }
             };
-            if(dialog != null)
+            if (dialog != null)
                 dialog.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("Back to menu?");
             builder.setPositiveButton("Yes", clicker);
             builder.setNegativeButton("No", null);
             dialog = builder.show();
-            TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+            TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
             messageText.setGravity(Gravity.CENTER);
             return true;
-        }
-        else {
+        } else {
             return super.onKeyDown(keyCode, event);
         }
     }
 
     @Override
     public void onServerMessageReceived(int argc, int[] args) {
-        if(args[0] == StaticBits.STEP_GAME) {
-            if(running) {
-                if(args[2] == (gameStep + 1)) {
+        if (args[0] == StaticBits.STEP_GAME) {
+            if (running) {
+                if (args[2] == (gameStep + 1)) {
                     loadPlayerPositions(args, 3);
                     stepGame(args[1]);
-                } else if(args[2] > (gameStep + 1)) {
+                } else if (args[2] > (gameStep + 1)) {
                     StaticBits.client.send(StaticBits.RESEND_STEPS, gameStep + 1);
                 }
             }
-        } else if(args[0] == StaticBits.CLIENT_READY_QUERY) {
-            if(running)
+        } else if (args[0] == StaticBits.CLIENT_READY_QUERY) {
+            if (running)
                 StaticBits.client.send(StaticBits.CLIENT_READY, 0);
-        } else if(args[0] == StaticBits.KILL_GAME) {
+        } else if (args[0] == StaticBits.KILL_GAME) {
             ToastOnUiThread("Game canceled");
             running = false;
-        } else if(args[0] == StaticBits.BACK_TO_MENU) {
+        } else if (args[0] == StaticBits.BACK_TO_MENU) {
             running = false;
-        } else if(args[0] == StaticBits.OUT_OF_TIME) {
+        } else if (args[0] == StaticBits.OUT_OF_TIME) {
             outOfTimeMessage(args[1]);
-        } else if(args[0] == StaticBits.TIME_DIFF) {
-            NativeInterface.setTimeSidebar((float)args[1]/(float)StaticBits.timeLimit);
+        } else if (args[0] == StaticBits.TIME_DIFF) {
+            NativeInterface.setTimeSidebar((float) args[1] / (float) StaticBits.timeLimit);
         }
     }
 
@@ -285,15 +286,15 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
     private void outOfTimeMessage(final int winningTeam) {
         runOnUiThread(() -> {
             gameFinished = true;
-            if(dialog != null)
+            if (dialog != null)
                 dialog.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
-            if(winningTeam == StaticBits.team)
+            if (winningTeam == StaticBits.team)
                 builder.setMessage("Out of time! You win!");
             else
                 builder.setMessage("Out of time! " + Util.teamToNameString(winningTeam) + " wins!");
             dialog = builder.show();
-            TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+            TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
             messageText.setTextColor(Util.teamToColour(winningTeam));
             messageText.setGravity(Gravity.CENTER);
             dialog.setCanceledOnTouchOutside(false);
@@ -305,23 +306,23 @@ public class GameClientActivity extends AppCompatActivity implements Client.Clie
     private void loadPlayerPositions(int[] data, int offset) {
         short[] tempxs = new short[5];
         short[] tempys = new short[5];
-        for(int p = 0; p < 6; p++) {
-            for(int xy = 0; xy < 5; xy++) {
-                tempxs[xy] = (short)data[offset++];
-                tempys[xy] = (short)data[offset++];
+        for (int p = 0; p < 6; p++) {
+            for (int xy = 0; xy < 5; xy++) {
+                tempxs[xy] = (short) data[offset++];
+                tempys[xy] = (short) data[offset++];
             }
             NativeInterface.setPlayerPosition(p, tempxs, tempys);
         }
     }
 
     private void stepGame(int speed) {
-        if(usingNativeStateLock)
+        if (usingNativeStateLock)
             return;
         usingNativeStateLock = true;
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             long previousTime = System.nanoTime();
             NativeInterface.stepDots();
-            if(speed == StaticBits.REGULATED_STEP)
+            if (speed == StaticBits.REGULATED_STEP)
                 Util.regulateSpeed(previousTime, StaticBits.GAME_SPEED);
         }
         usingNativeStateLock = false;

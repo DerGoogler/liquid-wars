@@ -28,7 +28,7 @@ import com.dergoogler.liquidwars.Util;
 
 import java.lang.Thread;
 
-public class GameServerActivity extends AppCompatActivity implements Server.ServerCallbacks, Runnable, MyGLSurfaceView.SurfaceCallbacks {
+public class GameServerActivity extends LiquidCompatActivity implements Server.ServerCallbacks, Runnable, MyGLSurfaceView.SurfaceCallbacks {
     private MyGLSurfaceView myGLSurfaceView = null;
     private boolean running;
     private int gameStep = 0;
@@ -48,14 +48,10 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-
+        this.hideSystemUI();
+        this.keepOn();
         context = this;
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        final int fullscreen = WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        final int keepOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-        getWindow().addFlags(fullscreen | keepOn);
 
         setContentView(R.layout.game);
         myGLSurfaceView = findViewById(R.id.mySurfaceView);
@@ -65,7 +61,7 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
 
         createReadyList();
 
-        for(int i = 0; i < clientLags.length; i++)
+        for (int i = 0; i < clientLags.length; i++)
             clientLags[i] = 0;
 
         NativeInterface.init(getAssets());
@@ -79,25 +75,25 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     @Override
     public void onPause() {
         super.onPause();
-        if(myGLSurfaceView != null)
+        if (myGLSurfaceView != null)
             myGLSurfaceView.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(myGLSurfaceView != null)
+        if (myGLSurfaceView != null)
             myGLSurfaceView.onResume();
     }
 
     @Override
     public void onDestroy() {
-        if(!isFinishing())
+        if (!isFinishing())
             finish();
         super.onDestroy();
         StaticBits.server.setCallbacks(StaticBits.multiplayerGameSetupActivity);
         running = false;
-        if(dialog != null)
+        if (dialog != null)
             dialog.dismiss();
     }
 
@@ -110,20 +106,20 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
         waitForEveryoneToBeReady();
         StaticBits.startTimestamp = System.currentTimeMillis();
         int aiStartDelay = 6;
-        while(running) {
+        while (running) {
             playerHistory.savePlayerPositions(xs, ys);
-            if(!frozen) {
+            if (!frozen) {
                 sendStepData();
                 stepGame();
-                final int timeDiff = (int)(System.currentTimeMillis() - StaticBits.startTimestamp)/1000;
-                if(!gameFinished) {
+                final int timeDiff = (int) (System.currentTimeMillis() - StaticBits.startTimestamp) / 1000;
+                if (!gameFinished) {
                     StaticBits.server.sendToAll(StaticBits.TIME_DIFF, timeDiff);
-                    NativeInterface.setTimeSidebar((float)timeDiff/(float)StaticBits.timeLimit);
+                    NativeInterface.setTimeSidebar((float) timeDiff / (float) StaticBits.timeLimit);
                 }
                 checkTimeout(timeDiff);
                 checkForWinner();
                 checkIfLost();
-                if(aiStartDelay-- < 0)
+                if (aiStartDelay-- < 0)
                     updateAI();
                 resendAnyLostSteps();
             }
@@ -135,26 +131,26 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     }
 
     private void checkTimeout(int timeDiff) {
-        if((timeDiff >= StaticBits.timeLimit) && !gameFinished) {
+        if ((timeDiff >= StaticBits.timeLimit) && !gameFinished) {
             runOnUiThread(() -> {
                 frozen = true;
                 gameFinished = true;
-                if(dialog != null)
+                if (dialog != null)
                     dialog.dismiss();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 int winningTeam = 0;
-                for(int i = 0; i < 6; i++) {
+                for (int i = 0; i < 6; i++) {
                     int score = NativeInterface.teamScore(winningTeam);
                     int temp = NativeInterface.teamScore(i);
-                    if(temp > score)
+                    if (temp > score)
                         winningTeam = i;
                 }
-                if(winningTeam == StaticBits.team)
+                if (winningTeam == StaticBits.team)
                     builder.setMessage("Out of time! You win!");
                 else
                     builder.setMessage("Out of time! " + Util.teamToNameString(winningTeam) + " wins!");
                 dialog = builder.show();
-                TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+                TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
                 messageText.setTextColor(Util.teamToColour(winningTeam));
                 messageText.setGravity(Gravity.CENTER);
                 dialog.setCanceledOnTouchOutside(false);
@@ -166,17 +162,17 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     }
 
     private void checkIfLost() {
-        if(lostGame)
+        if (lostGame)
             return;
-        if(NativeInterface.teamScore(StaticBits.team) == 0) {
+        if (NativeInterface.teamScore(StaticBits.team) == 0) {
             runOnUiThread(() -> {
                 lostGame = true;
-                if(dialog != null)
+                if (dialog != null)
                     dialog.dismiss();
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setMessage("You Lose");
                 dialog = builder.show();
-                TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+                TextView messageText = (TextView) dialog.findViewById(android.R.id.message);
                 messageText.setGravity(Gravity.CENTER);
                 messageText.setTextColor(Util.teamToColour(StaticBits.team));
                 dialog.setCanceledOnTouchOutside(false);
@@ -187,17 +183,17 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     }
 
     private void checkForWinner() {
-        if(gameFinished)
+        if (gameFinished)
             return;
-        for(int i = 0; i < 6; i++) {
-            if(NativeInterface.teamScore(i) == StaticBits.NUMBER_OF_TEAMS*StaticBits.dotsPerTeam) {
+        for (int i = 0; i < 6; i++) {
+            if (NativeInterface.teamScore(i) == StaticBits.NUMBER_OF_TEAMS * StaticBits.dotsPerTeam) {
                 final int p = i;
                 runOnUiThread(() -> {
                     gameFinished = true;
-                    if(dialog != null)
+                    if (dialog != null)
                         dialog.dismiss();
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    if(p == StaticBits.team)
+                    if (p == StaticBits.team)
                         builder.setMessage("You Win!");
                     else
                         builder.setMessage(Util.teamToNameString(p) + " Wins");
@@ -215,11 +211,11 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     }
 
     private void updateAI() {
-        for(int p = 0; p < 6; p++) {
-            if(StaticBits.teams[p] == StaticBits.AI_PLAYER) {
+        for (int p = 0; p < 6; p++) {
+            if (StaticBits.teams[p] == StaticBits.AI_PLAYER) {
                 int nearestXY = NativeInterface.getNearestDot(p, xs[p][0], ys[p][0]);
-                short nearestX = (short)(nearestXY >>> 16);
-                short nearestY = (short)(nearestXY & 0x0000FFFF);
+                short nearestX = (short) (nearestXY >>> 16);
+                short nearestY = (short) (nearestXY & 0x0000FFFF);
                 xs[p][0] = nearestX;
                 ys[p][0] = nearestY;
             }
@@ -227,24 +223,27 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     }
 
     private void waitForEveryoneToBeReady() {
-        if((StaticBits.server == null) || (ready == null))
+        if ((StaticBits.server == null) || (ready == null))
             return;
 
         int countdown = 10;
-        while(true) {
-            if(ready[0] && ready[1] && ready[2] && ready[3] && ready[4] && ready[5])
+        while (true) {
+            if (ready[0] && ready[1] && ready[2] && ready[3] && ready[4] && ready[5])
                 break;
-            if(countdown-- < 0) {
+            if (countdown-- < 0) {
                 StaticBits.server.sendToAll(StaticBits.CLIENT_READY_QUERY, 0);
                 countdown = 10;
             }
-            try { Thread.sleep(10); } catch (InterruptedException ignored) { }
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ignored) {
+            }
         }
     }
 
     private void createReadyList() {
-        for(int i = 0; i < 6; i++) {
-            if((StaticBits.teams[i] == StaticBits.AI_PLAYER) || (StaticBits.teams[i] == 0))
+        for (int i = 0; i < 6; i++) {
+            if ((StaticBits.teams[i] == StaticBits.AI_PLAYER) || (StaticBits.teams[i] == 0))
                 ready[i] = true;
             else
                 ready[i] = false;
@@ -263,11 +262,11 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
 
     private void resendAnyLostSteps() {
         int[] data = new int[3 + 6 * 5 * 2];
-        if(playerWithMissedStepsId == -1)
+        if (playerWithMissedStepsId == -1)
             return;
         data[0] = StaticBits.STEP_GAME;
         data[1] = StaticBits.FAST_STEP;
-        for(int i = playerWithMissedStepsStep; i <= gameStep; i++) {
+        for (int i = playerWithMissedStepsStep; i <= gameStep; i++) {
             data[2] = i;
             playerHistory.serialiseHistoricalPlayerState(gameStep - i, data, 3);
             StaticBits.server.sendToOne(playerWithMissedStepsId, data.length, data);
@@ -276,27 +275,30 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     }
 
     private void waitForSlowClients() {
-        if(playerWithMissedStepsId != -1)
+        if (playerWithMissedStepsId != -1)
             return;
         int biggestIndex = 0;
         int biggestValue = 0;
-        for(int i = 0; i < 6; i++) {
-            if(clientLags[i] > biggestValue) {
+        for (int i = 0; i < 6; i++) {
+            if (clientLags[i] > biggestValue) {
                 biggestIndex = i;
                 biggestValue = clientLags[i];
             }
         }
-        biggestValue = biggestValue*biggestValue*biggestValue;
-        for(int i = 0; i < biggestValue; i++) {
-            try { Thread.sleep(1); } catch (InterruptedException ie) { }
-            if(clientLags[biggestIndex] < 4)
+        biggestValue = biggestValue * biggestValue * biggestValue;
+        for (int i = 0; i < biggestValue; i++) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ie) {
+            }
+            if (clientLags[biggestIndex] < 4)
                 break;
         }
     }
 
     private void stepGame() {
         setPlayerPositions();
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             long previousTime = System.nanoTime();
             NativeInterface.stepDots();
             Util.regulateSpeed(previousTime, StaticBits.GAME_SPEED);
@@ -305,7 +307,7 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     }
 
     private void setPlayerPositions() {
-        for(int i = 0; i < 6; i++) {
+        for (int i = 0; i < 6; i++) {
             short[] tempxs = playerHistory.playerX[playerHistory.historyIndex][i];
             short[] tempys = playerHistory.playerY[playerHistory.historyIndex][i];
             NativeInterface.setPlayerPosition(i, tempxs, tempys);
@@ -316,17 +318,17 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     public void onTouch(MotionEvent event) {
         final int count = event.getPointerCount();
         final int p = clientIdToPlayerNumber(0);
-        for(int i = 0; i < 5; i++) {
-            if(i < count) {
-                xs[p][i] = (short)((event.getX(i) / (float) MyRenderer.displayWidth) * (float)MyRenderer.WIDTH);
-                ys[p][i] = (short)((MyRenderer.HEIGHT-1) - ((event.getY(i) / (float)MyRenderer.displayHeight) * (float)MyRenderer.HEIGHT));
+        for (int i = 0; i < 5; i++) {
+            if (i < count) {
+                xs[p][i] = (short) ((event.getX(i) / (float) MyRenderer.displayWidth) * (float) MyRenderer.WIDTH);
+                ys[p][i] = (short) ((MyRenderer.HEIGHT - 1) - ((event.getY(i) / (float) MyRenderer.displayHeight) * (float) MyRenderer.HEIGHT));
             } else {
                 xs[p][i] = -1;
                 ys[p][i] = -1;
             }
         }
 
-        if(event.getAction() == MotionEvent.ACTION_POINTER_UP) {
+        if (event.getAction() == MotionEvent.ACTION_POINTER_UP) {
             final int upIndex = event.getActionIndex();
             xs[p][upIndex] = -1;
             ys[p][upIndex] = -1;
@@ -337,17 +339,17 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     public void onHover(View v, MotionEvent event) {
         final int count = event.getPointerCount();
         final int p = clientIdToPlayerNumber(0);
-        for(int i = 0; i < 5; i++) {
-            if(i < count) {
-                xs[p][i] = (short)((event.getX(i) / (float) MyRenderer.displayWidth) * (float)MyRenderer.WIDTH);
-                ys[p][i] = (short)((MyRenderer.HEIGHT-1) - ((event.getY(i) / (float)MyRenderer.displayHeight) * (float)MyRenderer.HEIGHT));
+        for (int i = 0; i < 5; i++) {
+            if (i < count) {
+                xs[p][i] = (short) ((event.getX(i) / (float) MyRenderer.displayWidth) * (float) MyRenderer.WIDTH);
+                ys[p][i] = (short) ((MyRenderer.HEIGHT - 1) - ((event.getY(i) / (float) MyRenderer.displayHeight) * (float) MyRenderer.HEIGHT));
             } else {
                 xs[p][i] = -1;
                 ys[p][i] = -1;
             }
         }
 
-        if(event.getAction() == MotionEvent.ACTION_POINTER_UP) {
+        if (event.getAction() == MotionEvent.ACTION_POINTER_UP) {
             final int upIndex = event.getActionIndex();
             xs[p][upIndex] = -1;
             ys[p][upIndex] = -1;
@@ -356,13 +358,13 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if((keyCode == KeyEvent.KEYCODE_BACK) && !gameFinished) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && !gameFinished) {
             DialogInterface.OnClickListener clicker = (dialog, which) -> {
                 StaticBits.server.sendToAll(StaticBits.KILL_GAME, 0);
                 finish();
                 running = false;
             };
-            if(dialog != null)
+            if (dialog != null)
                 dialog.dismiss();
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage("Game is still in play! Back to menu?");
@@ -372,8 +374,7 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
             TextView messageText = dialog.findViewById(android.R.id.message);
             messageText.setGravity(Gravity.CENTER);
             return true;
-        }
-        else {
+        } else {
             StaticBits.server.sendToAll(StaticBits.BACK_TO_MENU, 0);
             return super.onKeyDown(keyCode, event);
         }
@@ -381,25 +382,25 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
 
     @Override
     public void onClientMessageReceived(int id, int argc, int[] args) {
-        if(args[0] == StaticBits.RESEND_STEPS) {
-            if(playerWithMissedStepsId == -1)
+        if (args[0] == StaticBits.RESEND_STEPS) {
+            if (playerWithMissedStepsId == -1)
                 noteMissedSteps(id, args[1]);
-        } else if(args[0] == StaticBits.PLAYER_POSITION_DATA) {
+        } else if (args[0] == StaticBits.PLAYER_POSITION_DATA) {
             final int p = clientIdToPlayerNumber(id);
-            for(int i = 0; i < 5; i++) {
-                xs[p][i] = (short)args[i+1];
-                ys[p][i] = (short)args[i+5+1];
+            for (int i = 0; i < 5; i++) {
+                xs[p][i] = (short) args[i + 1];
+                ys[p][i] = (short) args[i + 5 + 1];
             }
-        } else if(args[0] == StaticBits.CLIENT_CURRENT_GAMESTEP) {
+        } else if (args[0] == StaticBits.CLIENT_CURRENT_GAMESTEP) {
             final int p = clientIdToPlayerNumber(id);
             final int clientGameStep = args[1];
             clientLags[p] = gameStep - clientGameStep;
-        } else if(args[0] == StaticBits.CLIENT_READY) {
+        } else if (args[0] == StaticBits.CLIENT_READY) {
             final int p = clientIdToPlayerNumber(id);
             ready[p] = true;
-        } else if(args[0] == StaticBits.CLIENT_EXIT) {
+        } else if (args[0] == StaticBits.CLIENT_EXIT) {
             final int p = clientIdToPlayerNumber(id);
-            if((p >= 0) && (p < 6))
+            if ((p >= 0) && (p < 6))
                 clientLags[p] = 0;
         }
     }
@@ -411,7 +412,7 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     @Override
     public void onClientDisconnected(int id) {
         final int p = clientIdToPlayerNumber(id);
-        if((p >= 0) && (p < 6))
+        if ((p >= 0) && (p < 6))
             clientLags[p] = 0;
         StaticBits.multiplayerGameSetupActivity.onClientDisconnected(id);
         ready[p] = true;
@@ -423,8 +424,8 @@ public class GameServerActivity extends AppCompatActivity implements Server.Serv
     }
 
     private int clientIdToPlayerNumber(int id) {
-        for(int i = 0; i < 6; i++)
-            if(StaticBits.teams[i] == id)
+        for (int i = 0; i < 6; i++)
+            if (StaticBits.teams[i] == id)
                 return i;
         return -1;
     }

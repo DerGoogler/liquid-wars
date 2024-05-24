@@ -37,7 +37,7 @@ import com.google.android.material.button.MaterialButton;
 import java.io.InputStream;
 import java.io.IOException;
 
-public class MultiplayerGameSetupActivity extends AppCompatActivity implements OnItemSelectedListener, OnLongClickListener, Server.ServerCallbacks {
+public class MultiplayerGameSetupActivity extends LiquidCompatActivity implements OnItemSelectedListener, OnLongClickListener, Server.ServerCallbacks {
     private Spinner teamSpinner;
     private Spinner mapSpinner;
     private Spinner timeoutSpinner;
@@ -51,11 +51,9 @@ public class MultiplayerGameSetupActivity extends AppCompatActivity implements O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         context = this;
         StaticBits.multiplayerGameSetupActivity = this;
         StaticBits.clientGameSetupActivity = null;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.multi_game_setup);
         StaticBits.init();
         refreshMapImage();

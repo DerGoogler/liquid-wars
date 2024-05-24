@@ -28,7 +28,7 @@ import com.dergoogler.liquidwars.StaticBits;
 
 import java.util.ArrayList;
 
-public class MultiplayerMenuActivity extends AppCompatActivity {
+public class MultiplayerMenuActivity extends LiquidCompatActivity {
     private Context context;
     private ArrayAdapter serverList;
     private static EditText ipEditText;
@@ -38,9 +38,7 @@ public class MultiplayerMenuActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         context = this;
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.multiplayer_menu);
     }
 

@@ -29,7 +29,7 @@ import com.dergoogler.liquidwars.Util;
 import java.lang.Thread;
 import java.util.ArrayList;
 
-public class GameActivity extends AppCompatActivity implements Runnable, MyGLSurfaceView.SurfaceCallbacks {
+public class GameActivity extends LiquidCompatActivity implements Runnable, MyGLSurfaceView.SurfaceCallbacks {
     private MyGLSurfaceView myGLSurfaceView = null;
     private boolean running;
     private boolean paused;
@@ -45,19 +45,9 @@ public class GameActivity extends AppCompatActivity implements Runnable, MyGLSur
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Window window = getWindow();
-        WindowInsetsControllerCompat windowInsetsController =
-                WindowCompat.getInsetsController(window, window.getDecorView());
-        // Hide the system bars.
-        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
-        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
-
+        this.hideSystemUI();
+        this.keepOn();
         context = this;
-
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        final int fullscreen = WindowManager.LayoutParams.FLAG_FULLSCREEN;
-        final int keepOn = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
-        getWindow().addFlags(fullscreen | keepOn);
 
         setContentView(R.layout.game);
         myGLSurfaceView = findViewById(R.id.mySurfaceView);
