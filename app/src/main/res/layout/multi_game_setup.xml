@@ -35,9 +35,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
                 android:clickable="true"
-                android:padding="8sp"
                 android:gravity="start|center_vertical"
                 android:onClick="changePublicName"
+                android:padding="8sp"
                 android:text="" />
 
         </TableRow>
@@ -55,9 +55,9 @@
                 style="@style/Theme.Spinner.Outlined"
                 android:layout_width="fill_parent"
                 android:layout_height="match_parent"
-                android:padding="8sp"
                 android:gravity="start|center_vertical"
                 android:onClick="changeTeam"
+                android:padding="8sp"
                 android:text="" />
 
         </TableRow>
@@ -117,41 +117,52 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:paddingStart="10sp"
         android:paddingEnd="10sp"
         android:paddingBottom="5sp">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/previous_button"
-            style="@style/Theme.Button.Outlined"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.2"
-            android:onClick="previousMap"
-            android:scaleType="centerInside"
-            android:text="Prev"
-            android:textSize="30sp"
-            tools:ignore="NestedWeights" />
-
-
         <ImageView
             android:id="@+id/map_imageview"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="1" />
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="ContentDescription,NestedWeights" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/next_button"
-            style="@style/Theme.Button.Outlined"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.2"
-            android:onClick="nextMap"
-            android:scaleType="centerInside"
-            android:text="Next"
-            android:textSize="30sp" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/previous_button"
+                style="@style/Theme.Button.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginEnd="5sp"
+                android:layout_weight="0.2"
+                android:gravity="center|center_vertical"
+                android:onClick="previousMap"
+                android:scaleType="centerInside"
+                android:text="Prev"
+                android:textSize="30sp"
+                tools:ignore="NestedWeights" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/next_button"
+                style="@style/Theme.Button.Outlined"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginStart="5sp"
+                android:layout_weight="0.2"
+                android:onClick="nextMap"
+                android:scaleType="centerInside"
+                android:text="Next"
+                android:textSize="30sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -165,4 +176,10 @@
         android:layout_marginBottom="10sp"
         android:onClick="start"
         android:text="@string/start" />
+
+    <LinearLayout
+        android:id="@+id/multi_game_ads_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
 </LinearLayout>

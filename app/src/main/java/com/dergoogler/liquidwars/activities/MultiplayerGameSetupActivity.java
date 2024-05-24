@@ -55,6 +55,7 @@ public class MultiplayerGameSetupActivity extends LiquidCompatActivity implement
         StaticBits.multiplayerGameSetupActivity = this;
         StaticBits.clientGameSetupActivity = null;
         setContentView(R.layout.multi_game_setup);
+        setAdsBanner(R.id.multi_game_ads_banner);
         StaticBits.init();
         refreshMapImage();
         initSpinners();

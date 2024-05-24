@@ -16,5 +16,6 @@ public class InstructionsActivity extends LiquidCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.instructions);
+        setAdsBanner(R.id.instructions_ads_banner);
     }
 }

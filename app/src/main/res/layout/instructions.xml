@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:orientation="vertical"
     android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
-            android:paddingTop="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/instructions_one"/>
+            android:paddingTop="10sp"
+            android:text="@string/instructions_one"
+            android:textSize="15sp" />
 
         <TextView
-            android:paddingTop="10sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:text="@string/instructions_two"/>
+            android:paddingTop="10sp"
+            android:text="@string/instructions_two"
+            android:textSize="15sp" />
 
     </LinearLayout>
-</ScrollView>
+
+    <LinearLayout
+        android:id="@+id/instructions_ads_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+</LinearLayout>

@@ -18,12 +18,14 @@ import androidx.core.view.WindowCompat;
 
 import com.dergoogler.liquidwars.server.NetInfo;
 import com.dergoogler.liquidwars.R;
+import com.google.android.gms.ads.AdView;
 
 public class MainMenuActivity extends LiquidCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
+        setAdsBanner(R.id.main_menu_ads_banner);
     }
 
     public void singlePlayerMenu(View view) {

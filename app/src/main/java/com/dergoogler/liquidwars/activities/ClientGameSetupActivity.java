@@ -38,6 +38,7 @@ public class ClientGameSetupActivity extends LiquidCompatActivity implements Cli
         StaticBits.clientGameSetupActivity = this;
         retries = 4;
         setContentView(R.layout.client_game_setup);
+        setAdsBanner(R.id.client_ads_banner);
         StaticBits.init();
         refreshMapImage();
 

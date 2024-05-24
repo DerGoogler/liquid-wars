@@ -40,6 +40,7 @@ public class MultiplayerMenuActivity extends LiquidCompatActivity {
         super.onCreate(savedInstanceState);
         context = this;
         setContentView(R.layout.multiplayer_menu);
+        setAdsBanner(R.id.multiplayer_ads_banner);
     }
 
     @Override
@@ -63,9 +64,9 @@ public class MultiplayerMenuActivity extends LiquidCompatActivity {
         });
 
         ServerFinder.ServerFinderCallbacks sfc = serverInfo -> runOnUiThread(() -> {
-            for(ServerFinder.ServerInfo si : serverInfoList) {
-                if(si.ip.compareTo(serverInfo.ip) == 0) {
-                    if(si.name.compareTo(serverInfo.name) != 0) {
+            for (ServerFinder.ServerInfo si : serverInfoList) {
+                if (si.ip.compareTo(serverInfo.ip) == 0) {
+                    if (si.name.compareTo(serverInfo.name) != 0) {
                         int index = serverInfoList.indexOf(si);
                         serverInfoList.add(index, serverInfo);
                         serverInfoList.remove(si);
@@ -82,7 +83,7 @@ public class MultiplayerMenuActivity extends LiquidCompatActivity {
 
         OnClickListener clicker = (dialog, which) -> {
             ServerFinder.stopSearching();
-            if(which == DialogInterface.BUTTON_POSITIVE) {
+            if (which == DialogInterface.BUTTON_POSITIVE) {
                 OnClickListener clicker1 = (dialog1, which1) -> {
                     String ip = ipEditText.getText().toString();
                     String name = ip;
@@ -93,33 +94,33 @@ public class MultiplayerMenuActivity extends LiquidCompatActivity {
                 };
                 EditText tempEditText = ipEditText;
                 ipEditText = new EditText(context);
-                if(tempEditText != null)
+                if (tempEditText != null)
                     ipEditText.setText(tempEditText.getText());
                 String ip = NetInfo.getIPAddress(context);
                 ipEditText.setHint("e.g. " + ip);
                 ipEditText.setInputType(InputType.TYPE_CLASS_PHONE);
                 new AlertDialog.Builder(context)
-                    .setTitle("Enter IP Address")
-                    .setPositiveButton("Connect", clicker1)
-                    .setNegativeButton("Cancel", null)
-                    .setView(ipEditText)
-                    .show();
+                        .setTitle("Enter IP Address")
+                        .setPositiveButton("Connect", clicker1)
+                        .setNegativeButton("Cancel", null)
+                        .setView(ipEditText)
+                        .show();
             }
         };
         OnCancelListener cancelListener = dialog -> ServerFinder.stopSearching();
 
         serverInfoList = new ArrayList<>();
         String broadcastAddress = NetInfo.getBroadcastAddress(context);
-        ServerFinder.search(sfc, broadcastAddress, StaticBits.PORT_NUMBER+1);
+        ServerFinder.search(sfc, broadcastAddress, StaticBits.PORT_NUMBER + 1);
         String ssid = NetInfo.getSSID(this);
 
         searchAlertDialog = new AlertDialog.Builder(this)
-            .setTitle("Searching on " + ssid + "...")
-            .setPositiveButton("Manual Connect", clicker)
-            .setNegativeButton("Cancel", clicker)
-            .setOnCancelListener(cancelListener)
-            .setView(listview)
-            .show();
+                .setTitle("Searching on " + ssid + "...")
+                .setPositiveButton("Manual Connect", clicker)
+                .setNegativeButton("Cancel", clicker)
+                .setOnCancelListener(cancelListener)
+                .setView(listview)
+                .show();
     }
 
     public void startNewGame(View view) {

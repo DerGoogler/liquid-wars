@@ -38,6 +38,7 @@ public class SinglePlayerGameSetupActivity extends LiquidCompatActivity implemen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.single_game_setup);
+        setAdsBanner(R.id.single_game_ads_banner);
         StaticBits.init();
         refreshMapImage();
         initSpinners();

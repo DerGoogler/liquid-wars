@@ -137,4 +137,9 @@
             android:background="#999" />
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/client_ads_banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
 </ScrollView>

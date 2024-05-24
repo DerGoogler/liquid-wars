@@ -38,6 +38,8 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             multiDexEnabled true
+            // release ad unit
+            buildConfigField "String", "BANNER_UNIT", "\"ca-app-pub-5042729416879007/9604390569\""
         }
         debug {
             resValue "string", "app_name", "${app_name} Debug"
@@ -46,6 +48,8 @@ android {
             minifyEnabled false
             multiDexEnabled false
             applicationIdSuffix '.debug'
+            // demo ad unit
+            buildConfigField "String", "BANNER_UNIT", "\"ca-app-pub-3940256099942544/6300978111\""
         }
     }
     externalNativeBuild {
@@ -69,8 +73,6 @@ android {
     productFlavors {
         'default' {
             dimension 'type'
-
-            buildConfigField "long", "BUILD_DATE", "${cur_time}"
         }
     }
 }
