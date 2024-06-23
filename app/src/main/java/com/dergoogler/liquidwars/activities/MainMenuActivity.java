@@ -7,6 +7,7 @@ import static android.Manifest.permission_group.LOCATION;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 import android.view.Window;
@@ -19,6 +20,7 @@ import androidx.core.view.WindowCompat;
 import com.dergoogler.liquidwars.server.NetInfo;
 import com.dergoogler.liquidwars.R;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.games.PlayGames;
 
 public class MainMenuActivity extends LiquidCompatActivity {
     @Override
@@ -26,6 +28,13 @@ public class MainMenuActivity extends LiquidCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
         setAdsBanner(R.id.main_menu_ads_banner);
+
+        TextView username = findViewById(R.id.google_play_username);
+
+        if (getPlayersClient != null) {
+            username.setText(getPlayersClient.getCurrentPlayer().getResult().getPlayerId());
+        }
+
     }
 
     public void singlePlayerMenu(View view) {

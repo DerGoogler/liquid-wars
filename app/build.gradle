@@ -9,8 +9,8 @@ android {
         applicationId "com.dergoogler.liquidwars"
         minSdk 26
         targetSdk 34
-        versionName "1.1.1"
-        versionCode 111
+        versionName "1.1.2"
+        versionCode 112
         externalNativeBuild {
             ndkBuild {
                 targets "application", "nativeinterface", "ode", "application", "aclib"
@@ -86,4 +86,5 @@ dependencies {
     implementation "androidx.core:core:1.13.1"
     implementation "com.google.android.material:material:1.12.0"
     implementation 'com.google.android.gms:play-services-ads:23.1.0'
+    implementation "com.google.android.gms:play-services-games-v2:20.1.0"
 }

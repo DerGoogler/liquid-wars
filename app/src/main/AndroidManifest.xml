@@ -97,7 +97,10 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-5042729416879007~6841214599"/>
+            android:value="@string/game_services_ads_id"/>
+
+        <meta-data android:name="com.google.android.gms.games.APP_ID"
+            android:value="@string/game_services_project_id"/>
 
     </application>
 

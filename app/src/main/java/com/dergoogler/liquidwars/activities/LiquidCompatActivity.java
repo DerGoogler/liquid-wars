@@ -2,6 +2,7 @@ package com.dergoogler.liquidwars.activities;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,16 +18,45 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.GamesSignInClient;
+import com.google.android.gms.games.PlayGames;
+import com.google.android.gms.games.PlayGamesSdk;
+import com.google.android.gms.games.PlayersClient;
 
 
 public class LiquidCompatActivity extends AppCompatActivity {
     private AdView adView;
+
+    protected PlayersClient getPlayersClient = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        PlayGamesSdk.initialize(this);
+
+
+
+        GamesSignInClient gamesSignInClient = PlayGames.getGamesSignInClient(this);
+
+        gamesSignInClient.isAuthenticated().addOnCompleteListener(isAuthenticatedTask -> {
+            boolean isAuthenticated =
+                    (isAuthenticatedTask.isSuccessful() &&
+                            isAuthenticatedTask.getResult().isAuthenticated());
+
+            if (isAuthenticated) {
+                getPlayersClient = PlayGames.getPlayersClient(this);
+            } else {
+                Log.i("LiquidCompat", "Not logged in Google Play Services");
+            }
+
+        });
+
+
+
         MobileAds.initialize(this, initializationStatus -> {
 
         });
