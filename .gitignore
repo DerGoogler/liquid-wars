@@ -36,6 +36,15 @@ build/
 .navigation
 captures/
 output.json
+release/
+app/debug/*
+app/releaseCandidate/*
+app/beta/*
+app/alpha/*
+app/debugMin/*
+app/playstore/*
+.externalNativeBuild/
+.cxx/
 
 #NDK
 obj/
