@@ -9,7 +9,7 @@
 
 # Java class files
 *.class
-
+.kotlin
 # generated files
 bin/
 gen/

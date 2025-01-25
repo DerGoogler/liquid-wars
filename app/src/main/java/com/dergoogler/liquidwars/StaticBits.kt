@@ -17,7 +17,7 @@ object StaticBits {
     var client: Client? = null
     var server: Server? = null
     var publicName: String = "Liquid Wars Game"
-    var teams: IntArray = IntArray(6)
+    val teams: IntArray = IntArray(6)
     var gameWasDisconnected: Boolean = false
 
     const val VERSION_CODE: Int = 11
