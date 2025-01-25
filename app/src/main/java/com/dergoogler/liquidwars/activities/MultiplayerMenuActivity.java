@@ -21,8 +21,8 @@ import android.text.InputType;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 
-import com.dergoogler.liquidwars.server.NetInfo;
 import com.dergoogler.liquidwars.R;
+import com.dergoogler.liquidwars.server.NetInfo;
 import com.dergoogler.liquidwars.server.ServerFinder;
 import com.dergoogler.liquidwars.StaticBits;
 
