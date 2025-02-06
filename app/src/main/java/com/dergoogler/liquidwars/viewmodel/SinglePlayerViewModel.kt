@@ -31,6 +31,9 @@ class SinglePlayerViewModel @Inject constructor(
     val mapsList = context.resources.getStringArray(R.array.maps_array).toList()
     val teamsList = context.resources.getStringArray(R.array.teams_array).toList()
 
+    val currentMap: Int get() = StaticBits.map
+    val currentMapName: String get() = mapsList[currentMap + 1]
+
     fun startGame(context: Context) {
         val intent = Intent(context, GameActivity::class.java)
         context.startActivity(intent)
@@ -62,9 +65,7 @@ class SinglePlayerViewModel @Inject constructor(
         StaticBits.team = pos
     }
 
-    fun onMapSelected(sel: Any) {
-        val selection = sel.toString()
-        val pos = mapsList.indexOfFirst { ix -> ix == selection }
-        StaticBits.map = pos - 1
+    fun onMapSelected(pos: Int) {
+        StaticBits.map = pos
     }
 }

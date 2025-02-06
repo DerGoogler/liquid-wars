@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,15 +19,27 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.dergoogler.liquidwars.StaticBits
 import com.dergoogler.liquidwars.ui.component.MapImage
+import com.dergoogler.liquidwars.ui.component.MapSelectBottomSheet
 import com.dergoogler.liquidwars.ui.component.Spinner
 import com.dergoogler.liquidwars.viewmodel.SinglePlayerViewModel
-import timber.log.Timber
 
 @Composable
 fun SinglePlayerScreen(
     vm: SinglePlayerViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
+
+    var openMapBottomSheet by remember { mutableStateOf(false) }
+    if (openMapBottomSheet) {
+        MapSelectBottomSheet(
+            onClose = { openMapBottomSheet = false },
+            maps = vm.mapsList,
+            onMapSelect = {
+                vm.onMapSelected(it)
+                openMapBottomSheet = false
+            }
+        )
+    }
 
     Scaffold(
         topBar = {
@@ -115,11 +131,12 @@ fun SinglePlayerScreen(
                         fontSize = 16.sp,
                         textAlign = TextAlign.Start
                     )
-                    Spinner(
-                        modifier = Modifier.weight(1f),
-                        items = vm.mapsList,
-                        onItemSelected = vm::onMapSelected
-                    )
+                    OutlinedButton(
+                        onClick = { openMapBottomSheet = true },
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        Text(text = vm.currentMapName)
+                    }
                 }
             }
 

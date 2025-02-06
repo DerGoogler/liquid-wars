@@ -6,14 +6,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import com.dergoogler.liquidwars.R
-import com.dergoogler.liquidwars.StaticBits
-import timber.log.Timber
 import java.io.IOException
 import java.io.InputStream
 
@@ -41,7 +38,7 @@ private fun loadImagePainterFromAssets(context: Context, selection: Int): Painte
 
     return try {
         inputStream = try {
-            if (StaticBits.map == -1) assetManager.open("maps/random-map.png")
+            if (selection == -1) assetManager.open("maps/random-map.png")
             else assetManager.open("maps/$selection-image.png")
         } catch (e: IOException) {
             try {
