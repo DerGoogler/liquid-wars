@@ -89,7 +89,7 @@ object ServerFinder {
 
     class ServerInfo(var name: String, var ip: String)
 
-    interface ServerFinderCallbacks {
+    fun interface ServerFinderCallbacks {
         fun onServerFound(serverInfo: ServerInfo?)
     }
 }

@@ -2,288 +2,236 @@ package com.dergoogler.liquidwars.activities
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.View
-import android.view.View.OnLongClickListener
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.dergoogler.liquidwars.R
 import com.dergoogler.liquidwars.StaticBits
 import com.dergoogler.liquidwars.StaticBits.init
 import com.dergoogler.liquidwars.StaticBits.newSeed
 import com.dergoogler.liquidwars.Util.clientIdToPlayerNumber
-import com.dergoogler.liquidwars.Util.intToTime
-import com.dergoogler.liquidwars.Util.teamToNameString
-import com.dergoogler.liquidwars.server.NetInfo
-import com.dergoogler.liquidwars.server.Server
-import com.dergoogler.liquidwars.server.Server.ServerCallbacks
 import com.dergoogler.liquidwars.server.ServerFinder
-import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.launch
 import java.io.IOException
 import java.io.InputStream
 
-class MultiplayerGameSetupActivity : LiquidCompatActivity(), AdapterView.OnItemSelectedListener,
-    OnLongClickListener, ServerCallbacks {
-    private val teamSpinner: Spinner? = null
-    private var mapSpinner: Spinner? = null
-    private var timeoutSpinner: Spinner? = null
-    private var teamSizeSpinner: Spinner? = null
-    private var nameEditText: EditText? = null
-    private var context: Context? = null
-    private var nametv: TextView? = null
-    private var myID = 0
-    private var numberOfClients = 0
+class MultiplayerGameSetupActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        context = this
-        StaticBits.multiplayerGameSetupActivity = this
-        StaticBits.clientGameSetupActivity = null
-        setContentView(R.layout.multi_game_setup)
-        setAdsBanner(R.id.multi_game_ads_banner)
+        setContent {
+            MultiplayerGameSetupScreen(
+                context = this,
+                onGameStart = {
+                    val intent = Intent(this, GameServerActivity::class.java)
+                    startActivity(intent)
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun ScreenEventListener(onEvent: (event: Lifecycle.Event) -> Unit) {
+    val eventHandler = rememberUpdatedState(newValue = onEvent)
+    val lifecycleOwner = rememberUpdatedState(newValue = LocalLifecycleOwner.current)
+
+    DisposableEffect(lifecycleOwner.value) {
+        val lifecycle = lifecycleOwner.value.lifecycle
+        val observer = LifecycleEventObserver { _, event ->
+            eventHandler.value(event)
+        }
+
+        lifecycle.addObserver(observer)
+
+        onDispose {
+            lifecycle.removeObserver(observer)
+        }
+    }
+}
+
+@Composable
+fun MultiplayerGameSetupScreen(context: Context, onGameStart: () -> Unit) {
+    val resources = LocalContext.current.resources
+    var publicName by remember { mutableStateOf(StaticBits.publicName) }
+    var selectedMapIndex by remember { mutableStateOf(0) }
+    var selectedTimeoutIndex by remember { mutableStateOf(2) }
+    var selectedTeamSizeIndex by remember { mutableStateOf(2) }
+    var myId by remember { mutableStateOf(0) }
+    var numberOfClients by remember { mutableStateOf(0) }
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(Unit) {
         init()
-        refreshMapImage()
-        initSpinners()
-        initButtons()
-        ServerFinder.share(context, StaticBits.PORT_NUMBER + 1, StaticBits.publicName)
-        StaticBits.server = Server(this, StaticBits.PORT_NUMBER)
-        updateMessageTextView()
-        nametv = findViewById(R.id.public_name_textview)
-        nametv?.text = StaticBits.publicName
-        val tv = findViewById<TextView>(R.id.team_textview)
-        tv.text = teamToNameString(0)
-    }
-
-    override fun onResume() {
-        super.onResume()
+//        StaticBits.multiplayerGameSetupActivity = this@LaunchedEffect
         newSeed()
-        if (StaticBits.gameWasDisconnected) {
-            if (StaticBits.client != null) StaticBits.client!!.destroy()
-            StaticBits.client = null
-            myID = 0
-            for (i in 1..5) StaticBits.teams[i] = StaticBits.AI_PLAYER
-            StaticBits.teams[0] = myID
-            StaticBits.gameWasDisconnected = false
+    }
+
+//    ScreenEventListener {
+//        when (it) {
+//            Lifecycle.Event.ON_RESUME -> {
+//                myId = 0
+//            }
+//            else -> {}
+//        }
+//    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Public Name
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Public Name:", fontSize = 20.sp)
+            BasicTextField(
+                value = publicName,
+                onValueChange = { publicName = it },
+                keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(onDone = {
+                    StaticBits.publicName = publicName
+                    ServerFinder.share(context, StaticBits.PORT_NUMBER + 1, StaticBits.publicName)
+                }),
+                modifier = Modifier.width(200.dp)
+            )
         }
-        if (StaticBits.server != null) {
-            ServerFinder.share(context, StaticBits.PORT_NUMBER + 1, StaticBits.publicName)
-            StaticBits.server!!.startAccepting()
-        }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        StaticBits.server!!.destroy()
-        ServerFinder.stopSharing()
-    }
-
-    fun changePublicName(view: View?) {
-        val clicker = DialogInterface.OnClickListener { dialog: DialogInterface?, which: Int ->
-            val name = nameEditText!!.text.toString()
-            if ((name.length > 0) && (StaticBits.publicName.compareTo(name) != 0)) {
-                StaticBits.publicName = name
-                ServerFinder.stopSharing()
-                ServerFinder.share(context, StaticBits.PORT_NUMBER + 1, StaticBits.publicName)
-                val nameBytes = name.toByteArray()
-                val data = IntArray(1 + nameBytes.size)
-                data[0] = StaticBits.UPDATE_SERVER_NAME
-                for (i in 1..<data.size) data[i] = nameBytes[i - 1].toInt()
-                StaticBits.server!!.sendToAll(data.size, data)
-                nametv!!.text = StaticBits.publicName
-            }
-        }
-        nameEditText = EditText(this)
-        nameEditText!!.setText(nametv!!.text)
-        AlertDialog.Builder(this)
-            .setTitle("Enter a name to identify your game:")
-            .setPositiveButton("Done", clicker)
-            .setNegativeButton("Cancel", null)
-            .setView(nameEditText)
-            .show()
-    }
-
-    private fun initSpinners() {
-        var adapter: ArrayAdapter<CharSequence?>
-        val simpleSpinnerItem = android.R.layout.simple_spinner_item
-
-        mapSpinner = findViewById(R.id.map_spinner)
-        adapter = ArrayAdapter.createFromResource(this, R.array.maps_array, simpleSpinnerItem)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        mapSpinner?.setAdapter(adapter)
-        mapSpinner?.setOnItemSelectedListener(this)
-
-        timeoutSpinner = findViewById(R.id.timeout_spinner)
-        adapter = ArrayAdapter.createFromResource(this, R.array.timeout_array, simpleSpinnerItem)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        timeoutSpinner?.setAdapter(adapter)
-        timeoutSpinner?.setOnItemSelectedListener(this)
-        timeoutSpinner?.setSelection(2)
-
-        teamSizeSpinner = findViewById(R.id.teamsize_spinner)
-        adapter = ArrayAdapter.createFromResource(this, R.array.teamsize_array, simpleSpinnerItem)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        teamSizeSpinner?.setAdapter(adapter)
-        teamSizeSpinner?.setOnItemSelectedListener(this)
-        teamSizeSpinner?.setSelection(2)
-    }
-
-    private fun initButtons() {
-        val previousButton = findViewById<MaterialButton>(R.id.previous_button)
-        previousButton.setOnLongClickListener(this)
-        val nextButton = findViewById<MaterialButton>(R.id.next_button)
-        nextButton.setOnLongClickListener(this)
-    }
-
-    fun start(view: View?) {
-        ServerFinder.stopSharing()
-        StaticBits.server!!.stopAccepting()
-        val args = intArrayOf(
-            StaticBits.START_GAME,
-            StaticBits.seed,
-            StaticBits.map,
-            StaticBits.dotsPerTeam
+        // Map Selection
+        DropdownMenuField(
+            label = "Select Map",
+            options = resources.getStringArray(R.array.maps_array),
+            selectedIndex = selectedMapIndex,
+            onOptionSelected = { selectedMapIndex = it }
         )
-        StaticBits.server!!.sendToAll(4, args)
-        StaticBits.server!!.setCallbacks(null)
-        StaticBits.team = clientIdToPlayerNumber(myID)
 
-        val intent = Intent(this, GameServerActivity::class.java)
-        startActivity(intent)
-    }
+        // Timeout Selection
+        DropdownMenuField(
+            label = "Select Timeout",
+            options = resources.getStringArray(R.array.timeout_array),
+            selectedIndex = selectedTimeoutIndex,
+            onOptionSelected = { selectedTimeoutIndex = it }
+        )
 
-    override fun onLongClick(view: View): Boolean {
-        val id = view.id
-        if (id == R.id.next_button) {
-            var pos = mapSpinner!!.selectedItemPosition
-            pos += 20
-            if (pos > StaticBits.NUMBER_OF_MAPS) pos = StaticBits.NUMBER_OF_MAPS
-            mapSpinner!!.setSelection(pos)
-        } else if (id == R.id.previous_button) {
-            var pos = mapSpinner!!.selectedItemPosition
-            pos -= 20
-            if (pos < 0) pos = 0
-            mapSpinner!!.setSelection(pos)
+        // Team Size Selection
+        DropdownMenuField(
+            label = "Select Team Size",
+            options = resources.getStringArray(R.array.teamsize_array),
+            selectedIndex = selectedTeamSizeIndex,
+            onOptionSelected = { selectedTeamSizeIndex = it }
+        )
+
+        // Map Preview
+        MapPreview(selectedMapIndex)
+
+        // Start Game Button
+        Button(
+            onClick = {
+                coroutineScope.launch {
+                    StaticBits.server!!.stopAccepting()
+                    StaticBits.teams[0] = clientIdToPlayerNumber(myId)
+                    onGameStart()
+                }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Text("Start Game")
         }
-        return true
-    }
 
-    fun nextMap(view: View?) {
-        var pos = mapSpinner!!.selectedItemPosition
-        pos++
-        if (pos > StaticBits.NUMBER_OF_MAPS) pos = StaticBits.NUMBER_OF_MAPS
-        mapSpinner!!.setSelection(pos)
+        // Footer Info
+        Text(
+            text = "Number of players: ${numberOfClients + 1}",
+            fontSize = 16.sp,
+            color = Color.Gray
+        )
     }
+}
 
-    fun previousMap(view: View?) {
-        var pos = mapSpinner!!.selectedItemPosition
-        pos--
-        if (pos < 0) pos = 0
-        mapSpinner!!.setSelection(pos)
-    }
+@Composable
+fun DropdownMenuField(
+    label: String,
+    options: Array<String>,
+    selectedIndex: Int,
+    onOptionSelected: (Int) -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
 
-    fun changeTeam(view: View?) {
-        //TODO cycle through available teams.
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-        val spinnerId = parent.id
-        if (spinnerId == R.id.map_spinner) {
-            StaticBits.map = pos - 1
-            val m = mapSpinner!!.selectedItemPosition
-            StaticBits.server!!.sendToAll(StaticBits.SET_MAP, pos)
-            refreshMapImage()
-        } else if (spinnerId == R.id.timeout_spinner) {
-            StaticBits.timeLimit = intToTime(pos)
-            val t = timeoutSpinner!!.selectedItemPosition
-            StaticBits.server!!.sendToAll(StaticBits.SET_TIME_LIMIT, pos)
-        } else if (spinnerId == R.id.teamsize_spinner) {
-            if (view != null) {
-                StaticBits.dotsPerTeam = ((view as TextView).text.toString() + "").toInt()
+    Column {
+        Text(text = label, fontSize = 18.sp, modifier = Modifier.padding(bottom = 8.dp))
+        Box {
+            OutlinedButton(onClick = { expanded = true }) {
+                Text(text = options[selectedIndex])
             }
-            StaticBits.server!!.sendToAll(StaticBits.SET_TEAM_SIZE, StaticBits.dotsPerTeam)
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                options.forEachIndexed { index, option ->
+                    DropdownMenuItem(
+                        text = {
+                            Text(option)
+                        },
+                        onClick = {
+                            onOptionSelected(index)
+                            expanded = false
+                        }
+                    )
+                }
+            }
         }
     }
+}
 
-    override fun onNothingSelected(parent: AdapterView<*>?) {}
-
-    private fun refreshMapImage() {
-        var `is`: InputStream? = null
+@Composable
+fun MapPreview(selectedMapIndex: Int) {
+    val context = LocalContext.current
+    val mapImage = remember(selectedMapIndex) {
         try {
-            `is` = if (StaticBits.map == -1) assets.open("maps/random-map.png")
-            else assets.open("maps/" + StaticBits.map + "-image.png")
+            val assetName =
+                if (selectedMapIndex == -1) "maps/random-map.png" else "maps/$selectedMapIndex-image.png"
+            val `is`: InputStream = context.assets.open(assetName)
+            Drawable.createFromStream(`is`, null)?.toBitmap()
         } catch (e: IOException) {
-            try {
-                `is` = assets.open("maps/" + StaticBits.map + "-map.png")
-            } catch (ex: IOException) {
-            }
-        }
-        val d = Drawable.createFromStream(`is`, null)
-        val iv = findViewById<ImageView>(R.id.map_imageview)
-        iv.setImageDrawable(d)
-    }
-
-    override fun onClientMessageReceived(id: Int, argc: Int, args: IntArray) {
-        if (args[0] == StaticBits.SEND_VERSION_CODE) {
-            if (args[1] != StaticBits.VERSION_CODE) checkVersionCompatibility(args[1])
+            null
         }
     }
 
-    private fun checkVersionCompatibility(v: Int) {
-        if (StaticBits.VERSION_CODE < v) toast("Liquid Wars needs updating.", Toast.LENGTH_LONG)
-    }
-
-    override fun onClientConnected(id: Int) {
-        numberOfClients++
-        updateMessageTextView()
-        for (i in 0..5) {
-            if (StaticBits.teams[i] == StaticBits.AI_PLAYER) {
-                StaticBits.teams[i] = id
-                StaticBits.server!!.sendToOne(id, StaticBits.SET_TEAM, i)
-                StaticBits.server!!.sendToOne(
-                    id,
-                    StaticBits.SEND_VERSION_CODE,
-                    StaticBits.VERSION_CODE
-                )
-                break
-            }
-        }
-        val t = timeoutSpinner!!.selectedItemPosition
-        StaticBits.server!!.sendToOne(id, StaticBits.SET_TIME_LIMIT, t)
-        val m = mapSpinner!!.selectedItemPosition
-        StaticBits.server!!.sendToOne(id, StaticBits.SET_MAP, m)
-        StaticBits.server!!.sendToAll(StaticBits.SET_TEAM_SIZE, StaticBits.dotsPerTeam)
-    }
-
-    override fun onClientDisconnected(id: Int) {
-        numberOfClients--
-        updateMessageTextView()
-        for (i in 0..5) {
-            if (StaticBits.teams[i] == id) {
-                StaticBits.teams[i] = StaticBits.AI_PLAYER
-                break
-            }
-        }
-    }
-
-    private fun updateMessageTextView() {
-        runOnUiThread {
-            val tv = findViewById<TextView>(R.id.multi_game_textview)
-            val ip = NetInfo.getIPAddress(context)
-            val ssid = NetInfo.getSSID(context)
-            tv.text =
-                "Sharing game on " + ssid + ". IP Address: " + ip + ". Number of players: " + (numberOfClients + 1)
-        }
-    }
-
-    private fun toast(message: String, length: Int) {
-        runOnUiThread { Toast.makeText(context, message, length).show() }
+    if (mapImage != null) {
+        Image(
+            bitmap = mapImage.asImageBitmap(),
+            contentDescription = null,
+            modifier = Modifier.size(200.dp)
+        )
+    } else {
+        Text("No map preview available", color = Color.Red, fontSize = 16.sp)
     }
 }

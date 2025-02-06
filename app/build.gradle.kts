@@ -28,6 +28,7 @@ android {
             "en",
         )
 
+        @Suppress("UnstableApiUsage")
         externalNativeBuild {
             ndkBuild {
                 targets += listOf("application", "nativeinterface", "ode", "application", "aclib")
@@ -141,9 +142,19 @@ android {
         buildConfig = true
     }
 
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    kotlinOptions {
+        jvmTarget = "21"
     }
 
     packaging.resources.excludes += setOf(
@@ -164,6 +175,11 @@ android {
                 "Liquid-Wars-${versionName}-${versionCode}-${name}.apk"
         }
     }
+
+}
+
+kotlin {
+    jvmToolchain(21)
 }
 
 protobuf {

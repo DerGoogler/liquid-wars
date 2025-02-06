@@ -1,5 +1,9 @@
 package com.dergoogler.liquidwars
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.dergoogler.liquidwars.activities.ClientGameSetupActivity
 import com.dergoogler.liquidwars.activities.MultiplayerGameSetupActivity
 import com.dergoogler.liquidwars.server.Server
@@ -8,9 +12,9 @@ import kotlin.math.abs
 object StaticBits {
     var clientGameSetupActivity: ClientGameSetupActivity? = null
     var multiplayerGameSetupActivity: MultiplayerGameSetupActivity? = null
-    var team: Int = 0
-    var map: Int = 0
-    var seed: Int = 0
+    var team: Int by mutableIntStateOf(0)
+    var map: Int by mutableIntStateOf(-1)
+    var seed: Int by mutableIntStateOf(0)
     var dotsPerTeam: Int = 400
     var startTimestamp: Long = 0
     var timeLimit: Int = 4 * 60

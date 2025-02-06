@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <style name="Theme.LiquidWars" parent="Theme.MaterialComponents.NoActionBar" />
     <style name="Theme.LiqurdWars" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:windowBackground">@color/lw_primary_background</item>
         <item name="android:colorPrimary">@color/lw_primary_background</item>

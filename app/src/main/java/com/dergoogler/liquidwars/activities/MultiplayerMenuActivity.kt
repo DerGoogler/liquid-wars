@@ -1,129 +1,160 @@
 package com.dergoogler.liquidwars.activities
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
-import android.view.View
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.ListView
-import com.dergoogler.liquidwars.R
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import com.dergoogler.liquidwars.StaticBits
+import com.dergoogler.liquidwars.activities.ClientGameSetupActivity
+import com.dergoogler.liquidwars.activities.MultiplayerGameSetupActivity
 import com.dergoogler.liquidwars.server.NetInfo
 import com.dergoogler.liquidwars.server.ServerFinder
 import com.dergoogler.liquidwars.server.ServerFinder.ServerFinderCallbacks
 import com.dergoogler.liquidwars.server.ServerFinder.ServerInfo
+import kotlinx.coroutines.launch
 
-class MultiplayerMenuActivity : LiquidCompatActivity() {
-    private var context: Context? = null
-    private var serverList: ArrayAdapter<*>? = null
-    private var searchAlertDialog: AlertDialog? = null
-    var serverInfoList: ArrayList<ServerInfo>? = null
-
+class MultiplayerMenuActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        context = this
-        setContentView(R.layout.multiplayer_menu)
-        setAdsBanner(R.id.multiplayer_ads_banner)
+        setContent {
+            MultiplayerMenuScreenContent(context = this)
+        }
     }
+}
 
-    override fun onDestroy() {
-        super.onDestroy()
-        ServerFinder.stopSharing()
-    }
+@Composable
+fun MultiplayerMenuScreenContent(context: Context) {
+    var serverInfoList by remember { mutableStateOf(listOf<ServerInfo>()) }
+    var isSearching by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
+    var ipAddress by remember { mutableStateOf("") }
 
-    fun connectToGame(view: View?) {
-        serverList =
-            ArrayAdapter<Any?>(this, android.R.layout.simple_list_item_1,
-                ArrayList<String?>() as List<Any?>
-            )
-        val listview = ListView(this)
-        listview.adapter = serverList
-        listview.onItemClickListener =
-            OnItemClickListener { parent: AdapterView<*>?, view1: View?, position: Int, id: Long ->
-                searchAlertDialog!!.cancel()
-                val ip = serverInfoList!![position].ip
-                val name = serverInfoList!![position].name
-                val intent = Intent(context, ClientGameSetupActivity::class.java)
-                intent.putExtra("ip", ip)
-                intent.putExtra("name", name)
-                startActivity(intent)
-            }
-
-        val sfc = ServerFinderCallbacks { serverInfo: ServerInfo ->
-            runOnUiThread {
-                for (si in serverInfoList!!) {
-                    if (si.ip.compareTo(serverInfo.ip) == 0) {
-                        if (si.name.compareTo(serverInfo.name) != 0) {
-                            val index = serverInfoList!!.indexOf(si)
-                            serverInfoList!!.add(index, serverInfo)
-                            serverInfoList!!.remove(si)
-                            val s = serverList?.getItem(index)
-                            serverList!!.remove(s as Nothing?)
-                            serverList!!.insert(serverInfo.name as Nothing?, index)
-                        }
-                        return@runOnUiThread
-                    }
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Button(
+            onClick = {
+                coroutineScope.launch {
+                    isSearching = true
+                    val broadcastAddress = NetInfo.getBroadcastAddress(context)
+                    ServerFinder.search(
+                        ServerFinderCallbacks { serverInfo ->
+                            if (serverInfo != null) {
+                                serverInfoList = serverInfoList.filter { it.ip != serverInfo.ip } + serverInfo
+                            }
+                        },
+                        broadcastAddress,
+                        StaticBits.PORT_NUMBER + 1
+                    )
                 }
-                serverInfoList!!.add(serverInfo)
-                serverList!!.add(serverInfo.name as Nothing?)
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Search for Servers")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn(modifier = Modifier.fillMaxWidth()) {
+            items(serverInfoList.size) { index ->
+                val serverInfo = serverInfoList[index]
+                ServerItem(serverInfo) {
+                    val intent = Intent(context, ClientGameSetupActivity::class.java)
+                    intent.putExtra("ip", serverInfo.ip)
+                    intent.putExtra("name", serverInfo.name)
+                    context.startActivity(intent)
+                }
             }
         }
 
-        val clicker = DialogInterface.OnClickListener { dialog: DialogInterface?, which: Int ->
-            ServerFinder.stopSearching()
-            if (which == DialogInterface.BUTTON_POSITIVE) {
-                val clicker1 =
-                    DialogInterface.OnClickListener { dialog1: DialogInterface?, which1: Int ->
-                        val ip = ipEditText!!.text.toString()
-                        val name = ip
-                        val intent = Intent(context, ClientGameSetupActivity::class.java)
-                        intent.putExtra("ip", ip)
-                        intent.putExtra("name", name)
-                        startActivity(intent)
-                    }
-                val tempEditText = ipEditText
-                ipEditText = EditText(context)
-                if (tempEditText != null) ipEditText!!.setText(tempEditText.text)
-                val ip = NetInfo.getIPAddress(context)
-                ipEditText!!.hint = "e.g. $ip"
-                ipEditText!!.inputType = InputType.TYPE_CLASS_PHONE
-                AlertDialog.Builder(context)
-                    .setTitle("Enter IP Address")
-                    .setPositiveButton("Connect", clicker1)
-                    .setNegativeButton("Cancel", null)
-                    .setView(ipEditText)
-                    .show()
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(
+            onClick = {
+                val intent = Intent(context, MultiplayerGameSetupActivity::class.java)
+                context.startActivity(intent)
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Start New Game")
+        }
+
+        if (isSearching) {
+            ManualConnectDialog(
+                onDismiss = { isSearching = false },
+                onConnect = {
+                    val intent = Intent(context, ClientGameSetupActivity::class.java)
+                    intent.putExtra("ip", ipAddress)
+                    intent.putExtra("name", ipAddress)
+                    context.startActivity(intent)
+                },
+                ipAddress = ipAddress,
+                onIpAddressChange = { ipAddress = it }
+            )
+        }
+    }
+}
+
+@Composable
+fun ServerItem(serverInfo: ServerInfo, onConnect: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(text = serverInfo.name, style = MaterialTheme.typography.labelSmall)
+            Button(onClick = onConnect) {
+                Text("Connect")
             }
         }
-        val cancelListener =
-            DialogInterface.OnCancelListener { dialog: DialogInterface? -> ServerFinder.stopSearching() }
-
-        serverInfoList = ArrayList()
-        val broadcastAddress = NetInfo.getBroadcastAddress(context)
-        ServerFinder.search(sfc, broadcastAddress, StaticBits.PORT_NUMBER + 1)
-        val ssid = NetInfo.getSSID(this)
-
-        searchAlertDialog = AlertDialog.Builder(this)
-            .setTitle("Searching on $ssid...")
-            .setPositiveButton("Manual Connect", clicker)
-            .setNegativeButton("Cancel", clicker)
-            .setOnCancelListener(cancelListener)
-            .setView(listview)
-            .show()
     }
+}
 
-    fun startNewGame(view: View?) {
-        val intent = Intent(this, MultiplayerGameSetupActivity::class.java)
-        startActivity(intent)
-    }
-
-    companion object {
-        private var ipEditText: EditText? = null
-    }
+@Composable
+fun ManualConnectDialog(
+    onDismiss: () -> Unit,
+    onConnect: () -> Unit,
+    ipAddress: String,
+    onIpAddressChange: (String) -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Enter IP Address") },
+        text = {
+            Column {
+                TextField(
+                    value = ipAddress,
+                    onValueChange = onIpAddressChange,
+                    label = { Text("IP Address") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                )
+            }
+        },
+        confirmButton = {
+            Button(onClick = onConnect) {
+                Text("Connect")
+            }
+        },
+        dismissButton = {
+            Button(onClick = onDismiss) {
+                Text("Cancel")
+            }
+        }
+    )
 }

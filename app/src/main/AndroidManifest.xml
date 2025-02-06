@@ -24,17 +24,18 @@
         android:xlargeScreens="true" />
 
     <application
+        android:name=".App"
         android:appCategory="game"
         android:icon="@mipmap/ic_launcher"
         android:isGame="true"
         android:label="@string/app_name">
 
         <activity
-            android:name=".activities.MainMenuActivity"
+            android:name=".ui.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.LiqurdWars"
+            android:theme="@style/Theme.LiquidWars"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
