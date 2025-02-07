@@ -3,6 +3,7 @@ package com.dergoogler.liquidwars.viewmodel
 import android.app.Application
 import android.content.Context
 import android.content.Intent
+import android.view.InputDevice
 import android.view.MotionEvent
 import androidx.compose.runtime.*
 import androidx.lifecycle.AndroidViewModel
@@ -23,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel(assistedFactory = SinglePlayerGameViewModel.Factory::class)
@@ -43,7 +45,7 @@ class SinglePlayerGameViewModel @AssistedInject constructor(
     val ys = Array(6) { ShortArray(5) }
     var winningTeam by mutableIntStateOf(0)
 
-    fun onTouch(event: MotionEvent) {
+    fun onTouch(event: MotionEvent): Boolean {
         val count = event.pointerCount
         for (i in 0..4) {
             if (i < count) {
@@ -65,6 +67,37 @@ class SinglePlayerGameViewModel @AssistedInject constructor(
             xs[StaticBits.team][upId] = -1
             ys[StaticBits.team][upId] = -1
         }
+
+        return true
+    }
+
+    fun onJoystick(event: MotionEvent): Boolean {
+        if (event.source and InputDevice.SOURCE_JOYSTICK == InputDevice.SOURCE_JOYSTICK) {
+
+            val inputDevice = event.device
+
+            if (inputDevice != null) {
+                val count = event.pointerCount
+                for (i in 0..4) {
+                    if (i < count) {
+                        val xAxis = event.getAxisValue(MotionEvent.AXIS_X, count)
+                        val yAxis = event.getAxisValue(MotionEvent.AXIS_Y, count)
+                        xs[StaticBits.team][i] =
+                            ((xAxis / MyRenderer.displayWidth.toFloat()) * MyRenderer.WIDTH.toFloat()).toInt()
+                                .toShort()
+                        ys[StaticBits.team][i] =
+                            ((MyRenderer.HEIGHT - 1) - ((yAxis / MyRenderer.displayHeight.toFloat()) * MyRenderer.HEIGHT.toFloat())).toInt()
+                                .toShort()
+                    } else {
+                        xs[StaticBits.team][i] = -1
+                        ys[StaticBits.team][i] = -1
+                    }
+                }
+
+            }
+        }
+
+        return true
     }
 
     fun pauseGame() {

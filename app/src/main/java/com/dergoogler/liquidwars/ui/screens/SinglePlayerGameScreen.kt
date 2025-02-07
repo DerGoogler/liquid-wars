@@ -65,21 +65,15 @@ fun SinglePlayerGameScreen(
         }
     }
 
-    val close = remember(vm.paused, vm.gameFinished) {
-        {
-            if (!vm.gameFinished && !vm.lostGame) {
-                vm.pauseGame()
-            }
-        }
-    }
-
     LaunchedEffect(Unit) {
         vm.startGame()
     }
 
     BackHandler(
         enabled = true,
-        onBack = close
+        onBack = {
+            vm.pauseGame()
+        }
     )
 
     Scaffold { paddingValues ->
@@ -92,7 +86,6 @@ fun SinglePlayerGameScreen(
                     .fillMaxSize()
                     .pointerInteropFilter { event ->
                         vm.onTouch(event)
-                        true
                     },
                 factory = {
                     loadPlayerInitialPositions(vm.xs, vm.ys)
@@ -104,6 +97,7 @@ fun SinglePlayerGameScreen(
                         StaticBits.dotsPerTeam
                     )
                     vm.myGLSurfaceView.requestPointerCapture()
+                    vm.myGLSurfaceView.requestFocus()
                     vm.myGLSurfaceView
                 }
             )
@@ -117,7 +111,9 @@ fun SinglePlayerGameScreen(
                         enabled = true,
                         interactionSource = closeButtonInteractionSource,
                         indication = ripple(),
-                        onClick = close
+                        onClick = {
+                            vm.pauseGame()
+                        }
                     )
             ) {
                 Icon(
