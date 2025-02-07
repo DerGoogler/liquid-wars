@@ -45,46 +45,9 @@ class GameActivity : LiquidCompatActivity(), Runnable, SurfaceCallbacks {
         myGLSurfaceView = findViewById(R.id.mySurfaceView)
         myGLSurfaceView?.setSurfaceCallbacks(this)
 
-        loadPlayerInitialPositions(xs, ys)
 
-        NativeInterface.init(assets)
-        NativeInterface.createGame(
-            StaticBits.team,
-            StaticBits.map,
-            StaticBits.seed,
-            StaticBits.dotsPerTeam
-        )
-
-        myGLSurfaceView?.requestPointerCapture()
-
-        Thread(this).start()
     }
 
-    override fun onPause() {
-        super.onPause()
-        paused = true
-        if (myGLSurfaceView != null) {
-            myGLSurfaceView!!.releasePointerCapture()
-            myGLSurfaceView!!.onPause()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        paused = false
-        if (myGLSurfaceView != null) {
-            myGLSurfaceView!!.requestPointerCapture()
-            myGLSurfaceView!!.onResume()
-        }
-    }
-
-    override fun onDestroy() {
-        myGLSurfaceView!!.releasePointerCapture()
-        if (!isFinishing) finish()
-        super.onDestroy()
-        running = false
-        if (dialog != null) dialog!!.dismiss()
-    }
 
     override fun run() {
         running = true

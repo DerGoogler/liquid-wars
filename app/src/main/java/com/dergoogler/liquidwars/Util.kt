@@ -5,7 +5,6 @@ import android.content.Context
 import android.os.Handler
 
 object Util {
-    @JvmStatic
     fun loadPlayerInitialPositions(xs: Array<ShortArray>, ys: Array<ShortArray>) {
         for (p in 0..5) for (i in 0..4) {
             ys[p][i] = -1
@@ -27,7 +26,6 @@ object Util {
         ys[5][0] = (MyRenderer.HEIGHT - ydis).toShort()
     }
 
-    @JvmStatic
     fun teamToColour(p: Int): Int {
         when (p) {
             0 -> return -0xff0100
@@ -40,7 +38,6 @@ object Util {
         return -0x1
     }
 
-    @JvmStatic
     fun teamToNameString(p: Int): String {
         when (p) {
             0 -> return "Green"
@@ -53,25 +50,21 @@ object Util {
         return "Unknown"
     }
 
-    @JvmStatic
     fun getMapName(c: Context, m: Int): String {
         val maps = c.resources.getStringArray(R.array.maps_array)
         return maps[m]
     }
 
-    @JvmStatic
     fun getTimeoutString(c: Context, t: Int): String {
         val timeout = c.resources.getStringArray(R.array.timeout_array)
         return timeout[t]
     }
 
-    @JvmStatic
     fun clientIdToPlayerNumber(id: Int): Int {
         for (i in 0..5) if (StaticBits.teams[i] == id) return i
         return -1
     }
 
-    @JvmStatic
     fun intToTime(i: Int): Int {
         when (i) {
             0 -> return 30
@@ -85,7 +78,6 @@ object Util {
         return 60 * 3
     }
 
-    @JvmStatic
     fun regulateSpeed(previousTime: Long, totalDelay: Int) {
         val currentTime = System.nanoTime()
         val timeDiff = currentTime - previousTime
@@ -103,13 +95,11 @@ object Util {
         }
     }
 
-    @JvmStatic
     fun makeDialogCancelableIn(dialog: Dialog, millis: Int) {
         val handler = Handler()
         handler.postDelayed({ dialog.setCanceledOnTouchOutside(true) }, millis.toLong())
     }
 
-    @JvmStatic
     fun makeDialogDismissIn(dialog: Dialog, millis: Int) {
         val handler = Handler()
         handler.postDelayed({ dialog.dismiss() }, millis.toLong())

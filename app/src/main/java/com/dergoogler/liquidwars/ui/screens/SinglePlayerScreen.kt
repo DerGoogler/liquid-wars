@@ -21,7 +21,11 @@ import com.dergoogler.liquidwars.StaticBits
 import com.dergoogler.liquidwars.ui.component.MapImage
 import com.dergoogler.liquidwars.ui.component.MapSelectBottomSheet
 import com.dergoogler.liquidwars.ui.component.Spinner
+import com.dergoogler.liquidwars.ui.providable.LocalNavController
+import com.dergoogler.liquidwars.ui.utils.navigateSingleTopTo
 import com.dergoogler.liquidwars.viewmodel.SinglePlayerViewModel
+import com.dergoogler.liquidwars.ui.navigation.graphs.HomeScreen
+import com.dergoogler.liquidwars.viewmodel.SinglePlayerGameViewModel
 
 @Composable
 fun SinglePlayerScreen(
@@ -159,7 +163,7 @@ fun SinglePlayerScreen(
 
             Button(
                 onClick = {
-                    vm.startGame(context)
+                    SinglePlayerGameViewModel.startGame(context)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

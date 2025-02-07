@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeOut
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.dergoogler.liquidwars.ui.screens.SinglePlayerGameScreen
 import com.dergoogler.liquidwars.ui.screens.HomeScreen
 import com.dergoogler.liquidwars.ui.screens.InstructionsScreen
 import com.dergoogler.liquidwars.ui.screens.SinglePlayerScreen
