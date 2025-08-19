@@ -15,6 +15,9 @@ android {
             ndkBuild {
                 targets "application", "nativeinterface", "ode", "application", "aclib"
                 abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
+                arguments "APP_LDFLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384 -Wl,-z,separate-code"
+                cFlags "-ffunction-sections", "-fdata-sections"
+                cppFlags "-ffunction-sections", "-fdata-sections"
             }
         }
         ndk {

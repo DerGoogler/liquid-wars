@@ -6,6 +6,11 @@ MY_LOCAL_PATH := $(LOCAL_PATH)/nativeinterface
 
 LOCAL_MODULE := nativeinterface
 
+# 16 KB page size compatibility flags
+LOCAL_LDFLAGS += "-Wl,-z,max-page-size=16384"
+LOCAL_LDFLAGS += "-Wl,-z,common-page-size=16384"
+LOCAL_LDFLAGS += "-Wl,-z,separate-code"
+
 MY_LOCAL_SRC_FILES := $(wildcard $(MY_LOCAL_PATH)/*.cpp)
 LOCAL_SRC_FILES := $(subst cpp/, , $(MY_LOCAL_SRC_FILES))
 
