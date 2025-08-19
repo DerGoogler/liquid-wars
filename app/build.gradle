@@ -3,14 +3,14 @@ apply plugin: 'com.android.application'
 def app_name = "Liquid Wars"
 
 android {
-    compileSdk 34
+    compileSdk 36
     namespace "com.dergoogler.liquidwars"
     defaultConfig {
         applicationId "com.dergoogler.liquidwars"
         minSdk 26
-        targetSdk 34
-        versionName "1.1.2"
-        versionCode 112
+        targetSdk 36
+        versionName "1.1.3"
+        versionCode 113
         externalNativeBuild {
             ndkBuild {
                 targets "application", "nativeinterface", "ode", "application", "aclib"
@@ -20,6 +20,10 @@ android {
         ndk {
             abiFilters "armeabi-v7a", "x86", "arm64-v8a", "x86_64"
         }
+    }
+
+    android.buildFeatures {
+        buildConfig = true
     }
 
     splits {
