@@ -1,6 +1,4 @@
 import com.android.build.gradle.internal.api.ApkVariantOutputImpl
-//import org.gradle.internal.extensions.stdlib.capitalized
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     alias(libs.plugins.self.application)
@@ -12,11 +10,11 @@ plugins {
     alias(libs.plugins.protobuf)
 }
 
-val baseVersionName = "1.1.2"
+val baseVersionName = "1.1.4"
 val baseAppName = "Liquid Wars"
 
 android {
-    compileSdk = 35
+    compileSdk = 36
     namespace = "com.dergoogler.liquidwars"
 
     defaultConfig {
@@ -31,8 +29,9 @@ android {
         @Suppress("UnstableApiUsage")
         externalNativeBuild {
             ndkBuild {
-                targets += listOf("application", "nativeinterface", "ode", "application", "aclib")
+                targets += listOf("application", "nativeinterface", "ode", "aclib")
                 abiFilters += listOf("armeabi-v7a", "x86", "arm64-v8a", "x86_64")
+                arguments += listOf("APP_LDFLAGS=-Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384 -Wl")
             }
         }
         ndk {

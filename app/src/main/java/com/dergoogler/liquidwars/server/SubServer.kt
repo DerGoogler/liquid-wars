@@ -32,7 +32,7 @@ class SubServer(
         subServerCallbacks.onSubServerDisconnect(id)
     }
 
-    override fun destroy() {
+    fun destroy() {
         if (socket != null) {
             try {
                 socket!!.close()

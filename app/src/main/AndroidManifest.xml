@@ -10,8 +10,10 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <uses-feature android:name="android.hardware.screen.landscape" />
-    <uses-feature android:name="android.hardware.screen.portrait" />
-    <uses-feature android:name="android.hardware.touchscreen" />
+    <uses-feature android:name="android.hardware.screen.portrait"
+        android:required="false" />
+    <uses-feature android:name="android.hardware.touchscreen"
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.type.pc"
         android:required="false" />
